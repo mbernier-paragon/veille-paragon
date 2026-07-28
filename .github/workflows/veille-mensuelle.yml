@@ -1,0 +1,45 @@
+# À placer dans votre dépôt sous : .github/workflows/veille-mensuelle.yml
+name: Veille BPO Paragon — mise à jour mensuelle
+
+on:
+  schedule:
+    - cron: '0 6 1 * *'      # le 1er de chaque mois à 06:00 UTC (~07:00/08:00 Paris)
+  workflow_dispatch: {}       # + bouton "Run workflow" pour un lancement manuel à la demande
+
+permissions:
+  contents: write             # autorise le bot à committer la page mise à jour
+
+jobs:
+  maj-veille:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Régénérer les signaux (API Claude + recherche web)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          VEILLE_FILE: index.html
+          VEILLE_MODEL: claude-sonnet-4-6
+          VEILLE_MIN_SIGNALS: '12'
+        run: python update_veille.py
+
+      - name: Publier si la page a changé
+        run: |
+          if [ -n "$(git status --porcelain index.html)" ]; then
+            git config user.name  "Veille Paragon Bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add index.html
+            git commit -m "Veille : mise à jour automatique $(date +'%Y-%m')"
+            git push
+          else
+            echo "Aucun changement à publier ce mois-ci."
+          fi
