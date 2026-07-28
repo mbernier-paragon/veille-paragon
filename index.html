@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veille Paragon — BPO · Élections · Facturation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--bleu:#1a3a5c;--bleu-mid:#2563a8;--bleu-light:#dbeafe;--bleu-accent:#3b82f6;--gris-bg:#f7f8fa;--gris-border:#e2e6ea;--gris-text:#6b7280;--noir:#0f1621;--blanc:#ffffff;--radius:10px;--radius-lg:16px;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);--shadow-hover:0 4px 16px rgba(0,0,0,.12)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--gris-bg);color:var(--noir);min-height:100vh;font-size:15px;line-height:1.6}
+
+/* HEADER */
+.site-header{background:var(--bleu);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08)}
+.header-inner{max-width:1160px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:58px;gap:1rem}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+.logo-mark{width:28px;height:28px;background:var(--bleu-accent);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.logo-mark svg{width:15px;height:15px;fill:white}
+.logo-text{color:white;font-weight:600;font-size:14px;letter-spacing:-.01em}
+.logo-sub{color:rgba(255,255,255,.4);font-size:11px;font-weight:300}
+.header-search{flex:1;max-width:380px;position:relative}
+.header-search input{width:100%;padding:7px 11px 7px 32px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.1);color:white;font-size:13px;font-family:inherit;outline:none;transition:background .2s,border-color .2s}
+.header-search input::placeholder{color:rgba(255,255,255,.38)}
+.header-search input:focus{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3)}
+.search-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.38);pointer-events:none;width:13px;height:13px}
+.header-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.hpill{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);border-radius:20px;padding:3px 9px;font-size:11px;white-space:nowrap}
+.btn-export{background:var(--bleu-accent);color:white;border:none;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s}
+.btn-export:hover{background:#2563eb}
+
+/* METIER NAV — barre secondaire */
+.metier-nav{background:rgba(0,0,0,.2);border-top:1px solid rgba(255,255,255,.06)}
+.metier-nav-inner{max-width:1160px;margin:0 auto;padding:0 1.5rem;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.metier-nav-inner::-webkit-scrollbar{display:none}
+.mtab{padding:9px 14px;font-size:12px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;display:flex;align-items:center;gap:6px}
+.mtab:hover{color:rgba(255,255,255,.8)}
+.mtab.active{color:white;border-bottom-color:var(--bleu-accent)}
+.mtab-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* HERO */
+.hero{background:var(--bleu);padding:2.25rem 1.5rem 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:36px;background:var(--gris-bg);clip-path:ellipse(55% 100% at 50% 100%)}
+.hero-edition{display:inline-block;background:rgba(59,130,246,.22);color:#93c5fd;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:3px 11px;border-radius:20px;margin-bottom:.9rem}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,3.5vw,38px);color:white;font-weight:400;line-height:1.2;margin-bottom:.65rem}
+.hero-title em{color:#93c5fd;font-style:italic}
+.hero-desc{color:rgba(255,255,255,.55);font-size:14px;max-width:500px;margin:0 auto 1.4rem;font-weight:300}
+.hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat-n{font-size:21px;font-weight:600;color:white}
+.hero-stat-l{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+
+/* LAYOUT */
+.main{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;display:grid;grid-template-columns:210px 1fr;gap:1.75rem;align-items:start}
+
+/* SIDEBAR */
+.sidebar{position:sticky;top:116px}
+.sb-section{margin-bottom:1.5rem}
+.sb-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-text);margin-bottom:.5rem;padding-left:4px}
+.fb{display:flex;align-items:center;gap:7px;width:100%;padding:6px 9px;border-radius:8px;border:none;background:transparent;color:var(--gris-text);font-size:13px;font-family:inherit;cursor:pointer;text-align:left;transition:background .15s,color .15s;margin-bottom:1px}
+.fb:hover{background:rgba(37,99,168,.08);color:var(--bleu)}
+.fb.active{background:var(--bleu-light);color:var(--bleu);font-weight:500}
+.fb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.fb-count{margin-left:auto;font-size:11px;background:var(--gris-border);border-radius:10px;padding:1px 6px;color:var(--gris-text)}
+.fb.active .fb-count{background:rgba(37,99,168,.15);color:var(--bleu)}
+.urg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gris-text);margin-bottom:3px;padding:0 4px}
+.urg-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* CONTENT */
+.content-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;gap:1rem}
+.content-count{font-size:13px;color:var(--gris-text)}
+.sort-sel{font-size:12px;font-family:inherit;padding:5px 10px;border-radius:8px;border:1px solid var(--gris-border);background:var(--blanc);color:var(--noir);cursor:pointer;outline:none}
+.cards{display:flex;flex-direction:column;gap:12px}
+
+/* CARD */
+.card{background:var(--blanc);border-radius:var(--radius-lg);border:1px solid var(--gris-border);padding:1.15rem 1.4rem;box-shadow:var(--shadow);transition:box-shadow .2s,transform .15s;cursor:pointer;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--urgence-color,#ccc)}
+.card:hover{box-shadow:var(--shadow-hover);transform:translateY(-1px)}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;margin-bottom:.55rem}
+.card-badges{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.02em;padding:2px 7px;border-radius:5px}
+.badge-metier{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;border:1px solid var(--gris-border);color:var(--gris-text);background:var(--gris-bg)}
+.badge-urg{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px}
+.card-toggle{width:22px;height:22px;border-radius:6px;border:1px solid var(--gris-border);background:var(--gris-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s;color:var(--gris-text)}
+.card.open .card-toggle{transform:rotate(180deg)}
+.card-title{font-size:14px;font-weight:600;color:var(--noir);line-height:1.35;letter-spacing:-.01em;margin-bottom:.3rem}
+.card-meta{font-size:11px;color:var(--gris-text);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card-meta-sep{color:var(--gris-border)}
+.card-excerpt{font-size:13px;color:#374151;line-height:1.55;margin-top:.5rem}
+.card-body{display:none;margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--gris-border);animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.card.open .card-body{display:block}
+.card-detail{font-size:13px;color:#374151;line-height:1.6;margin-bottom:.65rem}
+.card-detail ul{padding-left:1.1rem;margin-top:.2rem}
+.card-detail ul li{margin-bottom:.2rem}
+.card-source{font-size:11px;color:var(--gris-text);background:var(--gris-bg);padding:6px 10px;border-radius:6px;display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.card-source-label{display:flex;align-items:center;gap:4px;margin-right:2px}
+.src-links{display:flex;flex-wrap:wrap;gap:5px}
+.src-link{color:var(--bleu-mid);text-decoration:none;font-size:11px;border-bottom:1px solid rgba(37,99,168,.25);padding-bottom:1px;transition:color .15s,border-color .15s}
+.src-link:hover{color:var(--bleu);border-bottom-color:var(--bleu)}
+
+/* EMPTY */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--gris-text)}
+.empty-ico{font-size:32px;margin-bottom:.65rem;opacity:.4}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--blanc);border-radius:var(--radius-lg);width:92%;max-width:680px;max-height:86vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.2);display:flex;flex-direction:column}
+.modal-header{padding:1.1rem 1.4rem;border-bottom:1px solid var(--gris-border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--blanc);z-index:1}
+.modal-title{font-size:15px;font-weight:600}
+.modal-close{background:none;border:1px solid var(--gris-border);border-radius:7px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--gris-text);transition:background .15s}
+.modal-close:hover{background:var(--gris-bg)}
+.modal-tabs{display:flex;border-bottom:1px solid var(--gris-border);background:var(--blanc);position:sticky;top:55px;z-index:1}
+.modal-tab{padding:9px 15px;font-size:13px;cursor:pointer;color:var(--gris-text);border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;transition:color .15s}
+.modal-tab.on{color:var(--bleu);border-bottom-color:var(--bleu);font-weight:500}
+.modal-body{padding:1.4rem;flex:1}
+.modal-panel{display:none}
+.modal-panel.on{display:block}
+.modal-chk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:7px;margin-bottom:1.1rem}
+.modal-chk{display:flex;align-items:flex-start;gap:7px;padding:7px 9px;border:1px solid var(--gris-border);border-radius:8px;cursor:pointer;transition:border-color .15s,background .15s;font-size:12px;line-height:1.4}
+.modal-chk:hover{border-color:var(--bleu-accent);background:var(--bleu-light)}
+.modal-chk input{margin-top:1px;flex-shrink:0;accent-color:var(--bleu)}
+.preview-box{border:1px solid var(--gris-border);border-radius:var(--radius);overflow:hidden;margin-bottom:.9rem}
+.preview-box iframe{width:100%;height:400px;border:none;display:block}
+.preview-textarea{width:100%;height:250px;font-family:'Courier New',monospace;font-size:11px;padding:11px;border:none;background:#1e1e1e;color:#d4d4d4;resize:vertical;outline:none;display:block}
+.modal-actions{display:flex;gap:7px;justify-content:flex-end;padding:.9rem 1.4rem;border-top:1px solid var(--gris-border);background:var(--blanc);position:sticky;bottom:0}
+.btn-sec{padding:7px 14px;border-radius:8px;border:1px solid var(--gris-border);background:var(--blanc);font-size:13px;font-family:inherit;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:5px;color:var(--noir)}
+.btn-sec:hover{background:var(--gris-bg)}
+.btn-pri{padding:7px 14px;border-radius:8px;border:none;background:var(--bleu);color:white;font-size:13px;font-weight:500;font-family:inherit;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:5px}
+.btn-pri:hover{background:var(--bleu-mid)}
+.copy-notice{font-size:11px;color:#166534;margin-top:5px;display:none}
+
+footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px solid var(--gris-border);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.footer-brand{font-size:13px;color:var(--gris-text)}
+.footer-brand strong{color:var(--noir)}
+.footer-note{font-size:11px;color:var(--gris-text)}
+
+@media(max-width:768px){.main{grid-template-columns:1fr}.sidebar{position:static}.header-inner{flex-wrap:wrap;height:auto;padding:.7rem 1rem}.header-search{max-width:100%;order:3;width:100%}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="logo-text">Paragon</div>
+        <div class="logo-sub">Veille sectorielle</div>
+      </div>
+    </a>
+    <div class="header-search">
+      <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="globalSearch" placeholder="Rechercher dans les signaux..." oninput="doSearch()">
+    </div>
+    <div class="header-right">
+      <span class="hpill" id="headerDate"></span>
+      <button class="btn-export" onclick="openExport()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        Exporter newsletter
+      </button>
+    </div>
+  </div>
+
+  <!-- BARRE MÉTIERS -->
+  <nav class="metier-nav" aria-label="Filtrer par métier">
+    <div class="metier-nav-inner" id="metierTabs">
+      <button class="mtab active" data-metier="all" onclick="filterMetier(this)">
+        <span class="mtab-dot" style="background:#888"></span>Tous les métiers
+      </button>
+      <button class="mtab" data-metier="bpo" onclick="filterMetier(this)">
+        <span class="mtab-dot" style="background:#2563a8"></span>BPO &amp; Externalisation
+      </button>
+      <button class="mtab" data-metier="crc" onclick="filterMetier(this)">
+        <span class="mtab-dot" style="background:#0e7490"></span>CRC &middot; Relation client
+      </button>
+      <button class="mtab" data-metier="vote-correspondance" onclick="filterMetier(this)">
+        <span class="mtab-dot" style="background:#166534"></span>Vote par correspondance
+      </button>
+      <button class="mtab" data-metier="vote-electronique" onclick="filterMetier(this)">
+        <span class="mtab-dot" style="background:#9d174d"></span>Vote électronique
+      </button>
+      <button class="mtab" data-metier="bailleurs" onclick="filterMetier(this)">
+        <span class="mtab-dot" style="background:#6d28d9"></span>Bailleurs sociaux
+      </button>
+      <button class="mtab" data-metier="facturation" onclick="filterMetier(this)">
+        <span class="mtab-dot" style="background:#92400e"></span>Facturation électronique &amp; PA
+      </button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-edition" id="heroEdition">Édition · juin 2026</div>
+  <h1 class="hero-title">Veille <em>Paragon</em> — tous métiers</h1>
+  <p class="hero-desc">BPO · CRC · Vote par correspondance · Vote électronique · Bailleurs sociaux · Facturation &amp; PA. Signaux du mois, sources &lt; 30 jours.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-n" id="statTotal">—</div><div class="hero-stat-l">Signaux</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">6</div><div class="hero-stat-l">Métiers</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">&lt; 30j</div><div class="hero-stat-l">Fraîcheur</div></div>
+    <div class="hero-stat"><div class="hero-stat-n" id="statUrgent">—</div><div class="hero-stat-l">Urgents</div></div>
+  </div>
+</section>
+
+<main class="main">
+  <aside class="sidebar">
+    <div class="sb-section">
+      <div class="sb-label">Axes thématiques</div>
+      <button class="fb active" data-axe="all" onclick="filterAxe(this)"><span class="fb-dot" style="background:#888"></span>Tous<span class="fb-count" id="cnt-all">—</span></button>
+      <button class="fb" data-axe="marche" onclick="filterAxe(this)"><span class="fb-dot" style="background:#2563a8"></span>Marché &amp; réglementation<span class="fb-count" id="cnt-marche"></span></button>
+      <button class="fb" data-axe="clients" onclick="filterAxe(this)"><span class="fb-dot" style="background:#166534"></span>Clients &amp; opportunités<span class="fb-count" id="cnt-clients"></span></button>
+      <button class="fb" data-axe="secteurs" onclick="filterAxe(this)"><span class="fb-dot" style="background:#c2410c"></span>Secteurs<span class="fb-count" id="cnt-secteurs"></span></button>
+      <button class="fb" data-axe="acteurs" onclick="filterAxe(this)"><span class="fb-dot" style="background:#92400e"></span>Acteurs<span class="fb-count" id="cnt-acteurs"></span></button>
+      <button class="fb" data-axe="techno" onclick="filterAxe(this)"><span class="fb-dot" style="background:#4c1d95"></span>Technologies<span class="fb-count" id="cnt-techno"></span></button>
+      <button class="fb" data-axe="rse" onclick="filterAxe(this)"><span class="fb-dot" style="background:#9d174d"></span>RSE · RH · Management<span class="fb-count" id="cnt-rse"></span></button>
+      <button class="fb" data-axe="securite" onclick="filterAxe(this)"><span class="fb-dot" style="background:#b91c1c"></span>Sécurité &amp; RGPD<span class="fb-count" id="cnt-securite"></span></button>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Urgence</div>
+      <div class="urg-item"><span class="urg-dot" style="background:#dc2626"></span>Critique</div>
+      <div class="urg-item"><span class="urg-dot" style="background:#d97706"></span>Haute</div>
+      <div class="urg-item"><span class="urg-dot" style="background:#2563a8"></span>Stratégique</div>
+      <div class="urg-item"><span class="urg-dot" style="background:#166534"></span>Opportunité</div>
+      <div class="urg-item"><span class="urg-dot" style="background:#92400e"></span>À surveiller</div>
+    </div>
+  </aside>
+
+  <div class="content">
+    <div class="content-header">
+      <span class="content-count" id="contentCount"></span>
+      <select class="sort-sel" onchange="sortCards(this.value)">
+        <option value="urgence">Trier par urgence</option>
+        <option value="metier">Trier par métier</option>
+        <option value="axe">Trier par axe</option>
+        <option value="alpha">Trier par titre</option>
+      </select>
+    </div>
+    <div class="cards" id="cardsContainer"></div>
+    <div class="empty" id="emptyState" style="display:none">
+      <div class="empty-ico">🔍</div>
+      <h3>Aucun signal trouvé</h3>
+      <p>Essayez un autre filtre ou une autre recherche.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-brand"><strong>Paragon BPS &amp; Paragon Elections</strong> — Veille sectorielle</div>
+  <div class="footer-note">Usage interne · Mis à jour mensuellement · Sources &lt; 30 jours</div>
+</footer>
+
+<!-- MODAL EXPORT -->
+<div class="modal-overlay" id="exportModal" onclick="closeExportIfBg(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Exporter la newsletter</span>
+      <button class="modal-close" onclick="closeExport()">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab on" onclick="switchModalTab('preview',this)">Prévisualisation</button>
+      <button class="modal-tab" onclick="switchModalTab('select',this)">Sélectionner</button>
+      <button class="modal-tab" onclick="switchModalTab('html',this)">HTML à copier</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-panel on" id="modal-preview">
+        <div class="preview-box"><iframe id="nlFrame" title="Prévisualisation newsletter"></iframe></div>
+      </div>
+      <div class="modal-panel" id="modal-select">
+        <p style="font-size:13px;color:var(--gris-text);margin-bottom:.75rem">Signaux à inclure :</p>
+        <div class="modal-chk-grid" id="modalChk"></div>
+      </div>
+      <div class="modal-panel" id="modal-html">
+        <p style="font-size:13px;color:var(--gris-text);margin-bottom:.75rem">Copiez ce HTML dans votre client mail (mode HTML) :</p>
+        <textarea class="preview-textarea" id="htmlOut" readonly></textarea>
+        <div class="copy-notice" id="copyNotice">✓ Copié !</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-sec" onclick="closeExport()">Fermer</button>
+      <button class="btn-pri" onclick="copyHTML()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copier le HTML
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DONNÉES — SIGNALS
+// Pour mettre à jour : modifier ce tableau SIGNALS.
+// Chaque signal a : id, metier, axe, badge, badgeColor,
+// badgeTextColor, urgence, urgenceColor, title, meta, date,
+// excerpt, detail (HTML), source
+// ============================================================
+const SIGNALS = [
+
+  // ── BPO & EXTERNALISATION ────────────────────────────────
+  {id:'b1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Marché mondial',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'BPO mondial ~328 Md$ : la CX portée par l\'IA et l\'outcome-based',
+   meta:'Marché & réglementation',date:'Juillet 2026',
+   excerpt:'Le marché mondial du BPO est estimé à ~328 Md$ (2025). Le segment expérience client (CX) croît à ~12,8 %/an vers ~296 Md$ d\'ici 2033. En France, la relation client externalisée est appelée à plus que doubler d\'ici 2035.',
+   detail:`<ul><li>Marché mondial BPO ~328 Md$ (2025) ; segment CX 102 Md$ en 2024 → ~296 Md$ d'ici 2033 (TCAC ~12,8 %).</li><li>France : segment relation client externalisée particulièrement dynamique, appelé à plus que doubler d'ici 2035 ; 53 % des entreprises externalisent déjà tout ou partie de leur support.</li><li>Moteurs de fond : hyper-automatisation (RPA + IA générative), bascule vers des modèles contractuels orientés résultats (<em>outcome-based</em>), montée en gamme sectorielle.</li><li>Recentrage sur les « moments de vérité » : l'agent devient expert de la relation, l'IA absorbe les tâches à faible valeur.</li></ul>`,
+   links:[{l:'Armatis — panorama BPO Europe 2026',u:'https://www.armatis.com/2026/02/25/quels-sont-les-acteurs-bpo-de-la-relation-client-en-europe-et-en-france-panorama-du-marche-2026/'},{l:'Armatis — définition & marché BPO 2026',u:'https://www.armatis.com/2026/02/24/quest-ce-que-le-bpo-business-process-outsourcing-definition-fonctionnement-et-avantages/'},{l:'La Plume — externalisation service client 2026',u:'https://www.laplume.mg/blog/actualites/externalisation-service-client-guide-tarifs-2026/'}]},
+
+  {id:'b2',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'techno',axeLabel:'Technologies',
+   badge:'IA agentique',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'IA agentique : l\'AFRC publie son benchmark des offres (juillet 2026)',
+   meta:'Technologies & innovation',date:'Juillet 2026',
+   excerpt:'L\'AFRC publie en juillet 2026 un benchmark des offres d\'IA agentique de la relation client. L\'orchestration multi-agents et les modèles hybrides IA + humain s\'imposent comme standard — un levier direct pour une offre « BPO augmenté ».',
+   detail:`<ul><li>Benchmark AFRC (juillet 2026, 21 p.) : grille d'évaluation dédiée à l'IA agentique et à l'automatisation de la relation client.</li><li>Ruptures identifiées : orchestration multi-agents pour des parcours complexes, interopérabilité indispensable avec les applications métier et les bases de données, modèles hybrides IA + humain dominants.</li><li>Différence avec le RPA : un agent planifie, décide et s'adapte aux cas non prévus, là où le RPA reste fragile aux exceptions.</li><li>Pour Paragon : positionner une offre « BPO augmenté » (opérateurs + agents IA supervisés) sur les flux documentaires à fort volume ; documenter la gouvernance (AI Act, traçabilité) comme critère d'AO.</li></ul>`,
+   links:[{l:'AFRC — benchmark IA agentique (juil. 2026)',u:'https://www.afrc.org/2026/07/01/07-2026-benchmark-offre-ia-agentique-des-acteurs-de-solutions-de-relation-client/'},{l:'Optiserv — externalisation relation client 2026',u:'https://www.optiserv.fr/guide-pratique-de-lexternalisation-de-la-relation-client-2026/'}]},
+
+  {id:'b3',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'rse',axeLabel:'RSE · RH · Management',
+   badge:'Transparence salariale',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'Transparence salariale : projet de loi (22 articles) au Conseil d\'État',
+   meta:'RSE · RH · Management',date:'Juillet 2026',
+   excerpt:'Le PJL de transposition de la directive (UE) 2023/970 a été transmis au Conseil d\'État le 7 juin 2026. Vote visé fin 2026, entrée en vigueur envisagée au 1er janvier 2028. 7 indicateurs remplaceront l\'Index Pénicaud ; sanctions jusqu\'à 1 % du CA et exclusion des AO publics.',
+   detail:`<ul><li>Projet de loi (22 articles) transmis au Conseil d'État le 7 juin 2026 ; dépôt au Parlement attendu, vote visé fin 2026, entrée en vigueur envisagée au 1er janvier 2028.</li><li>Contenu : 7 indicateurs obligatoires (> 50 salariés) remplaçant l'Index Pénicaud, droit à l'information des salariés, fourchettes de rémunération dès l'offre d'emploi, fin des clauses de confidentialité salariale.</li><li>Sanctions envisagées : jusqu'à 1 % du chiffre d'affaires pour manquement déclaratif, et <em>exclusion des appels d'offres publics</em> — levier dissuasif direct pour un prestataire.</li><li>Préparation faible : ~6,2 % des entreprises ont un projet formalisé ; 56 % des RH en font une priorité 2026, 38 % redoutant surtout les tensions internes.</li><li>Pour Paragon : cartographier les grilles (écart « inexpliqué » ~4 % à poste comparable), préparer les fourchettes, renforcer le volet RSE des mémoires techniques.</li></ul>`,
+   links:[{l:'PayFit — transparence des salaires 2026',u:'https://payfit.com/fr/fiches-pratiques/transparence-des-salaires/'},{l:'Fiche-paie — état du droit (juil. 2026)',u:'https://fiche-paie.fr/blog/transparence-salariale'},{l:'Juritravail — 7 points clés',u:'https://www.juritravail.com/Actualite/transparence-des-remunerations-7-points-pour-comprendre-les-nouvelles-exigences-europeennes/Id/376662'}]},
+
+  {id:'b4',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'secteurs',axeLabel:'Secteurs',
+   badge:'Souveraineté',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'SecNumCloud : d\'un atout à une condition d\'accès aux marchés publics santé',
+   meta:'Souveraineté numérique · Secteurs',date:'Juillet 2026',
+   excerpt:'Le décret SREN n°2026-272 (14 avril 2026) impose SecNumCloud aux administrations et établissements publics pour les données sensibles. La Plateforme des données de santé quitte Azure d\'ici fin 2026. SecNumCloud devient une condition d\'accès, plus un simple différenciateur.',
+   detail:`<ul><li>Décret n°2026-272 du 14 avril 2026 (loi SREN, art. 31) : administrations et établissements publics — dont les hôpitaux — doivent héberger leurs données sensibles chez des prestataires conformes SecNumCloud ; complété par le décret HDS de fin mars 2026 (hébergeurs).</li><li>La Plateforme des données de santé (ex-Health Data Hub) quitte Microsoft Azure pour un hébergement qualifié SecNumCloud ; copie complète du SNDS visée fin 2026 (marché « Nuage Public » DINUM / Agence des achats de l'État).</li><li>Cadre élargi : NIS2 et extension possible aux opérateurs d'importance vitale (OIV). SecNumCloud « n'est plus un argument différenciant mais une condition d'accès » au marché public de la santé.</li><li>Pour Paragon (protection sociale, mutuelles, bailleurs sociaux) : vérifier l'hébergement de ses outils SI et formaliser un paragraphe « données 100 % France / souveraineté » dans chaque mémoire, certifications et hébergeurs nommément cités.</li></ul>`,
+   links:[{l:'Décret SREN 2026-272 — cloud santé',u:'https://application-sante-numerique.fr/blog/decret-sren-donnees-sensibles-cloud-etablissements-sante-publics/'},{l:'DSIH — migration SNDS vers SecNumCloud',u:'https://dsih.fr/articles/6164/souverainete-numerique-la-plateforme-des-donnees-de-sante-migrera-directement-vers-un-cloud-secnumcloud-dici-fin-2026'},{l:'SecNumCloud & opérateurs santé (OIV)',u:'https://application-sante-numerique.fr/blog/secnumcloud-extension-obligation-operateurs-sante-numerique/'}]},
+
+  {id:'b5',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'PSC fonction publique',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'PSC fonction publique : montée en charge des opérateurs, flux d\'actes massifs',
+   meta:'Clients & opportunités · Secteurs',date:'Juillet 2026',
+   excerpt:'La réforme PSC monte en charge : loi n°2025-1251 du 22 déc. 2025 rendant la prévoyance obligatoire, plus de 80 % des agents de l\'État couverts au 1er mai 2026. Les opérateurs (MGEN, CNP, MGEFI, MNT, Alan...) génèrent des volumes d\'actes externalisables.',
+   detail:`<ul><li>Participation employeur obligatoire (santé depuis le 1er janv. 2026, prévoyance depuis le 1er janv. 2025) ; la loi n°2025-1251 du 22 décembre 2025 rend la PSC prévoyance obligatoire.</li><li>Déploiement : plus de 80 % des agents de l'État auront accès à un contrat santé au 1er mai 2026 ; couverture complète santé + prévoyance visée d'ici fin 2026.</li><li>Grands AO en cours / attribués (Intérieur, Éducation nationale, MEF...) : opérateurs retenus (MGEN, CNP Assurances, MGEFI, MNT, Alan...) en montée en charge sur affiliations, résiliations, ayants droit, remboursements et changements de situation.</li><li>Pour Paragon BPS (gestion d'actes en protection sociale, expertise SICAP) : se positionner en sous-traitance des opérateurs PSC ou en réponse directe sur les AO de délégation de gestion.</li></ul>`,
+   links:[{l:'Portail fonction publique — point PSC',u:'https://www.fonction-publique.gouv.fr/toutes-les-actualites/le-point-sur-la-protection-sociale-complementaire-des-agents-publics'},{l:'Verspieren — préparer la réforme PSC 2026',u:'https://www.verspieren.com/article/psc-fonction-publique-preparer-la-reforme-2026/'}]},
+
+  // ── VOTE PAR CORRESPONDANCE ──────────────────────────────
+  {id:'vc1',metier:'vote-correspondance',metierLabel:'Vote par correspondance',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Calendrier électoral',badgeColor:'#dcfce7',badgeTextColor:'#166534',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'Élections locataires HLM : scrutin du 15 novembre au 15 décembre 2026',
+   meta:'Marché & réglementation',date:'Juillet 2026',
+   excerpt:'Le scrutin quadriennal se tiendra du 15 novembre au 15 décembre 2026 : plus de 4 millions de locataires (OPH, ESH, Coop HLM, SEM). L\'USH a diffusé son kit de communication (circulaire n°42/26). Fenêtre de production courte sur le T4.',
+   detail:`<ul><li>Scrutin du 15 novembre au 15 décembre 2026 pour les représentants des locataires aux CA/CS des organismes HLM (OPH, ESH, Coop HLM, SEM) ; plus de 4 millions de locataires concernés.</li><li>Jalons légaux : information des locataires ≥ 10 semaines avant, dépôt des listes ≥ 8 semaines avant, transmission du matériel de vote ≥ 2 semaines avant.</li><li>L'USH a diffusé son kit de communication (circulaire n°42/26) ; un flash juridique « facturation électronique » a également été publié le 22 juillet 2026.</li><li>Pour Paragon Elections : fenêtre de production courte (matériel, logistique, dépouillement) sur le T4 2026 — capacité industrielle et sécurité des flux à valoriser.</li></ul>`,
+   links:[{l:'Eklesio — calendrier élections locataires 2026',u:'https://www.eklesio.com/actualites/election-des-representants-des-locataires-comment-et-quand-se-derouleront-les-operations-electorales-de-2026/'},{l:'USH — circulaire n°42/26 (kit de communication)',u:'https://www.union-habitat.org/centre-de-ressources/habitants-politiques-sociales/circulaire-ush-ndeg42/26-kit-de-communication'}]},
+
+  {id:'vc2',metier:'vote-correspondance',metierLabel:'Vote par correspondance',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'Sourcing & AO',badgeColor:'#dcfce7',badgeTextColor:'#166534',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'Sourcing prestataires de vote : les bailleurs publient leurs cahiers des charges',
+   meta:'Clients & opportunités',date:'Juillet 2026',
+   excerpt:'Les fédérations ESH, OPH et Coop HLM ont mené un sourcing de prestataires de vote en amont des cahiers des charges. Les bailleurs annoncent désormais leurs modalités locales (IDF Habitat, Normandie mutualisée, Partélios...). La période de réponse aux AO est à son pic.',
+   detail:`<ul><li>Les fédérations ESH, OPH et Coop HLM ont conduit un sourcing de prestataires de vote en amont de la publication des cahiers des charges des bailleurs ou de leurs groupements.</li><li>Modalités locales annoncées : IDF Habitat (20 nov.–8 déc. 2026, vote en ligne ou postal), organisation mutualisée en Normandie (UHSN), Partélios, etc.</li><li>Protocole national Coop'HLM du 26 novembre 2025 (avec 5 associations représentatives) : cadre de bonnes pratiques décliné localement pour favoriser la participation.</li><li>Pour Paragon Elections : réponse aux AO à son pic (été–automne 2026) ; valoriser l'offre clé en main postal + électronique et les retours d'expérience (Habitat 08, Plaine Commune Habitat, PETRAM...).</li></ul>`,
+   links:[{l:'Coop\'HLM — élections des locataires 2026',u:'https://www.hlm.coop/ressources/31/20512'},{l:'IDF Habitat — élection des représentants',u:'https://www.idfhabitat.fr/actualites-agenda/election-representants-locataires/'}]},
+
+  {id:'vc3',metier:'vote-correspondance',metierLabel:'Vote par correspondance',axe:'acteurs',axeLabel:'Acteurs & concurrence',
+   badge:'Listes & participation',badgeColor:'#dcfce7',badgeTextColor:'#166534',
+   urgence:'À SURVEILLER',urgenceColor:'#6b7280',
+   title:'Listes, associations et réinstallation des CA post-municipales',
+   meta:'Acteurs & concurrence',date:'Juillet 2026',
+   excerpt:'Seules les associations nationales représentatives de locataires peuvent présenter des listes. Le contexte 2026 (réinstallation des CA d\'OPH après les municipales, mobilisation associative) et la faible participation historique renforcent l\'intérêt du vote mixte.',
+   detail:`<ul><li>Seules les associations nationales représentatives de locataires (et affiliées) peuvent présenter des listes ; représentativité et recevabilité sont vérifiées par l'organisme.</li><li>Contexte 2026 : réinstallation des conseils d'administration des OPH après les municipales, évolutions de composition (décrets 2021-2022), mobilisation renforcée des associations (INDECOSA-CGT, Que Choisir Ensemble...).</li><li>Le défi central reste la participation historiquement faible — argument en faveur du vote mixte (postal + internet) pour élargir l'accès au scrutin.</li><li>Pour Paragon Elections : accompagner les bailleurs sur la communication et l'accessibilité (multicanal) autant que sur la logistique.</li></ul>`,
+   links:[{l:'CGT AB-Habitat — mobilisation élections 2026',u:'https://www.cgt-ab-habitat.com/2026/05/toute-la-cgt-mobilisee-pour-le-logement-elections-des-representants-des-locataires-et-des-salaries-chez-des-bailleurs-sociaux.defendre-notre-pouvoir-d-achat-nos-condition-d-habitat-et-de-travail.html'},{l:'UFC-Que Choisir — élections HLM 2026',u:'https://www.ufcquechoisir-manche.fr/elections-hlm-2026'}]},
+
+  // ── VOTE ÉLECTRONIQUE ────────────────────────────────────
+  {id:'ve1',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'CNIL 2026-045',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'Vote électronique : délibération CNIL n°2026-045 + guide technique ANSSI',
+   meta:'Marché & réglementation',date:'Juillet 2026',
+   excerpt:'La CNIL a publié au JO le 24 avril 2026 la délibération n°2026-045 (adoptée le 19 mars), qui abroge les recommandations de 2010 et 2019. Elle s\'accompagne d\'un guide technique ANSSI (réf. ANSSI-PA-118), à utiliser conjointement.',
+   detail:`<ul><li>Délibération CNIL n°2026-045 publiée au JO le 24 avril 2026 (adoptée le 19 mars 2026) : actualise la sécurité des systèmes de vote par correspondance électronique et abroge les recommandations de 2010 et 2019.</li><li>Guide technique ANSSI associé (réf. ANSSI-PA-118, 24 avril 2026) : la recommandation CNIL fixe les objectifs juridiques/organisationnels, le guide ANSSI apporte les précisions techniques — les deux s'utilisent ensemble.</li><li>Nouveautés : classification en 3 niveaux de risque, exigences renforcées (authentification forte, vérifiabilité, contrôle d'intégrité de l'urne, expertise indépendante).</li><li>Cible : organisateurs de scrutins, prestataires de solutions de vote, experts cybersécurité.</li></ul>`,
+   links:[{l:'CNIL — recommandation vote électronique',u:'https://www.cnil.fr/fr/recommandation-vote-electronique'},{l:'Kercia — analyse de la délibération 2026-045',u:'https://www.kercia.com/nouvelle-recommandation-cnil'}]},
+
+  {id:'ve2',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'secteurs',axeLabel:'Secteurs',
+   badge:'Période transitoire',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'Période transitoire CNIL : quel référentiel pour les élections HLM 2026 ?',
+   meta:'Secteurs · Conformité',date:'Juillet 2026',
+   excerpt:'La CNIL prévoit une transition : les scrutins déjà en préparation et prévus en 2026 peuvent conserver la version 2019 ; tout nouveau scrutin suit la version 2026. Un point à qualifier dès la réponse à l\'AO pour les élections HLM.',
+   detail:`<ul><li>Transition : les scrutins déjà en préparation et prévus en 2026 peuvent continuer d'appliquer la version 2019 ; la nouvelle recommandation s'applique à tout nouveau scrutin.</li><li>Enjeu pour les élections HLM de nov.–déc. 2026 : qualifier dès l'AO le référentiel applicable et documenter les objectifs de sécurité retenus selon le niveau de risque.</li><li>La CNIL déconseille le vote par correspondance électronique en cas de menace à ressources et motivation fortes (ingérence) — à tracer dans l'analyse de risque.</li><li>Pour Paragon Elections : sécuriser le choix méthodologique et l'expertise indépendante en amont pour éviter tout risque d'annulation du scrutin.</li></ul>`,
+   links:[{l:'CNIL — nouvelle recommandation 2026 (transition)',u:'https://www.cnil.fr/fr/vote-electronique-par-correspondance-une-nouvelle-recommandation-en-2026'},{l:'SVP — actualisation des recommandations CNIL',u:'https://www.svp.com/actualite/actualisation-des-recommandations-de-la-cnil-sur-le-vote-electronique'}]},
+
+  {id:'ve3',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'techno',axeLabel:'Technologies',
+   badge:'Vote mixte',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
+   urgence:'OPPORTUNITÉ',urgenceColor:'#16a34a',
+   title:'Vote mixte (postal + internet) : levier de participation pour les bailleurs',
+   meta:'Technologies & innovation',date:'Juillet 2026',
+   excerpt:'Le vote mixte associe bulletin papier et vote internet pour élargir l\'accès au scrutin. La CNIL reconnaît que la difficulté d\'accès entraînant l\'abstention peut justifier le vote électronique, sous réserve des objectifs de sécurité.',
+   detail:`<ul><li>Le vote mixte associe bulletin papier et vote par internet : il élargit l'accès au scrutin (locataires éloignés du numérique comme connectés) et vise une meilleure participation.</li><li>La CNIL reconnaît que la difficulté d'accès au scrutin, source d'abstention importante, peut justifier le recours au vote électronique — à condition de répondre aux objectifs de sécurité du niveau de risque.</li><li>Atouts opérationnels : émargement unifié, dépouillement consolidé, traçabilité ; contraintes : interopérabilité et haute disponibilité pendant l'ouverture du scrutin (objectifs ANSSI).</li><li>Pour Paragon Elections : positionner l'offre mixte clé en main comme réponse directe à l'objectif de participation des bailleurs.</li></ul>`,
+   links:[{l:'CNIL — recommandation (PDF, mars 2026)',u:'https://www.cnil.fr/sites/default/files/2026-04/recommandation_vote_electronique.pdf'},{l:'ANSSI — guide vote par internet (élections non politiques)',u:'https://messervices.cyber.gouv.fr/documents-guides/anssi-guide-vote-internet-elections-non-politiques.pdf'}]},
+
+  // ── FACTURATION ÉLECTRONIQUE & PLATEFORMES AGRÉÉES ───────
+  {id:'f1',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Réception 1er sept.',badgeColor:'#fef3c7',badgeTextColor:'#92400e',
+   urgence:'CRITIQUE',urgenceColor:'#dc2626',
+   title:'Réception obligatoire des factures électroniques au 1er septembre 2026 (J-~34)',
+   meta:'Marché & réglementation',date:'Juillet 2026',
+   excerpt:'Dès le 1er septembre 2026, toutes les entreprises assujetties à la TVA doivent pouvoir RECEVOIR leurs factures au format électronique, sans palier de taille (~10 M d\'acteurs). L\'asymétrie avec l\'émission (2027 pour les PME) piège de nombreux dirigeants.',
+   detail:`<ul><li>À compter du 1er septembre 2026, toutes les entreprises françaises assujetties à la TVA doivent pouvoir RECEVOIR leurs factures au format électronique — sans palier de taille (art. 289 bis du CGI).</li><li>Asymétrie clé : l'ÉMISSION est échelonnée (GE/ETI au 1er sept. 2026, PME/TPE/micro au 1er sept. 2027), mais la RÉCEPTION s'impose à tous d'un coup (~10 millions d'acteurs).</li><li>Piège fréquent : une PME qui « attend 2027 » recevra dès sept. 2026 des factures de ses clients grands comptes ; sans plateforme, les cycles de paiement se bloquent.</li><li>Depuis l'abandon du PPF comme outil d'échange direct, aucune solution gratuite de l'État ne réceptionne les factures à la place de l'entreprise.</li></ul>`,
+   links:[{l:'impots.gouv.fr — guide pratique (PDF)',u:'https://www.impots.gouv.fr/sites/default/files/media/1_metier/2_professionnel/EV/2_gestion/290_facturation_electronique/guide_pratique_facturation_electronique.pdf'},{l:'Obligation de réception 2026',u:'https://ma-facture-electronique.org/reforme-2026/obligation-reception/'},{l:'URSSAF — facturation électronique',u:'https://www.urssaf.fr/accueil/actualites/facturation-electronique.html'}]},
+
+  {id:'f2',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'acteurs',axeLabel:'Acteurs & concurrence',
+   badge:'PA immatriculées',badgeColor:'#fef3c7',badgeTextColor:'#92400e',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'~142 Plateformes Agréées immatriculées, ~156 référencées (mi-juillet 2026)',
+   meta:'Acteurs & concurrence',date:'Juillet 2026',
+   excerpt:'L\'annuaire DGFiP recense ~142 Plateformes Agréées immatriculées (tests d\'interopérabilité réussis) et ~14 dossiers en attente, soit ~156 opérateurs référencés au relevé de mi-juillet 2026 — contre 134 fin mai. De nouveaux opérateurs s\'ajoutent chaque mois.',
+   detail:`<ul><li>Relevé de mi-juillet 2026 : ~142 Plateformes Agréées immatriculées (tests d'interopérabilité réussis) et ~14 dossiers complets en attente, soit ~156 opérateurs référencés (vs 134 fin mai 2026).</li><li>Vocabulaire : « Plateforme Agréée » (PA) remplace « Plateforme de Dématérialisation Partenaire » (PDP) depuis juillet 2025.</li><li>Seule la liste officielle publiée sur impots.gouv.fr fait foi ; un statut affiché sur le site d'un éditeur ne vaut pas immatriculation.</li><li>Beaucoup de PA ciblent les GE/ETI ou des verticales (EDI, assurance, santé) ; l'écosystème se structure à l'approche de l'échéance.</li></ul>`,
+   links:[{l:'Prêt à Facturer — annuaire des PA (17 juil. 2026)',u:'https://www.pretafacturer.com/annuaire'},{l:'Comparateur e-Facturation — liste des PA',u:'https://comparateur-efacturation.fr/guide/liste-plateformes-agreees'},{l:'MyFrenchTool — liste PA (6 juil. 2026)',u:'https://www.myfrenchtool.com/plateformes-agreees'}]},
+
+  {id:'f3',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'Mandat de facturation',badgeColor:'#fef3c7',badgeTextColor:'#92400e',
+   urgence:'OPPORTUNITÉ',urgenceColor:'#16a34a',
+   title:'E-reporting GE/ETI et mandat de facturation : la fenêtre BPO',
+   meta:'Clients & opportunités',date:'Juillet 2026',
+   excerpt:'L\'e-reporting s\'applique aux GE/ETI dès le 1er sept. 2026, avec sanctions (~15 € par facture non conforme, amendes). Le mandat de facturation autorise un tiers BPO à émettre au nom du client — une opportunité directe d\'offre intégrée pour Paragon.',
+   detail:`<ul><li>L'e-reporting (transmission des données de transaction/paiement à l'administration) s'applique aux grandes entreprises et ETI dès le 1er septembre 2026, en parallèle de l'émission.</li><li>Sanctions annoncées : de l'ordre de 15 € par facture non conforme et amendes en cas de manquement déclaratif — le blocage opérationnel des paiements s'ajoute au risque financier.</li><li>Le mandat de facturation autorise une entreprise à mandater un tiers (prestataire BPO, expert-comptable) pour émettre en son nom ; il se formalise contractuellement et ne décharge pas le donneur d'ordre de sa responsabilité.</li><li>Pour Paragon BPS : proposer une offre intégrée « conformité e-invoicing + externalisation documentaire » (PA choisie, flux sécurisés, traçabilité e-reporting) et réviser les contrats BPO existants.</li></ul>`,
+   links:[{l:'impots.gouv.fr — guide pratique (PDF)',u:'https://www.impots.gouv.fr/sites/default/files/media/1_metier/2_professionnel/EV/2_gestion/290_facturation_electronique/guide_pratique_facturation_electronique.pdf'},{l:'Comparatif facture électronique — PA & sanctions',u:'https://www.comparatif-facture-electronique.fr/plateformes-agreees/'}]},
+
+  {id:'f4',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'techno',axeLabel:'Technologies',
+   badge:'PPF & formats',badgeColor:'#fef3c7',badgeTextColor:'#92400e',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'PPF concentrateur seul : les PA deviennent le passage obligé (Factur-X / UBL / CII)',
+   meta:'Technologies & innovation',date:'Juillet 2026',
+   excerpt:'Le PPF ne sert plus de plateforme d\'échange direct : il devient annuaire central et concentrateur de données. Tous les flux passent par une PA, dans un format structuré (Factur-X, UBL, CII). Un PDF envoyé par mail n\'est plus une facture au sens légal.',
+   detail:`<ul><li>Le Portail Public de Facturation (PPF) ne sert plus de plateforme d'échange direct entre entreprises : il joue le rôle d'annuaire central et de concentrateur de données.</li><li>Architecture : Émetteur → PA émettrice → PPF → PA réceptrice → Récepteur ; désigner sa plateforme de réception dans l'annuaire devient obligatoire.</li><li>Formats structurés exigés : Factur-X, UBL, CII — un PDF ordinaire envoyé par mail n'est pas une facture électronique au sens légal.</li><li>Pour Paragon BPS : se positionner en interface de confiance (conversion de formats, routage, contrôle de complétude, archivage à valeur probante) au sein de cette chaîne.</li></ul>`,
+   links:[{l:'Pennylane — réforme facturation électronique',u:'https://www.pennylane.com/fr/fiches-pratiques/facture-electronique/reforme-facturation-electronique'},{l:'Les Experts-Comptables — rôle des PA & PPF',u:'https://les-experts-comptables.fr/ressources/liste-plateformes-agreees-facturation-electronique'}]},
+
+
+  // ── CRC · RELATION CLIENT ────────────────────────────────
+  {id:'crc1',metier:'crc',metierLabel:'CRC · Relation client',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Marché CRC',badgeColor:'#cffafe',badgeTextColor:'#155e75',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'Relation client externalisée : 53 % des entreprises externalisent, le chat progresse',
+   meta:'Marché & réglementation',date:'Juillet 2026',
+   excerpt:'53 % des entreprises françaises confient déjà tout ou partie de leur support client à un partenaire externe. Le chat gagne du terrain sur le téléphone, la valeur se déplace vers les « moments de vérité » que l\'IA ne suffit pas à traiter.',
+   detail:`<ul><li>53 % des entreprises françaises externalisent tout ou partie de leur support client, SAV ou hotline (23 % partiellement).</li><li>Le chat en ligne gagne du terrain sur le téléphone (réponse attendue en minutes) ; périmètres inbound, outbound, back-office, multicanal.</li><li>Arbitrage onshore / nearshore / offshore selon coût, image et complexité ; bascule CAPEX → OPEX, disponibilité 24/7 et multilingue.</li><li>Montée en valeur : l'agent devient expert des « moments de vérité », l'IA absorbe les requêtes à faible valeur.</li></ul>`,
+   links:[{l:'La Plume — externalisation service client 2026',u:'https://www.laplume.mg/blog/actualites/externalisation-service-client-guide-tarifs-2026/'},{l:'Optiserv — guide relation client 2026',u:'https://www.optiserv.fr/guide-pratique-de-lexternalisation-de-la-relation-client-2026/'}]},
+
+  {id:'crc2',metier:'crc',metierLabel:'CRC · Relation client',axe:'techno',axeLabel:'Technologies',
+   badge:'IA & centres de contact',badgeColor:'#cffafe',badgeTextColor:'#155e75',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'CRC augmenté : l\'IA agentique redéfinit les centres de contact',
+   meta:'Technologies & innovation',date:'Juillet 2026',
+   excerpt:'L\'IA agentique transforme les centres de contact : orchestration multi-agents, interopérabilité avec les applications métier, et modèle hybride IA + conseiller humain appelé à devenir dominant (benchmark AFRC, juillet 2026).',
+   detail:`<ul><li>Orchestration multi-agents pour des parcours clients complexes ; interopérabilité avec les applications métier et bases de données désormais indispensable.</li><li>Modèles hybrides IA + conseiller humain : standard dominant de demain (benchmark AFRC, juillet 2026).</li><li>Bénéfices : traitement accéléré des requêtes à faible valeur, analytics temps réel pour le pilotage ; défi : supervision et garde-fous humains.</li><li>Pour Paragon : coupler plateaux CRC et agents IA supervisés, sur des données hébergées en France, comme différenciateur d'AO.</li></ul>`,
+   links:[{l:'AFRC — benchmark IA agentique (juil. 2026)',u:'https://www.afrc.org/2026/07/01/07-2026-benchmark-offre-ia-agentique-des-acteurs-de-solutions-de-relation-client/'},{l:'Optiserv — guide relation client 2026',u:'https://www.optiserv.fr/guide-pratique-de-lexternalisation-de-la-relation-client-2026/'}]},
+
+  // ── BAILLEURS SOCIAUX · SLS / OPS ────────────────────────
+  {id:'bail1',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Campagne SLS/OPS 2026',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'Enquêtes SLS/OPS : campagne réglementaire 2026 auprès de tous les locataires',
+   meta:'Marché & réglementation',date:'Juillet 2026',
+   excerpt:'La loi du 4 mars 1996 impose aux bailleurs sociaux l\'enquête SLS (annuelle) et l\'enquête OPS (biennale). La campagne 2026, lancée dès l\'automne 2025, court jusqu\'à l\'automne 2026 selon les organismes, avec pénalités en cas de non-réponse.',
+   detail:`<ul><li>La loi n°96-162 du 4 mars 1996 impose l'enquête SLS (annuelle, art. L.441-9 CCH) et l'enquête OPS (biennale, art. L.442-5 CCH) auprès des locataires.</li><li>Objet : vérifier ressources (revenus N-2) et occupation ; au-delà de +20 % des plafonds, application d'un Supplément de Loyer de Solidarité au quittancement.</li><li>Sanctions de non-réponse : pénalité OPS de 7,62 €/mois de retard ; SLS au taux maximum, pouvant atteindre des montants forfaitaires élevés.</li><li>Campagne 2026 lancée à l'automne 2025, échéances variables selon les bailleurs (d'avril à novembre 2026) ; réponse par courrier ou en ligne.</li></ul>`,
+   links:[{l:'Alogea — lancement enquête OPS/SLS 2026',u:'https://www.alogea.fr/actualites/lenquete-occupation-du-parc-social-ops-et-le-supplement-de-loyer-solidarite-sls-2026-est-lancee/'},{l:'Deux-Sèvres Habitat — enquête SLS/OPS 2026',u:'https://www.79habitat.fr/enquete-sls-ops-2026/'},{l:'Ministère — enquête OPS (cadre)',u:'https://www.ecologie.gouv.fr/politiques-publiques/enquete-loccupation-du-parc-social-ops'}]},
+
+  {id:'bail2',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'Externalisation SLS/OPS',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
+   urgence:'OPPORTUNITÉ',urgenceColor:'#16a34a',
+   title:'SLS/OPS : des campagnes multicanales à fort volume, terrain naturel du BPO',
+   meta:'Clients & opportunités',date:'Juillet 2026',
+   excerpt:'Chaque campagne SLS/OPS combine envoi de masse, collecte multicanale (papier + web) et contrôle de pièces sur tout le parc. Plusieurs bailleurs l\'externalisent déjà (ex. Xelians) — une opportunité directe pour Paragon.',
+   detail:`<ul><li>Chaque campagne génère un envoi de masse (courrier + formulaire prérempli), une collecte multicanale (papier + web) et le contrôle des pièces (avis d'imposition, justificatifs) pour l'ensemble du parc.</li><li>Plusieurs bailleurs externalisent déjà la campagne à un prestataire (ex. Xelians pour la collecte et la numérisation), signe d'un marché ouvert.</li><li>Enjeux : pics de charge saisonniers, délais contraints, relances, hotline locataires, RGPD et traçabilité.</li><li>Pour Paragon (traitement de courrier, GED, gestion d'actes) : offre clé en main SLS/OPS — édition, routage, collecte multicanale, LAD/RAD, contrôle de complétude et reporting.</li></ul>`,
+   links:[{l:'Alogea — enquête OPS/SLS (prestataire Xelians)',u:'https://www.alogea.fr/actualites/lenquete-occupation-du-parc-social-ops-et-le-supplement-de-loyer-solidarite-sls-2026-est-lancee/'},{l:'Partélios — enquête OPS SLS 2026',u:'https://www.partelios.fr/actualite/enquete_ops_sls_2026/161'}]},
+
+  {id:'bail3',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'techno',axeLabel:'Technologies',
+   badge:'Donnée & GIP-SNE',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
+   urgence:'À SURVEILLER',urgenceColor:'#6b7280',
+   title:'OPS : qualité de la donnée et téléversement au portail GIP-SNE',
+   meta:'Technologies & innovation',date:'Juillet 2026',
+   excerpt:'Les données OPS alimentent l\'outil de cartographie du GIP-SNE, transmis à l\'État à l\'échelle du logement. Recueil, redressement, contrôle et téléversement : la qualité de la donnée est l\'enjeu opérationnel central.',
+   detail:`<ul><li>Les données OPS alimentent l'outil de cartographie du GIP-SNE (occupation sociale du parc), transmises à l'État (DHUP) à l'échelle du logement puis agrégées par commune.</li><li>Étapes : recueil, redressement des données sous contrôle du bailleur, téléversement définitif dans le portail cartographique, production d'indicateurs.</li><li>Enjeu opérationnel : la qualité et la complétude de la donnée conditionnent la conformité et la fiabilité des statistiques nationales.</li><li>Pour Paragon : valoriser le contrôle qualité, l'anonymisation et la sécurisation des flux (données sensibles, RGPD) comme différenciateurs.</li></ul>`,
+   links:[{l:'Ministère — enquête OPS & portail GIP-SNE',u:'https://www.ecologie.gouv.fr/politiques-publiques/enquete-loccupation-du-parc-social-ops'},{l:'ANGDM — obligations de réponse SLS/OPS',u:'https://www.angdm.gouv.fr/enquetes-des-bailleurs-sociaux-les-obligations-de-reponse-des-locataires'}]},
+
+  // ── BPO · THÉMATIQUES TRANSVERSES (Automation & Délégation de gestion) ──
+  {id:'b6',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'techno',axeLabel:'Technologies',
+   badge:'Automation · IDP',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'Hyperautomatisation & IDP : la chaîne RPA + IA pour le flux documentaire',
+   meta:'Technologies & innovation',date:'Juillet 2026',
+   excerpt:'L\'hyperautomatisation orchestre IA, ML, RPA, IDP et process mining pour automatiser de bout en bout. L\'IDP convertit les documents non structurés en données fiables ; des acteurs souverains français (Letxbe, Teklia) émergent.',
+   detail:`<ul><li>L'hyperautomatisation orchestre IA, ML, RPA, IDP et process mining pour automatiser des processus de bout en bout — au-delà des bots isolés.</li><li>L'IDP (OCR + NLP + ML) convertit les documents non structurés (courriers, pièces justificatives) en données fiables, prêtes à déclencher des workflows.</li><li>Acteurs souverains français à surveiller : Letxbe.ai (jusqu'à ~90 % du traitement documentaire automatisé, hébergement France), Teklia ; les éditeurs établis (ABBYY, DocuWare, Kodak Alaris) intègrent l'IA générative.</li><li>Pour Paragon : industrialiser LAD/RAD et contrôle de complétude sur les flux à fort volume (affiliations, SLS/OPS, courrier entrant), en gardant supervision humaine et souveraineté des données.</li></ul>`,
+   links:[{l:'Parseur — de la RPA à l\'hyperautomatisation',u:'https://parseur.com/fr/blog/rpa-hyperautomatisation'},{l:'Archimag — IDP : actualité et enjeux',u:'https://www.archimag.com/tags/idp'}]},
+
+  {id:'b7',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'Délégation de gestion',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'Délégation de gestion santé/prévoyance : marché en recomposition, opportunité d\'actes',
+   meta:'Clients & opportunités · Secteurs',date:'Juillet 2026',
+   excerpt:'La gestion déléguée couvre désormais ~1/3 des prestations santé (~22-23 M de bénéficiaires). Le marché se recompose (Cegedim/Allianz, Gentto = Apicil + Docaposte, Harmonie/NoveoCare), avec des conventions à clauses de performance.',
+   detail:`<ul><li>La gestion déléguée (affiliations, cotisations, liquidation des prestations, sinistres prévoyance, relation client, lutte fraude, reporting) couvre ~1/3 des prestations santé, soit ~22-23 M de bénéficiaires.</li><li>Marché en recomposition : Cegedim Insurance Solutions (contrat Allianz sur 15 ans), Gentto (co-entreprise Apicil + Docaposte), acquisition de NoveoCare par Harmonie Mutuelle (groupe VYV), rachats Aon / Delta / Baloo.</li><li>Les conventions intègrent des clauses de performance : délais de remboursement, taux de traitement automatisé, qualité de service, sécurité des données.</li><li>Pour Paragon BPS (gestion d'actes en protection sociale, expertise SICAP) : se positionner en délégataire ou sous-traitant sur des maillons ciblés, avec un modèle industrialisé et souverain.</li></ul>`,
+   links:[{l:'Tessi — optimiser sa délégation de gestion',u:'https://www.tessi-blog.com/delegation-gestion-assurance/'},{l:'L\'Argus — l\'assurance investit la gestion déléguée',u:'https://www.argusdelassurance.com/assurance-de-personnes/sante/pourquoi-l-assurance-investit-la-gestion-deleguee.235898'}]},
+
+
+  // ── SÉCURITÉ & RGPD (axe transverse) ─────────────────────
+  {id:'sec1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'securite',axeLabel:'Sécurité & RGPD',
+   badge:'CNIL · sous-traitants',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'CNIL : les sous-traitants dans le viseur — sécuriser la chaîne de traitement',
+   meta:'Sécurité & RGPD',date:'Juillet 2026',
+   excerpt:'La CNIL publie le 27 mai 2026 une fiche sur les cyberattaques visant les sous-traitants et durcit ses contrôles après un bilan 2025 record. Le responsable de traitement reste responsable même quand la faille vient du prestataire.',
+   detail:`<ul><li>Fiche CNIL du 27 mai 2026 (« violations typiques ») sur les cyberattaques visant les sous-traitants : rappel des art. 28 (contrat), 32 (sécurité) et 33-34 (notification) du RGPD.</li><li>Recommandations : cartographier les flux confiés, imposer des clauses de notification rapide (sous 24 h), tester les procédures de crise incluant la sous-traitance.</li><li>Contexte : contrôles renforcés en 2026 après un bilan 2025 record (83 sanctions, 486,8 M€) ; les sous-traitants sont pointés comme maillon faible, l'IA industrialisant les attaques.</li><li>Le responsable de traitement reste responsable même si la faille vient du prestataire (ex. France Travail, 5 M€, janv. 2026) — Paragon, sous-traitant de données sensibles, doit documenter ses mesures (art. 32) et sa réactivité.</li></ul>`,
+   links:[{l:'Données Personnelles — fiche CNIL sous-traitants (mai 2026)',u:'https://www.donneespersonnelles.fr/actualite-rgpd-2026'},{l:'CNIL — sanction France Travail (5 M€)',u:'https://www.cnil.fr/fr/violation-de-donnees-sanction-5millions-france-travail'},{l:'Siècle Digital — la CNIL durcit ses contrôles',u:'https://siecledigital.fr/2026/05/20/la-cnil-va-durcir-ses-controles-face-a-lexplosion-des-violations-de-donnees/'}]},
+
+  {id:'sec2',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'securite',axeLabel:'Sécurité & RGPD',
+   badge:'NIS2 · DORA',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'Loi Résilience (NIS2, REC, DORA) : l\'effet cascade atteint les prestataires',
+   meta:'Sécurité & RGPD',date:'Juillet 2026',
+   excerpt:'La loi Résilience, qui transpose NIS2, REC et DORA, arrive à l\'Assemblée en juillet 2026 : ~15 000 entités, 18 secteurs, sanctions jusqu\'à 10 M€ ou 2 % du CA. Les clients régulés répercutent leurs exigences de sécurité sur leurs sous-traitants.',
+   detail:`<ul><li>La loi Résilience transpose d'un seul texte NIS2, REC et DORA ; examen en séance à l'Assemblée en juillet 2026, promulgation attendue à l'été, décrets fin 2026, premiers contrôles en 2027.</li><li>Périmètre : ~15 000 entités en France, 18 secteurs, catégories « essentielles » et « importantes » ; sanctions jusqu'à 10 M€ ou 2 % du chiffre d'affaires.</li><li>Effet cascade : même hors périmètre, un sous-traitant fournissant un service critique reçoit des exigences de sécurité contractuelles de ses clients régulés — le marché des prestataires s'aligne sur ces standards.</li><li>Notification : NIS2 = alerte ANSSI sous 24 h puis 72 h (distincte des 72 h RGPD/CNIL) ; pré-enregistrement via le portail ANSSI « Mon Espace NIS2 ».</li><li>Pour Paragon : anticiper les clauses cyber dans les AO (banque, assurance, secteur public) et formaliser gestion des risques + plan de réponse à incident.</li></ul>`,
+   links:[{l:'Legiscope — transposition NIS2 en France',u:'https://www.legiscope.com/blog/transposition-nis2-france.html'},{l:'Laucked — loi Résilience (NIS2/REC/DORA)',u:'https://www.laucked.com/blog/loi-resilience-nis2'},{l:'Tech-Insider — NIS2 : 15 000 entités, sanctions',u:'https://tech-insider.org/fr/directive-nis-2-transposition-france-2026/'}]},
+
+  {id:'sec3',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'securite',axeLabel:'Sécurité & RGPD',
+   badge:'RGPD · SLS/OPS',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
+   urgence:'À SURVEILLER',urgenceColor:'#6b7280',
+   title:'Enquêtes SLS/OPS : données fiscales sensibles, exigences RGPD renforcées',
+   meta:'Sécurité & RGPD',date:'Juillet 2026',
+   excerpt:'Les campagnes SLS/OPS collectent avis d\'imposition et situation du foyer sur tout le parc : minimisation, conservation limitée et anonymisation avant transmission au portail GIP-SNE. Un enjeu de protection des données pour les bailleurs et leurs prestataires.',
+   detail:`<ul><li>Les campagnes SLS/OPS collectent des données sensibles (avis d'imposition, composition et situation du foyer) auprès de tout le parc — traitement à fort enjeu RGPD.</li><li>Obligations : minimisation, durée de conservation limitée, base légale (obligation légale), information des locataires ; les données OPS sont anonymisées avant téléversement au portail cartographique du GIP-SNE (le NIR des occupants n'est pas demandé).</li><li>La CNIL rappelle (fiche sous-traitants, mai 2026) que l'externalisation ne transfère pas la responsabilité : clauses art. 28, sécurité art. 32, notification rapide.</li><li>Pour Paragon : valoriser chiffrement, cloisonnement des accès, traçabilité et anonymisation comme différenciateurs dans les réponses aux bailleurs.</li></ul>`,
+   links:[{l:'Ministère — enquête OPS (anonymisation, GIP-SNE)',u:'https://www.ecologie.gouv.fr/politiques-publiques/enquete-loccupation-du-parc-social-ops'},{l:'Données Personnelles — fiche CNIL sous-traitants',u:'https://www.donneespersonnelles.fr/actualite-rgpd-2026'}]},
+
+  {id:'sec4',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'securite',axeLabel:'Sécurité & RGPD',
+   badge:'RGPD · vote',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'Vote électronique : données d\'opinion, séparation stricte identité / vote',
+   meta:'Sécurité & RGPD',date:'Juillet 2026',
+   excerpt:'Les données de vote peuvent révéler des opinions (syndicales, politiques) — catégorie sensible au sens de l\'art. 9 du RGPD. La CNIL impose la séparation stricte identité/vote, la confidentialité du bulletin dès sa création et une expertise indépendante selon le risque.',
+   detail:`<ul><li>Les données de vote peuvent révéler des opinions (syndicales, politiques) — catégorie sensible au sens de l'art. 9 du RGPD, justifiant des garanties renforcées.</li><li>La délibération CNIL n°2026-045 exige la séparation stricte entre l'identité du votant et le contenu du vote, la confidentialité du bulletin dès sa création et, selon le niveau de risque, une expertise indépendante.</li><li>Enjeux prestataire : durées de conservation, gestion des clés et chiffrement, journalisation, purge post-scrutin et sous-traitance encadrée (art. 28).</li><li>Pour Paragon Elections : documenter la conformité RGPD + sécurité (avec le guide technique ANSSI) dès la réponse à l'AO, pour garantir la sincérité du scrutin et éviter tout risque d'annulation.</li></ul>`,
+   links:[{l:'CNIL — recommandation vote électronique',u:'https://www.cnil.fr/fr/recommandation-vote-electronique'},{l:'SVP — actualisation des recommandations CNIL',u:'https://www.svp.com/actualite/actualisation-des-recommandations-de-la-cnil-sur-le-vote-electronique'}]},
+
+];
+// ============================================================
+// FIN DES DONNÉES
+// ============================================================
+
+const URGENCE_ORDER = {CRITIQUE:0,HAUTE:1,'STRATÉGIQUE':2,'OPPORTUNITÉ':3,'À SURVEILLER':4};
+let activeMetier = 'all';
+let activeAxe = 'all';
+let searchQ = '';
+let sortMode = 'urgence';
+const exportSel = new Set(SIGNALS.map(s => s.id));
+
+function getFiltered() {
+  return SIGNALS.filter(s => {
+    const mOk = activeMetier === 'all' || s.metier === activeMetier;
+    const aOk = activeAxe === 'all' || s.axe === activeAxe;
+    const q = searchQ.toLowerCase();
+    const sOk = !q || s.title.toLowerCase().includes(q) || s.excerpt.toLowerCase().includes(q) || (s.detail||'').toLowerCase().includes(q);
+    return mOk && aOk && sOk;
+  }).sort((a,b) => {
+    if (sortMode === 'urgence') return (URGENCE_ORDER[a.urgence]??9)-(URGENCE_ORDER[b.urgence]??9);
+    if (sortMode === 'metier') return a.metier.localeCompare(b.metier);
+    if (sortMode === 'axe') return a.axe.localeCompare(b.axe);
+    return a.title.localeCompare(b.title);
+  });
+}
+
+function metierColors() {
+  return {bpo:'#2563a8',crc:'#0e7490','vote-correspondance':'#166534','vote-electronique':'#9d174d',bailleurs:'#6d28d9',facturation:'#92400e'};
+}
+
+function renderCards() {
+  const filtered = getFiltered();
+  const container = document.getElementById('cardsContainer');
+  const empty = document.getElementById('emptyState');
+  const n = filtered.length;
+  document.getElementById('contentCount').textContent = `${n} signal${n!==1?'s':''}`;
+  if (!n) { container.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display = 'none';
+  const mc = metierColors();
+  container.innerHTML = filtered.map(s => `
+    <article class="card" id="card-${s.id}" style="--urgence-color:${s.urgenceColor}" onclick="toggleCard('${s.id}')">
+      <div class="card-top">
+        <div class="card-badges">
+          <span class="badge" style="background:${s.badgeColor};color:${s.badgeTextColor}">${s.badge}</span>
+          <span class="badge-metier" style="border-color:${mc[s.metier]||'#ccc'};color:${mc[s.metier]||'#888'};background:transparent">${s.metierLabel}</span>
+          <span class="badge-urg" style="background:color-mix(in srgb,${s.urgenceColor} 12%,transparent);color:${s.urgenceColor}">${s.urgence}</span>
+        </div>
+        <div class="card-toggle"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <h2 class="card-title">${s.title}</h2>
+      <div class="card-meta"><span>${s.axeLabel}</span><span class="card-meta-sep">·</span><span>${s.date}</span></div>
+      <p class="card-excerpt">${s.excerpt}</p>
+      <div class="card-body">
+        <div class="card-detail">${s.detail}</div>
+        <div class="card-source">
+          <span class="card-source-label"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Sources :</span>
+          <span class="src-links">${(s.links||[]).map((lk,i) => `<a class="src-link" href="${lk.u}" target="_blank" rel="noopener">${lk.l}</a>${i < (s.links.length-1) ? '<span style="color:var(--gris-border)">·</span>' : ''}`).join('')}</span>
+        </div>
+      </div>
+    </article>`).join('');
+}
+
+function toggleCard(id) { document.getElementById('card-'+id).classList.toggle('open'); }
+
+function filterMetier(btn) {
+  document.querySelectorAll('.mtab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeMetier = btn.dataset.metier;
+  renderCards();
+}
+
+function filterAxe(btn) {
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeAxe = btn.dataset.axe;
+  renderCards();
+}
+
+function doSearch() { searchQ = document.getElementById('globalSearch').value; renderCards(); }
+function sortCards(mode) { sortMode = mode; renderCards(); }
+
+function updateCounts() {
+  ['marche','clients','secteurs','acteurs','techno','rse','securite'].forEach(axe => {
+    const el = document.getElementById('cnt-'+axe);
+    if (el) el.textContent = SIGNALS.filter(s => s.axe===axe).length;
+  });
+  document.getElementById('cnt-all').textContent = SIGNALS.length;
+  document.getElementById('statTotal').textContent = SIGNALS.length;
+  document.getElementById('statUrgent').textContent = SIGNALS.filter(s => ['CRITIQUE','HAUTE'].includes(s.urgence)).length;
+}
+
+function updateDate() {
+  const now = new Date();
+  document.getElementById('heroEdition').textContent = 'Édition · ' + now.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  document.getElementById('headerDate').textContent = now.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function buildNL(ids) {
+  const sigs = SIGNALS.filter(s => ids.has(s.id));
+  const date = new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  const mc = metierColors();
+  const items = sigs.map(s => `
+<tr><td style="padding:0 0 14px">
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="border-left:3px solid ${s.urgenceColor};padding:11px 13px;background:#f9fafb">
+  <div style="margin-bottom:4px">
+    <span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:${s.badgeColor};color:${s.badgeTextColor}">${s.badge}</span>
+    <span style="display:inline-block;font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid ${mc[s.metier]};color:${mc[s.metier]};margin-left:4px">${s.metierLabel}</span>
+  </div>
+  <div style="font-size:13px;font-weight:bold;color:#1a3a5c;margin-bottom:4px;line-height:1.3">${s.title}</div>
+  <div style="font-size:12px;color:#374151;line-height:1.5;margin-bottom:5px">${s.excerpt}</div>
+  <div style="font-size:10px;color:#9ca3af;margin-top:5px">Sources : ${(s.links||[]).map(lk => `<a href="${lk.u}" style="color:#3b82f6;text-decoration:none">${lk.l}</a>`).join(' &nbsp;·&nbsp; ')}</div>
+</td></tr></table>
+</td></tr>`).join('');
+  return `<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><title>Veille Paragon — ${date}</title></head>
+<body style="margin:0;padding:20px 0;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:0 16px">
+<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
+<tr><td style="background:#1a3a5c;padding:22px 26px;border-radius:10px 10px 0 0">
+  <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd;margin-bottom:5px">Paragon · Veille sectorielle</div>
+  <div style="font-size:21px;font-weight:700;color:#fff;margin-bottom:3px">BPO · Élections · Facturation</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.5)">${date} · ${sigs.length} signal${sigs.length>1?'s':''} · Usage interne</div>
+</td></tr>
+<tr><td style="background:#fff;padding:22px 26px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb">
+  <table width="100%" cellpadding="0" cellspacing="0">${items}</table>
+</td></tr>
+<tr><td style="background:#f9fafb;padding:14px 26px;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 10px 10px;text-align:center">
+  <div style="font-size:10px;color:#9ca3af">Paragon BPS &amp; Paragon Elections · Usage interne uniquement</div>
+</td></tr>
+</table></td></tr></table>
+</body></html>`;
+}
+
+function openExport() {
+  renderModalChk();
+  refreshNL();
+  document.getElementById('exportModal').classList.add('open');
+}
+function closeExport() { document.getElementById('exportModal').classList.remove('open'); }
+function closeExportIfBg(e) { if (e.target===document.getElementById('exportModal')) closeExport(); }
+
+function renderModalChk() {
+  document.getElementById('modalChk').innerHTML = SIGNALS.map(s => `
+    <label class="modal-chk">
+      <input type="checkbox" ${exportSel.has(s.id)?'checked':''} onchange="toggleExportSig('${s.id}',this.checked)">
+      <span>${s.title}</span>
+    </label>`).join('');
+}
+function toggleExportSig(id, checked) { checked ? exportSel.add(id) : exportSel.delete(id); refreshNL(); }
+
+function refreshNL() {
+  const html = buildNL(exportSel);
+  const frame = document.getElementById('nlFrame');
+  const doc = frame.contentDocument || frame.contentWindow.document;
+  doc.open(); doc.write(html); doc.close();
+  document.getElementById('htmlOut').value = html;
+}
+
+let curModalTab = 'preview';
+function switchModalTab(tab, btn) {
+  document.querySelectorAll('.modal-panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('on'));
+  document.getElementById('modal-'+tab).classList.add('on');
+  btn.classList.add('on');
+  curModalTab = tab;
+  if (tab === 'html') refreshNL();
+}
+
+function copyHTML() {
+  const html = buildNL(exportSel);
+  navigator.clipboard.writeText(html).then(() => {
+    const n = document.getElementById('copyNotice');
+    n.style.display = 'block';
+    setTimeout(() => n.style.display = 'none', 3000);
+    if (curModalTab !== 'html') switchModalTab('html', document.querySelector('.modal-tab:nth-child(3)'));
+  }).catch(() => { document.getElementById('htmlOut').select(); document.execCommand('copy'); });
+}
+
+updateDate();
+updateCounts();
+renderCards();
+</script>
+</body>
+</html>
