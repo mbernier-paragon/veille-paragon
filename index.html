@@ -190,6 +190,12 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
       <button class="mtab" data-metier="facturation" onclick="filterMetier(this)">
         <span class="mtab-dot" style="background:#92400e"></span>Facturation électronique &amp; PA
       </button>
+      <button class="mtab" data-metier="cartes" onclick="filterMetier(this)">
+        <span class="mtab-dot" style="background:#ca8a04"></span>Cartes &amp; billettique
+      </button>
+      <button class="mtab" data-metier="ao" onclick="filterMetier(this)">
+        <span class="mtab-dot" style="background:#334155"></span>Marchés publics &amp; AO
+      </button>
     </div>
   </nav>
 </header>
@@ -197,10 +203,10 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
 <section class="hero">
   <div class="hero-edition" id="heroEdition">Édition · juin 2026</div>
   <h1 class="hero-title">Veille <em>Paragon</em> — tous métiers</h1>
-  <p class="hero-desc">BPO · CRC · Vote par correspondance · Vote électronique · Bailleurs sociaux · Facturation &amp; PA. Signaux du mois, sources &lt; 30 jours.</p>
+  <p class="hero-desc">Vote · CRC · Cartes &amp; billettique · Facturation &amp; PA · Bailleurs · BPO · Marchés publics. Signaux du mois, sources &lt; 30 jours.</p>
   <div class="hero-stats">
     <div class="hero-stat"><div class="hero-stat-n" id="statTotal">—</div><div class="hero-stat-l">Signaux</div></div>
-    <div class="hero-stat"><div class="hero-stat-n">6</div><div class="hero-stat-l">Métiers</div></div>
+    <div class="hero-stat"><div class="hero-stat-n">8</div><div class="hero-stat-l">Métiers</div></div>
     <div class="hero-stat"><div class="hero-stat-n">&lt; 30j</div><div class="hero-stat-l">Fraîcheur</div></div>
     <div class="hero-stat"><div class="hero-stat-n" id="statUrgent">—</div><div class="hero-stat-l">Urgents</div></div>
   </div>
@@ -218,6 +224,8 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
       <button class="fb" data-axe="techno" onclick="filterAxe(this)"><span class="fb-dot" style="background:#4c1d95"></span>Technologies<span class="fb-count" id="cnt-techno"></span></button>
       <button class="fb" data-axe="rse" onclick="filterAxe(this)"><span class="fb-dot" style="background:#9d174d"></span>RSE · RH · Management<span class="fb-count" id="cnt-rse"></span></button>
       <button class="fb" data-axe="securite" onclick="filterAxe(this)"><span class="fb-dot" style="background:#b91c1c"></span>Sécurité &amp; RGPD<span class="fb-count" id="cnt-securite"></span></button>
+      <button class="fb" data-axe="economie" onclick="filterAxe(this)"><span class="fb-dot" style="background:#0f766e"></span>Économie &amp; social<span class="fb-count" id="cnt-economie"></span></button>
+      <button class="fb" data-axe="qualite" onclick="filterAxe(this)"><span class="fb-dot" style="background:#0891b2"></span>Qualité &amp; certifications<span class="fb-count" id="cnt-qualite"></span></button>
     </div>
     <div class="sb-section">
       <div class="sb-label">Urgence</div>
@@ -270,7 +278,34 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
         <div class="preview-box"><iframe id="nlFrame" title="Prévisualisation newsletter"></iframe></div>
       </div>
       <div class="modal-panel" id="modal-select">
-        <p style="font-size:13px;color:var(--gris-text);margin-bottom:.75rem">Signaux à inclure :</p>
+        <div style="margin-bottom:.9rem">
+          <label style="display:block;font-size:12px;color:var(--gris-text);margin-bottom:.35rem">Générer une newsletter par thématique :</label>
+          <select id="nlTheme" onchange="applyNLTheme(this.value)" style="width:100%;padding:.5rem .6rem;border:1px solid var(--gris-border);border-radius:8px;font-size:13px;background:#fff;color:var(--bleu)">
+            <option value="all">Tous les métiers &amp; axes</option>
+            <optgroup label="Par métier">
+              <option value="m:vote-correspondance">Vote par correspondance</option>
+              <option value="m:vote-electronique">Vote électronique</option>
+              <option value="m:crc">CRC · Relation client</option>
+              <option value="m:cartes">Cartes &amp; billettique</option>
+              <option value="m:facturation">Facturation électronique &amp; PA</option>
+              <option value="m:bailleurs">Bailleurs sociaux</option>
+              <option value="m:bpo">BPO &amp; Externalisation</option>
+              <option value="m:ao">Marchés publics &amp; AO</option>
+            </optgroup>
+            <optgroup label="Par axe thématique">
+              <option value="a:marche">Marché &amp; réglementation</option>
+              <option value="a:clients">Clients &amp; opportunités</option>
+              <option value="a:secteurs">Secteurs</option>
+              <option value="a:acteurs">Acteurs &amp; concurrence</option>
+              <option value="a:techno">Technologies</option>
+              <option value="a:rse">RSE · RH · Management</option>
+              <option value="a:securite">Sécurité &amp; RGPD</option>
+              <option value="a:economie">Économie &amp; social</option>
+              <option value="a:qualite">Qualité &amp; certifications</option>
+            </optgroup>
+          </select>
+        </div>
+        <p style="font-size:13px;color:var(--gris-text);margin-bottom:.75rem">Signaux inclus (cochez/décochez pour ajuster) :</p>
         <div class="modal-chk-grid" id="modalChk"></div>
       </div>
       <div class="modal-panel" id="modal-html">
@@ -543,6 +578,112 @@ const SIGNALS = [
    detail:`<ul><li>Les données de vote peuvent révéler des opinions (syndicales, politiques) — catégorie sensible au sens de l'art. 9 du RGPD, justifiant des garanties renforcées.</li><li>La délibération CNIL n°2026-045 exige la séparation stricte entre l'identité du votant et le contenu du vote, la confidentialité du bulletin dès sa création et, selon le niveau de risque, une expertise indépendante.</li><li>Enjeux prestataire : durées de conservation, gestion des clés et chiffrement, journalisation, purge post-scrutin et sous-traitance encadrée (art. 28).</li><li>Pour Paragon Elections : documenter la conformité RGPD + sécurité (avec le guide technique ANSSI) dès la réponse à l'AO, pour garantir la sincérité du scrutin et éviter tout risque d'annulation.</li></ul>`,
    links:[{l:'CNIL — recommandation vote électronique',u:'https://www.cnil.fr/fr/recommandation-vote-electronique'},{l:'SVP — actualisation des recommandations CNIL',u:'https://www.svp.com/actualite/actualisation-des-recommandations-de-la-cnil-sur-le-vote-electronique'}]},
 
+
+  // ── CARTES & BILLETTIQUE ─────────────────────────────────
+  {id:'cart1',metier:'cartes',metierLabel:'Cartes & billettique',axe:'techno',axeLabel:'Technologies',
+   badge:'Billettique · Open Payment',badgeColor:'#fef9c3',badgeTextColor:'#854d0e',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'Billettique : l\'Open Payment et le titre dématérialisé s\'imposent',
+   meta:'Technologies & innovation',date:'Juillet 2026',
+   excerpt:'Île-de-France Mobilités équipe toutes ses lignes de bus en Open Payment d\'ici l\'été 2026 (~150 M€), et la plateforme nationale d\'intermodalité (« Titre unique », CB2D) se déploie. Le titre dématérialisé devient le support privilégié, la carte sans contact une option.',
+   detail:`<ul><li>IDFM déploie l'Open Payment (carte bancaire/mobile sans contact comme titre) : tous les bus franciliens équipés d'ici l'été 2026, puis métro et RER ; investissement ~150 M€ (15 000 valideurs, 3 000 portiques).</li><li>Plus de 50 projets d'Open Payment lancés en France ; la Plateforme Numérique d'Intermodalité (DGITM) déploie l'application « Titre unique » et les codes-barres 2D (CB2D) — 9 territoires conventionnés début 2026.</li><li>La DGITM confirme le cap : le titre dématérialisé devient le support privilégié, la carte sans contact restant une option pour les usagers qui le souhaitent.</li><li>Pour Paragon (cartes de transport, personnalisation, logistique) : anticiper la bascule vers le dématérialisé et repositionner l'offre (perso premium, distribution multicanale, gestion des supports résiduels).</li></ul>`,
+   links:[{l:'Sénat — rapport billettique (2026)',u:'https://www.senat.fr/rap/r25-783/r25-7836.html'},{l:'IDFM — Open Payment (déploiement 2026)',u:'https://lautomobiliste.fr/21/05/2026/transport-parisien-paiement-carte-bancaire/'},{l:'France Mobilités — paiement sans contact',u:'https://www.francemobilites.fr/mots-cles/paiement-sans-contact'}]},
+
+  {id:'cart2',metier:'cartes',metierLabel:'Cartes & billettique',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'Fidélité · Wallet mobile',badgeColor:'#fef9c3',badgeTextColor:'#854d0e',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'Cartes de fidélité : la bascule vers le wallet mobile s\'accélère',
+   meta:'Clients & opportunités',date:'Juillet 2026',
+   excerpt:'33,8 % des Français préfèrent désormais la carte de fidélité dématérialisée (70 % chez les moins de 34 ans) et 61,7 % la stockent dans un wallet mobile. Carrefour, Guerlain, L\'Occitane digitalisent — un signal fort pour les émetteurs de cartes plastiques.',
+   detail:`<ul><li>Observatoire de la Fidélité : 87 % des Français adhèrent à au moins un programme (6 en moyenne) ; 33,8 % préfèrent la carte dématérialisée (vs 27,8 % en 2021), 61,7 % utilisent le wallet mobile, jusqu'à 70 % chez les moins de 34 ans.</li><li>Apple/Google Wallet permettent la dématérialisation sans application dédiée (QR code, NFC) ; gains observés : +15 % de valeur client et jusqu'à x2 de fréquence d'achat pour les porteurs « wallétisés ».</li><li>Enseignes pionnières : Carrefour (pass NFC), Guerlain, L'Occitane, Jacadi ; bénéfice RSE (moins de plastique et de papier).</li><li>Pour Paragon : faire évoluer l'offre fidélité vers l'hybride (support physique premium + carte wallet, personnalisation, notifications push, connexion CRM/caisse).</li></ul>`,
+   links:[{l:'Favecard — carte de fidélité digitale 2026',u:'https://www.favecard.co/fr/blog/carte-de-fidelite-digitale/'},{l:'Brevo — dématérialiser son programme de fidélité',u:'https://www.brevo.com/fr/blog/programme-fidelite-dematerialise/'},{l:'Le Hub La Poste — fidélité mobile',u:'https://lehub.laposte.fr/fidelite-mobile-bouleverse-enfin-cartes'}]},
+
+  {id:'cart3',metier:'cartes',metierLabel:'Cartes & billettique',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Support physique vs digital',badgeColor:'#fef9c3',badgeTextColor:'#854d0e',
+   urgence:'À SURVEILLER',urgenceColor:'#6b7280',
+   title:'Cartes à puce et supports : repositionner la valeur face au tout-digital',
+   meta:'Marché & réglementation',date:'Juillet 2026',
+   excerpt:'Fidélité, transport, accès : partout la carte physique cède du terrain au support dématérialisé. L\'enjeu se déplace vers la personnalisation, la sécurité, l\'hybridation et l\'éco-conception des cartes.',
+   detail:`<ul><li>Tendance transverse (fidélité, billettique, contrôle d'accès) : le smartphone (wallet, NFC, QR/CB2D) devient le support par défaut ; la carte à puce/plastique se recentre sur les usages premium, sécurisés ou hors-ligne.</li><li>Leviers de différenciation : personnalisation et finitions, sécurité du support (puce, éléments sécurisés), éco-conception (PVC recyclé), parcours hybride physique + digital.</li><li>Enjeu RSE et coût : réduire le plastique tout en maintenant un support tangible pour les publics éloignés du numérique.</li><li>Pour Paragon : construire une offre « support + service » (émission, personnalisation, logistique, dématérialisation associée) plutôt qu'une simple fourniture de cartes.</li></ul>`,
+   links:[{l:'Favecard — carte de fidélité digitale 2026',u:'https://www.favecard.co/fr/blog/carte-de-fidelite-digitale/'},{l:'Cerema — ressources billettique (formats de cartes)',u:'https://www.cerema.fr/fr/activites/mobilites/politiques-services-mobilite/mobility-service-maas-donnees-mobilite/ressources-billettique'}]},
+
+  // ── MARCHÉS PUBLICS & APPELS D'OFFRES ────────────────────
+  {id:'ao1',metier:'ao',metierLabel:'Marchés publics & AO',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Méthode & sources',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'Veille marchés publics : cadrer les bonnes sources et les alertes',
+   meta:'Marché & réglementation',date:'Juillet 2026',
+   excerpt:'BOAMP, TED/JOUE, PLACE, profils acheteurs et APProch couvrent l\'essentiel des consultations. Des alertes gratuites par mots-clés et codes CPV existent — à condition de cibler le périmètre Paragon et de trier Go/No-Go.',
+   detail:`<ul><li>Sources officielles gratuites : BOAMP (> seuils nationaux), TED/JOUE (> seuils européens), PLACE (profil acheteur de l'État), profils acheteurs des collectivités (Maximilien, Mégalis, AWS-Achat), France Marchés.</li><li>APProch publie en amont les projets d'achat des acheteurs publics — utile pour anticiper les futurs AO.</li><li>Les MAPA < 90 000 € HT n'apparaissent que sur les profils acheteurs ; les alertes par mot-clé génèrent du bruit (elles ne lisent pas le CCTP) → prévoir un tri par pertinence.</li><li>Pour Paragon : paramétrer des alertes par codes CPV (services d'élections, gestion documentaire, relation client, cartes/billettique) et un processus Go/No-Go hebdomadaire.</li></ul>`,
+   links:[{l:'Service Public — trouver les avis de marchés',u:'https://entreprendre.service-public.gouv.fr/vosdroits/F32089'},{l:'Comparatif plateformes d\'AO 2026',u:'https://remporte.fr/blog/plateformes-appels-offres-comparatif/'},{l:'Olra — sources gratuites d\'AO 2026',u:'https://olra.fr/blog/ou-trouver-appels-offres-gratuitement'}]},
+
+  {id:'ao2',metier:'ao',metierLabel:'Marchés publics & AO',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'AO Vote (HLM · CSE)',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'AO Vote : élections HLM, CSE et scrutins du secteur public à cibler',
+   meta:'Clients & opportunités',date:'Juillet 2026',
+   excerpt:'Deux gisements d\'AO à surveiller en priorité : les consultations des bailleurs pour les élections locataires (T4 2026) et le renouvellement des élections CSE 2026-2027, où le vote électronique progresse fortement.',
+   detail:`<ul><li>Élections locataires HLM (15 nov.–15 déc. 2026) : cahiers des charges des bailleurs et de leurs groupements en cours de publication — vote postal et/ou électronique.</li><li>Élections CSE 2026-2027 : marché récurrent (renouvellement tous les 4 ans, dès 11 salariés) ; le vote électronique s'y généralise (prestataires référencés par le ministère du Travail).</li><li>Autres scrutins : chambres consulaires, ordres professionnels, mutuelles, fédérations — souvent passés en marché ou en consultation.</li><li>Pour Paragon Elections : cibler les CPV « services d'organisation d'élections », valoriser l'offre mixte postal + électronique et la conformité CNIL 2026-045.</li></ul>`,
+   links:[{l:'USH — élections locataires 2026',u:'https://www.union-habitat.org/centre-de-ressources/habitants-politiques-sociales/circulaire-ush-ndeg42/26-kit-de-communication'},{l:'Ministère du Travail — vote électronique CSE',u:'https://www.elections-professionnelles.travail.gouv.fr/vote-electronique'},{l:'Influence!CSE — guide élections CSE 2026',u:'https://influence-ce.fr/elections-cse-procedure-etapes-guide-2026/'}]},
+
+  {id:'ao3',metier:'ao',metierLabel:'Marchés publics & AO',axe:'securite',axeLabel:'Sécurité & RGPD',
+   badge:'AO Sécurité & RGPD',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'AO Sécurité & RGPD : les clauses cyber deviennent souvent éliminatoires',
+   meta:'Sécurité & RGPD',date:'Juillet 2026',
+   excerpt:'Les CCTP intègrent de plus en plus d\'exigences SecNumCloud, hébergement en France, conformité RGPD et NIS2. Anticiper ces clauses conditionne l\'accès à de nombreux marchés, notamment dans la santé et le secteur public.',
+   detail:`<ul><li>Montée des exigences : hébergement souverain (SecNumCloud, HDS), analyse d'impact (DPIA), clauses art. 28 RGPD, plan de réponse à incident, et bientôt critères NIS2 (loi Résilience).</li><li>Dans la santé publique, SecNumCloud devient une condition d'accès (décret SREN) — un critère parfois éliminatoire.</li><li>Effet cascade : même comme sous-traitant, il faut prouver son niveau de sécurité pour rester dans les consultations des grands donneurs d'ordre.</li><li>Pour Paragon : constituer un « dossier sécurité » réutilisable (certifications, hébergeurs, mesures art. 32, PRA/PCA) pour répondre vite et bien aux volets cyber des AO.</li></ul>`,
+   links:[{l:'Décret SREN — SecNumCloud & marchés santé',u:'https://application-sante-numerique.fr/blog/decret-sren-donnees-sensibles-cloud-etablissements-sante-publics/'},{l:'CNIL — recommandation & sécurité',u:'https://www.cnil.fr/fr/recommandation-vote-electronique'},{l:'Legiscope — NIS2 (loi Résilience)',u:'https://www.legiscope.com/blog/transposition-nis2-france.html'}]},
+
+  {id:'ao4',metier:'ao',metierLabel:'Marchés publics & AO',axe:'qualite',axeLabel:'Qualité & certifications',
+   badge:'AO Qualité & RSE',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'AO Qualité & RSE : certifications et critères environnementaux décisifs',
+   meta:'Qualité & certifications',date:'Juillet 2026',
+   excerpt:'Les acheteurs publics pondèrent de plus en plus la RSE et exigent des certifications (ISO 9001/27001, HDS). Les considérations environnementales s\'imposent dans les marchés — un levier de différenciation à documenter.',
+   detail:`<ul><li>Critères qualité récurrents : ISO 9001 (qualité), ISO/IEC 27001 (sécurité de l'information), HDS (données de santé), labels relation client.</li><li>La commande publique intègre des considérations environnementales et sociales (loi Climat et résilience) : analyse du cycle de vie, insertion, empreinte carbone — pondérées dans la note.</li><li>Ces critères deviennent différenciants à prix comparable ; l'absence de certification peut fermer l'accès à certains lots.</li><li>Pour Paragon : maintenir un référentiel qualité/RSE à jour (certifications, indicateurs, politique d'achats responsables) et l'industrialiser dans les mémoires techniques.</li></ul>`,
+   links:[{l:'Marché-public.fr — critères & réponse aux AO',u:'https://www.marche-public.fr/veille-marches-publics-appels-offres-pme-entreprises.htm'},{l:'Comparatif plateformes d\'AO 2026',u:'https://remporte.fr/blog/plateformes-appels-offres-comparatif/'}]},
+
+  // ── CONCURRENCE PARAGON ──────────────────────────────────
+  {id:'conc1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'acteurs',axeLabel:'Acteurs & concurrence',
+   badge:'Concurrence Paragon',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'Concurrence : un paysage BPO qui se concentre autour de grands intégrés',
+   meta:'Acteurs & concurrence',date:'Juillet 2026',
+   excerpt:'Xerfi classe Paragon parmi une vingtaine d\'acteurs clés du BPO en France, aux côtés de Docaposte, Tessi, Xelians, Cegedim ou Foundever. Les mouvements récents (M&A, IA, facturation) redessinent la concurrence.',
+   detail:`<ul><li>Xerfi recense ~20 acteurs clés du BPO en France (dont Paragon, Docaposte, Tessi, Xelians, Cegedim, Foundever, Konecta, Teleperformance, Luminess, Strada).</li><li>Mouvements à suivre : Docaposte (groupe La Poste), intégré de la GED à la cyber (Maileva, Thiqa) et à la santé (Maincare) ; Tessi (GED + relation client via ADM Value, candidat plateforme agréée) ; Xelians (croissance externe, GED Microsoft 365 avec SoDoc) ; Cegedim/Gentto sur la gestion déléguée.</li><li>Lignes de front : facturation électronique (course aux PA), IA agentique, souveraineté/sécurité, verticalisation sectorielle.</li><li>Pour Paragon : tenir une fiche de veille concurrentielle par métier (offres, références, mouvements) et différencier sur le multi-métiers (vote + BPO + cartes + PA).</li></ul>`,
+   links:[{l:'Xerfi — le marché du BPO (acteurs clés)',u:'https://www.xerfi.com/presentationetude/le-marche-du-bpo_SAE21'},{l:'Docaposte — périmètre du groupe',u:'https://fr.wikipedia.org/wiki/Docaposte'},{l:'Xelians — acquisition SoDoc (GED M365)',u:'https://www.solutions-numeriques.com/xelians-elargit-son-offre-en-gestion-documentaire-avec-lacquisition-de-sodoc-specialise-dans-les-environnements-microsoft-365/'}]},
+
+  // ── ÉCONOMIE & SOCIAL ────────────────────────────────────
+  {id:'eco1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'economie',axeLabel:'Économie & social',
+   badge:'SMIC · coût du travail',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'SMIC : deux hausses en 2026, pression directe sur les prestations à forte main-d\'œuvre',
+   meta:'Économie & social',date:'Juillet 2026',
+   excerpt:'Après +1,18 % au 1er janvier, le SMIC a été revalorisé de +2,41 % au 1er juin 2026 (12,31 €/h, 1 867 € brut mensuel). Pour des activités à forte main-d\'œuvre (CRC, saisie, tri, éditique), l\'impact sur les coûts et les prix est direct.',
+   detail:`<ul><li>1er janvier 2026 : +1,18 % → 12,02 €/h (1 823,03 € brut) ; 1er juin 2026 : +2,41 % (déclenchement mécanique, inflation > 2 %) → 12,31 €/h, 1 867,02 € brut (~1 478 € net). Minimum garanti porté à 4,35 €.</li><li>Une nouvelle hausse automatique peut survenir en cours d'année si l'inflation repasse le seuil de 2 %.</li><li>Impact BPO/CRC : les prestations à forte intensité de main-d'œuvre voient leur coût unitaire progresser ; vigilance sur les marchés pluriannuels sans clause de révision de prix.</li><li>Pour Paragon : sécuriser des clauses d'indexation/révision dans les contrats et valoriser l'automatisation (IA/IDP) comme réponse à la pression salariale.</li></ul>`,
+   links:[{l:'Ministère du Travail — SMIC au 1er janv. 2026',u:'https://travail-emploi.gouv.fr/revalorisation-annuelle-du-smic-au-1er-janvier-2026'},{l:'info.gouv.fr — SMIC au 1er juin 2026',u:'https://www.info.gouv.fr/actualite/le-smic-revalorise-le-1er-juin-2026'},{l:'Service Public — revalorisation du SMIC',u:'https://entreprendre.service-public.gouv.fr/actualites/A17008'}]},
+
+  // ── ÉLECTIONS CSE (vote électronique) ────────────────────
+  {id:'cse1',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Élections CSE 2026-2027',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
+   urgence:'HAUTE',urgenceColor:'#d97706',
+   title:'Élections CSE 2026-2027 : le vote électronique se généralise',
+   meta:'Marché & réglementation',date:'Juillet 2026',
+   excerpt:'Le renouvellement des CSE (obligatoire dès 11 salariés, tous les 4 ans) alimente un flux continu de scrutins. Le vote électronique s\'y impose, encadré par accord ou DUE et par la nouvelle recommandation CNIL 2026-045.',
+   detail:`<ul><li>Cadre : art. L.2314-26 et R.2314-5 à 18 du Code du travail ; le vote électronique doit reposer sur un accord (ou une DUE à défaut) conclu avant le protocole préélectoral (PAP), avec garanties de confidentialité, sécurité et traçabilité.</li><li>Deux arrêts de la Cour de cassation (2025) ont précisé le dispositif ; la recommandation CNIL n°2026-045 s'applique aux scrutins CSE.</li><li>Le ministère du Travail publie une liste de prestataires partenaires et permet la transmission dématérialisée des procès-verbaux (CTEP).</li><li>Pour Paragon Elections : marché récurrent et volumique (multi-sites, télétravail) — se référencer, sécuriser la conformité et proposer le vote mixte.</li></ul>`,
+   links:[{l:'Ministère du Travail — vote électronique CSE',u:'https://www.elections-professionnelles.travail.gouv.fr/vote-electronique'},{l:'Blog RH — guide CSE 2026-2027',u:'https://www.blog-rh.com/2026/06/elections-professionnelles-cse-2026-guide-operationnel/'},{l:'Influence!CSE — procédure élections CSE',u:'https://influence-ce.fr/elections-cse-procedure-etapes-guide-2026/'}]},
+
+  // ── QUALITÉ & CERTIFICATIONS ─────────────────────────────
+  {id:'qual1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'qualite',axeLabel:'Qualité & certifications',
+   badge:'Certifications',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
+   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   title:'Qualité & certifications : socle de crédibilité pour les AO et les grands comptes',
+   meta:'Qualité & certifications',date:'Juillet 2026',
+   excerpt:'ISO 9001, ISO/IEC 27001, HDS, labels relation client : ces certifications structurent la confiance et deviennent des prérequis dans de nombreuses consultations, notamment publiques et dans la santé.',
+   detail:`<ul><li>Panorama : ISO 9001 (management de la qualité), ISO/IEC 27001 (sécurité de l'information), HDS (hébergement de données de santé), labels relation client (référentiels sectoriels).</li><li>Ces référentiels sont de plus en plus exigés ou fortement valorisés dans les marchés publics et chez les grands comptes (banque, assurance, mutuelle, secteur public).</li><li>Ils s'articulent avec les volets Sécurité/RGPD et RSE des mémoires techniques (preuves, indicateurs, audits).</li><li>Pour Paragon : cartographier les certifications par site et activité, planifier les audits de renouvellement et capitaliser un « kit preuves » réutilisable en réponse aux AO.</li></ul>`,
+   links:[{l:'Marché-public.fr — critères qualité & AO',u:'https://www.marche-public.fr/veille-marches-publics-appels-offres-pme-entreprises.htm'},{l:'SecNumCloud / HDS — hébergement santé',u:'https://application-sante-numerique.fr/blog/decret-sren-donnees-sensibles-cloud-etablissements-sante-publics/'}]},
+
 ];
 // ============================================================
 // FIN DES DONNÉES
@@ -553,6 +694,7 @@ let activeMetier = 'all';
 let activeAxe = 'all';
 let searchQ = '';
 let sortMode = 'urgence';
+let nlThemeLabel = 'Veille multi-métiers';
 const exportSel = new Set(SIGNALS.map(s => s.id));
 
 function getFiltered() {
@@ -571,7 +713,7 @@ function getFiltered() {
 }
 
 function metierColors() {
-  return {bpo:'#2563a8',crc:'#0e7490','vote-correspondance':'#166534','vote-electronique':'#9d174d',bailleurs:'#6d28d9',facturation:'#92400e'};
+  return {bpo:'#2563a8',crc:'#0e7490','vote-correspondance':'#166534','vote-electronique':'#9d174d',bailleurs:'#6d28d9',facturation:'#92400e',cartes:'#ca8a04',ao:'#334155'};
 }
 
 function renderCards() {
@@ -626,7 +768,7 @@ function doSearch() { searchQ = document.getElementById('globalSearch').value; r
 function sortCards(mode) { sortMode = mode; renderCards(); }
 
 function updateCounts() {
-  ['marche','clients','secteurs','acteurs','techno','rse','securite'].forEach(axe => {
+  ['marche','clients','secteurs','acteurs','techno','rse','securite','economie','qualite'].forEach(axe => {
     const el = document.getElementById('cnt-'+axe);
     if (el) el.textContent = SIGNALS.filter(s => s.axe===axe).length;
   });
@@ -665,7 +807,7 @@ function buildNL(ids) {
 <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
 <tr><td style="background:#1a3a5c;padding:22px 26px;border-radius:10px 10px 0 0">
   <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd;margin-bottom:5px">Paragon · Veille sectorielle</div>
-  <div style="font-size:21px;font-weight:700;color:#fff;margin-bottom:3px">BPO · Élections · Facturation</div>
+  <div style="font-size:21px;font-weight:700;color:#fff;margin-bottom:3px">${nlThemeLabel}</div>
   <div style="font-size:12px;color:rgba(255,255,255,.5)">${date} · ${sigs.length} signal${sigs.length>1?'s':''} · Usage interne</div>
 </td></tr>
 <tr><td style="background:#fff;padding:22px 26px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb">
@@ -694,6 +836,23 @@ function renderModalChk() {
     </label>`).join('');
 }
 function toggleExportSig(id, checked) { checked ? exportSel.add(id) : exportSel.delete(id); refreshNL(); }
+
+function applyNLTheme(v) {
+  exportSel.clear();
+  if (v === 'all') {
+    SIGNALS.forEach(s => exportSel.add(s.id));
+    nlThemeLabel = 'Veille multi-métiers';
+  } else {
+    const [k, val] = v.split(':');
+    const key = (k === 'm') ? 'metier' : 'axe';
+    const match = SIGNALS.filter(s => s[key] === val);
+    match.forEach(s => exportSel.add(s.id));
+    const first = match[0];
+    nlThemeLabel = first ? (k === 'm' ? first.metierLabel : first.axeLabel) : 'Veille Paragon';
+  }
+  renderModalChk();
+  refreshNL();
+}
 
 function refreshNL() {
   const html = buildNL(exportSel);
