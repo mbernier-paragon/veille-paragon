@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Veille Paragon — BPO · Élections · Facturation</title>
+<title>Veille Paragon BPS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -152,8 +152,8 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </div>
       <div>
-        <div class="logo-text">Paragon</div>
-        <div class="logo-sub">Veille sectorielle</div>
+        <div class="logo-text">Veille Paragon BPS</div>
+        <div class="logo-sub">BL BPS · Paragon Elections</div>
       </div>
     </a>
     <div class="header-search">
@@ -205,8 +205,7 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
 
 <section class="hero">
   <div class="hero-edition" id="heroEdition">Édition · juin 2026</div>
-  <h1 class="hero-title">Veille <em>Paragon</em> — tous métiers</h1>
-  <p class="hero-desc">Vote · CRC · Cartes &amp; billettique · Facturation &amp; PA · Bailleurs · BPO · Marchés publics. Signaux du mois, sources &lt; 30 jours.</p>
+  <h1 class="hero-title">Veille <em>Paragon BPS</em></h1>
   <div class="hero-stats">
     <div class="hero-stat"><div class="hero-stat-n" id="statTotal">—</div><div class="hero-stat-l">Signaux</div></div>
     <div class="hero-stat"><div class="hero-stat-n">8</div><div class="hero-stat-l">Métiers</div></div>
@@ -261,7 +260,7 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
 
 <footer>
   <div class="footer-brand"><strong>Paragon BPS &amp; Paragon Elections</strong> — Veille sectorielle</div>
-  <div class="footer-note">Usage interne · Mis à jour mensuellement · Sources &lt; 30 jours</div>
+  <div class="footer-note">Usage interne · Mise à jour bi-mensuelle · Dernière mise à jour : <span id="majDate">—</span> · Sources &lt; 30 jours</div>
 </footer>
 
 <!-- MODAL EXPORT -->
@@ -732,14 +731,14 @@ function renderCards() {
     <article class="card" id="card-${s.id}" style="--urgence-color:${s.urgenceColor}" onclick="toggleCard('${s.id}')">
       <div class="card-top">
         <div class="card-badges">
-          <span class="badge" style="background:${s.badgeColor};color:${s.badgeTextColor}">${s.badge}</span>
           <span class="badge-metier" style="border-color:${mc[s.metier]||'#ccc'};color:${mc[s.metier]||'#888'};background:transparent">${s.metierLabel}</span>
+          <span class="badge" style="background:${s.badgeColor};color:${s.badgeTextColor}">${s.axeLabel}</span>
           <span class="badge-urg" style="background:color-mix(in srgb,${s.urgenceColor} 12%,transparent);color:${s.urgenceColor}">${s.urgence}</span>
         </div>
         <div class="card-toggle"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
       </div>
       <h2 class="card-title">${s.title}</h2>
-      <div class="card-meta"><span>${s.axeLabel}</span><span class="card-meta-sep">·</span><span>${s.date}</span></div>
+      <div class="card-meta"><span>${s.badge}</span><span class="card-meta-sep">·</span><span>${s.date}</span></div>
       <p class="card-excerpt">${s.excerpt}</p>
       <div class="card-body">
         <div class="card-detail">${s.detail}</div>
@@ -795,8 +794,9 @@ function buildNL(ids) {
 <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 <td style="border-left:3px solid ${s.urgenceColor};padding:11px 13px;background:#f9fafb">
   <div style="margin-bottom:4px">
-    <span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:${s.badgeColor};color:${s.badgeTextColor}">${s.badge}</span>
-    <span style="display:inline-block;font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid ${mc[s.metier]};color:${mc[s.metier]};margin-left:4px">${s.metierLabel}</span>
+    <span style="display:inline-block;font-size:10px;padding:2px 6px;border-radius:4px;border:1px solid ${mc[s.metier]};color:${mc[s.metier]}">${s.metierLabel}</span>
+    <span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:${s.badgeColor};color:${s.badgeTextColor};margin-left:4px">${s.axeLabel}</span>
+    <span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:${s.urgenceColor};color:#fff;margin-left:4px">${s.urgence}</span>
   </div>
   <div style="font-size:13px;font-weight:bold;color:#1a3a5c;margin-bottom:4px;line-height:1.3">${s.title}</div>
   <div style="font-size:12px;color:#374151;line-height:1.5;margin-bottom:5px">${s.excerpt}</div>
@@ -809,7 +809,7 @@ function buildNL(ids) {
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:0 16px">
 <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
 <tr><td style="background:#1a3a5c;padding:22px 26px;border-radius:10px 10px 0 0">
-  <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd;margin-bottom:5px">Paragon · Veille sectorielle</div>
+  <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd;margin-bottom:5px">Paragon BPS · Veille</div>
   <div style="font-size:21px;font-weight:700;color:#fff;margin-bottom:3px">${nlThemeLabel}</div>
   <div style="font-size:12px;color:rgba(255,255,255,.5)">${date} · ${sigs.length} signal${sigs.length>1?'s':''} · Usage interne</div>
 </td></tr>
@@ -894,7 +894,13 @@ renderCards();
 // si une version plus récente est publiée (anti-cache).
 // À CHAQUE PUBLICATION D'UNE NOUVELLE VERSION : incrémenter BUILD.
 // ============================================================
-const BUILD = "2026-07-29-1";
+const BUILD = "2026-07-29-2";
+(function setMaj() {
+  var el = document.getElementById('majDate'); if (!el) return;
+  var mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  var m = BUILD.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  el.textContent = m ? (parseInt(m[3], 10) + ' ' + mois[parseInt(m[2], 10) - 1] + ' ' + m[1]) : BUILD;
+})();
 (function checkVersion() {
   try {
     fetch(location.pathname + '?_=' + Date.now(), { cache: 'no-store' })
