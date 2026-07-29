@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Veille Paragon — BPO · Élections · Facturation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -885,6 +888,27 @@ function copyHTML() {
 updateDate();
 updateCounts();
 renderCards();
+
+// ============================================================
+// CONTRÔLE DE VERSION — rafraîchit automatiquement la page
+// si une version plus récente est publiée (anti-cache).
+// À CHAQUE PUBLICATION D'UNE NOUVELLE VERSION : incrémenter BUILD.
+// ============================================================
+const BUILD = "2026-07-29-1";
+(function checkVersion() {
+  try {
+    fetch(location.pathname + '?_=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.text())
+      .then(txt => {
+        const m = txt.match(/const BUILD = "([^"]+)"/);
+        if (m && m[1] !== BUILD && sessionStorage.getItem('veilleBuild') !== m[1]) {
+          sessionStorage.setItem('veilleBuild', m[1]);  // garde-fou anti-boucle
+          location.reload();
+        }
+      })
+      .catch(() => {});
+  } catch (e) {}
+})();
 </script>
 </body>
 </html>
