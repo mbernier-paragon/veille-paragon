@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root{--bleu:#1a3a5c;--bleu-mid:#2563a8;--bleu-light:#dbeafe;--bleu-accent:#3b82f6;--gris-bg:#f7f8fa;--gris-border:#e2e6ea;--gris-text:#6b7280;--noir:#0f1621;--blanc:#ffffff;--radius:10px;--radius-lg:16px;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);--shadow-hover:0 4px 16px rgba(0,0,0,.12)}
+:root{--bleu:#134D71;--bleu-mid:#238ACB;--bleu-light:#e7f3fb;--bleu-accent:#238ACB;--bleu-sky:#56BEEC;--orange:#E38900;--orange-dark:#C56603;--gris-bg:#f6f7f9;--gris-border:#e2e6ea;--gris-text:#6b7280;--gris-brand:#7F7F7F;--noir:#0f1621;--blanc:#ffffff;--radius:10px;--radius-lg:16px;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);--shadow-hover:0 4px 16px rgba(0,0,0,.12)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--gris-bg);color:var(--noir);min-height:100vh;font-size:15px;line-height:1.6}
 
@@ -19,8 +19,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--gris-bg);color:var(--noir
 .site-header{background:var(--bleu);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08)}
 .header-inner{max-width:1160px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:58px;gap:1rem}
 .logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
-.logo-mark{width:28px;height:28px;background:var(--bleu-accent);border-radius:7px;display:flex;align-items:center;justify-content:center}
-.logo-mark svg{width:15px;height:15px;fill:white}
+.logo-mark{width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:32px;height:32px}
 .logo-text{color:white;font-weight:600;font-size:14px;letter-spacing:-.01em}
 .logo-sub{color:rgba(255,255,255,.4);font-size:11px;font-weight:300}
 .header-search{flex:1;max-width:380px;position:relative}
@@ -31,7 +31,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--gris-bg);color:var(--noir
 .header-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .hpill{background:rgba(255,255,255,.1);color:rgba(255,255,255,.65);border-radius:20px;padding:3px 9px;font-size:11px;white-space:nowrap}
 .btn-export{background:var(--bleu-accent);color:white;border:none;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:500;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s}
-.btn-export:hover{background:#2563eb}
+.btn-export:hover{background:#134D71}
 
 /* METIER NAV — barre secondaire */
 .metier-nav{background:rgba(0,0,0,.2);border-top:1px solid rgba(255,255,255,.06)}
@@ -40,14 +40,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--gris-bg);color:var(--noir
 .mtab{padding:9px 14px;font-size:12px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;display:flex;align-items:center;gap:6px}
 .mtab:hover{color:rgba(255,255,255,.8)}
 .mtab.active{color:white;border-bottom-color:var(--bleu-accent)}
-.mtab-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.mtab-ico{display:inline-flex;align-items:center;flex-shrink:0}
+.mtab-ico svg{width:15px;height:15px}
+/* SECTEUR NAV — pendant secteurs prioritaires */
+.secteur-nav{background:var(--bleu);border-top:1px solid rgba(255,255,255,.08)}
+.secteur-nav-inner{max-width:1160px;margin:0 auto;padding:7px 1.5rem;display:flex;gap:8px;align-items:center;overflow-x:auto;scrollbar-width:none}
+.secteur-nav-inner::-webkit-scrollbar{display:none}
+.secteur-lead{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-right:4px;white-space:nowrap}
+.sctab{padding:4px 11px;font-size:12px;font-weight:500;color:rgba(255,255,255,.6);cursor:pointer;border:1px solid rgba(255,255,255,.16);border-radius:20px;white-space:nowrap;background:none;font-family:inherit;display:flex;align-items:center;gap:6px;transition:.15s}
+.sctab:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.sctab.active{color:var(--bleu);background:#fff;border-color:#fff;font-weight:600}
+.sc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
 /* HERO */
 .hero{background:var(--bleu);padding:2.25rem 1.5rem 3rem;text-align:center;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:36px;background:var(--gris-bg);clip-path:ellipse(55% 100% at 50% 100%)}
-.hero-edition{display:inline-block;background:rgba(59,130,246,.22);color:#93c5fd;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:3px 11px;border-radius:20px;margin-bottom:.9rem}
+.hero-edition{display:inline-block;background:rgba(86,190,236,.22);color:#56BEEC;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:3px 11px;border-radius:20px;margin-bottom:.9rem}
 .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,3.5vw,38px);color:white;font-weight:400;line-height:1.2;margin-bottom:.65rem}
-.hero-title em{color:#93c5fd;font-style:italic}
+.hero-title em{color:#56BEEC;font-style:italic}
 .hero-desc{color:rgba(255,255,255,.55);font-size:14px;max-width:500px;margin:0 auto 1.4rem;font-weight:300}
 .hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
 .hero-stat{text-align:center}
@@ -149,7 +159,11 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
   <div class="header-inner">
     <a href="#" class="logo">
       <div class="logo-mark">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="9" fill="#134D71"/>
+          <path d="M13 10h9.2a7.4 7.4 0 0 1 0 14.8H18V30h-5z" fill="#fff"/>
+          <circle cx="27.4" cy="17.4" r="2.7" fill="#E38900"/>
+        </svg>
       </div>
       <div>
         <div class="logo-text">Veille Paragon BPS</div>
@@ -173,32 +187,45 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
   <nav class="metier-nav" aria-label="Filtrer par métier">
     <div class="metier-nav-inner" id="metierTabs">
       <button class="mtab active" data-metier="all" onclick="filterMetier(this)">
-        <span class="mtab-dot" style="background:#888"></span>Tous les métiers
+        <span class="mtab-ico" style="color:#BFBFBF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Tous les métiers
       </button>
       <button class="mtab" data-metier="bpo" onclick="filterMetier(this)">
-        <span class="mtab-dot" style="background:#2563a8"></span>BPO &amp; Externalisation
+        <span class="mtab-ico" style="color:#134D71"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></span>BPO &amp; Externalisation
       </button>
       <button class="mtab" data-metier="crc" onclick="filterMetier(this)">
-        <span class="mtab-dot" style="background:#0e7490"></span>CRC &middot; Relation client
+        <span class="mtab-ico" style="color:#0e7490"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13" width="4" height="7" rx="1.5"/><rect x="17.5" y="13" width="4" height="7" rx="1.5"/></svg></span>CRC &middot; Relation client
       </button>
       <button class="mtab" data-metier="vote-correspondance" onclick="filterMetier(this)">
-        <span class="mtab-dot" style="background:#166534"></span>Vote par correspondance
+        <span class="mtab-ico" style="color:#166534"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>Vote par correspondance
       </button>
       <button class="mtab" data-metier="vote-electronique" onclick="filterMetier(this)">
-        <span class="mtab-dot" style="background:#9d174d"></span>Vote électronique
+        <span class="mtab-ico" style="color:#238ACB"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/><path d="m8.5 10.5 2.2 2.2 4.3-4.6"/></svg></span>Vote électronique
       </button>
       <button class="mtab" data-metier="bailleurs" onclick="filterMetier(this)">
-        <span class="mtab-dot" style="background:#6d28d9"></span>Bailleurs sociaux
+        <span class="mtab-ico" style="color:#6d28d9"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 8h.01M15 8h.01M9 12h.01M15 12h.01"/><path d="M10 21v-3a2 2 0 0 1 4 0v3"/></svg></span>Bailleurs sociaux
       </button>
       <button class="mtab" data-metier="facturation" onclick="filterMetier(this)">
-        <span class="mtab-dot" style="background:#92400e"></span>Facturation électronique &amp; PA
+        <span class="mtab-ico" style="color:#C56603"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 13h6M9 17h4"/></svg></span>Facturation électronique &amp; PA
       </button>
       <button class="mtab" data-metier="cartes" onclick="filterMetier(this)">
-        <span class="mtab-dot" style="background:#ca8a04"></span>Cartes &amp; billettique
+        <span class="mtab-ico" style="color:#E38900"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg></span>Cartes &amp; billettique
       </button>
       <button class="mtab" data-metier="ao" onclick="filterMetier(this)">
-        <span class="mtab-dot" style="background:#334155"></span>Marchés publics &amp; AO
+        <span class="mtab-ico" style="color:#7F7F7F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 15-4v10L3 13z"/><path d="M9 12.5V18a2 2 0 0 0 3.5 1.3"/></svg></span>Marchés publics &amp; AO
       </button>
+    </div>
+  </nav>
+
+  <!-- BARRE SECTEURS PRIORITAIRES -->
+  <nav class="secteur-nav" aria-label="Filtrer par secteur prioritaire">
+    <div class="secteur-nav-inner">
+      <span class="secteur-lead">Secteurs prioritaires</span>
+      <button class="sctab active" data-secteur="all" onclick="filterSecteur(this)">Tous</button>
+      <button class="sctab" data-secteur="banque" onclick="filterSecteur(this)"><span class="sc-dot" style="background:#134D71"></span>Banque</button>
+      <button class="sctab" data-secteur="assurance" onclick="filterSecteur(this)"><span class="sc-dot" style="background:#238ACB"></span>Assurance</button>
+      <button class="sctab" data-secteur="sante" onclick="filterSecteur(this)"><span class="sc-dot" style="background:#56BEEC"></span>Santé</button>
+      <button class="sctab" data-secteur="prevoyance" onclick="filterSecteur(this)"><span class="sc-dot" style="background:#E38900"></span>Prévoyance</button>
+      <button class="sctab" data-secteur="bailleurs" onclick="filterSecteur(this)"><span class="sc-dot" style="background:#C56603"></span>Bailleurs</button>
     </div>
   </nav>
 </header>
@@ -219,7 +246,7 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
     <div class="sb-section">
       <div class="sb-label">Axes thématiques</div>
       <button class="fb active" data-axe="all" onclick="filterAxe(this)"><span class="fb-dot" style="background:#888"></span>Tous<span class="fb-count" id="cnt-all">—</span></button>
-      <button class="fb" data-axe="marche" onclick="filterAxe(this)"><span class="fb-dot" style="background:#2563a8"></span>Marché &amp; réglementation<span class="fb-count" id="cnt-marche"></span></button>
+      <button class="fb" data-axe="marche" onclick="filterAxe(this)"><span class="fb-dot" style="background:#238ACB"></span>Marché &amp; réglementation<span class="fb-count" id="cnt-marche"></span></button>
       <button class="fb" data-axe="clients" onclick="filterAxe(this)"><span class="fb-dot" style="background:#166534"></span>Clients &amp; opportunités<span class="fb-count" id="cnt-clients"></span></button>
       <button class="fb" data-axe="secteurs" onclick="filterAxe(this)"><span class="fb-dot" style="background:#c2410c"></span>Secteurs<span class="fb-count" id="cnt-secteurs"></span></button>
       <button class="fb" data-axe="acteurs" onclick="filterAxe(this)"><span class="fb-dot" style="background:#92400e"></span>Acteurs<span class="fb-count" id="cnt-acteurs"></span></button>
@@ -232,10 +259,10 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
     <div class="sb-section">
       <div class="sb-label">Urgence</div>
       <div class="urg-item"><span class="urg-dot" style="background:#dc2626"></span>Critique</div>
-      <div class="urg-item"><span class="urg-dot" style="background:#d97706"></span>Haute</div>
-      <div class="urg-item"><span class="urg-dot" style="background:#2563a8"></span>Stratégique</div>
+      <div class="urg-item"><span class="urg-dot" style="background:#E38900"></span>Haute</div>
+      <div class="urg-item"><span class="urg-dot" style="background:#238ACB"></span>Stratégique</div>
       <div class="urg-item"><span class="urg-dot" style="background:#166534"></span>Opportunité</div>
-      <div class="urg-item"><span class="urg-dot" style="background:#92400e"></span>À surveiller</div>
+      <div class="urg-item"><span class="urg-dot" style="background:#7F7F7F"></span>À surveiller</div>
     </div>
   </aside>
 
@@ -339,7 +366,7 @@ const SIGNALS = [
   // ── BPO & EXTERNALISATION ────────────────────────────────
   {id:'b1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Marché mondial',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'BPO mondial ~328 Md$ : la CX portée par l\'IA et l\'outcome-based',
    meta:'Marché & réglementation',date:'Juillet 2026',
    excerpt:'Le marché mondial du BPO est estimé à ~328 Md$ (2025). Le segment expérience client (CX) croît à ~12,8 %/an vers ~296 Md$ d\'ici 2033. En France, la relation client externalisée est appelée à plus que doubler d\'ici 2035.',
@@ -348,7 +375,7 @@ const SIGNALS = [
 
   {id:'b2',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'techno',axeLabel:'Technologies',
    badge:'IA agentique',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'IA agentique : l\'AFRC publie son benchmark des offres (juillet 2026)',
    meta:'Technologies & innovation',date:'Juillet 2026',
    excerpt:'L\'AFRC publie en juillet 2026 un benchmark des offres d\'IA agentique de la relation client. L\'orchestration multi-agents et les modèles hybrides IA + humain s\'imposent comme standard — un levier direct pour une offre « BPO augmenté ».',
@@ -357,7 +384,7 @@ const SIGNALS = [
 
   {id:'b3',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'rse',axeLabel:'RSE · RH · Management',
    badge:'Transparence salariale',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Transparence salariale : projet de loi (22 articles) au Conseil d\'État',
    meta:'RSE · RH · Management',date:'Juillet 2026',
    excerpt:'Le PJL de transposition de la directive (UE) 2023/970 a été transmis au Conseil d\'État le 7 juin 2026. Vote visé fin 2026, entrée en vigueur envisagée au 1er janvier 2028. 7 indicateurs remplaceront l\'Index Pénicaud ; sanctions jusqu\'à 1 % du CA et exclusion des AO publics.',
@@ -366,7 +393,7 @@ const SIGNALS = [
 
   {id:'b4',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'secteurs',axeLabel:'Secteurs',
    badge:'Souveraineté',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'SecNumCloud : d\'un atout à une condition d\'accès aux marchés publics santé',
    meta:'Souveraineté numérique · Secteurs',date:'Juillet 2026',
    excerpt:'Le décret SREN n°2026-272 (14 avril 2026) impose SecNumCloud aux administrations et établissements publics pour les données sensibles. La Plateforme des données de santé quitte Azure d\'ici fin 2026. SecNumCloud devient une condition d\'accès, plus un simple différenciateur.',
@@ -375,7 +402,7 @@ const SIGNALS = [
 
   {id:'b5',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'PSC fonction publique',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'PSC fonction publique : montée en charge des opérateurs, flux d\'actes massifs',
    meta:'Clients & opportunités · Secteurs',date:'Juillet 2026',
    excerpt:'La réforme PSC monte en charge : loi n°2025-1251 du 22 déc. 2025 rendant la prévoyance obligatoire, plus de 80 % des agents de l\'État couverts au 1er mai 2026. Les opérateurs (MGEN, CNP, MGEFI, MNT, Alan...) génèrent des volumes d\'actes externalisables.',
@@ -385,7 +412,7 @@ const SIGNALS = [
   // ── VOTE PAR CORRESPONDANCE ──────────────────────────────
   {id:'vc1',metier:'vote-correspondance',metierLabel:'Vote par correspondance',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Calendrier électoral',badgeColor:'#dcfce7',badgeTextColor:'#166534',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Élections locataires HLM : scrutin du 15 novembre au 15 décembre 2026',
    meta:'Marché & réglementation',date:'Juillet 2026',
    excerpt:'Le scrutin quadriennal se tiendra du 15 novembre au 15 décembre 2026 : plus de 4 millions de locataires (OPH, ESH, Coop HLM, SEM). L\'USH a diffusé son kit de communication (circulaire n°42/26). Fenêtre de production courte sur le T4.',
@@ -394,7 +421,7 @@ const SIGNALS = [
 
   {id:'vc2',metier:'vote-correspondance',metierLabel:'Vote par correspondance',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'Sourcing & AO',badgeColor:'#dcfce7',badgeTextColor:'#166534',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Sourcing prestataires de vote : les bailleurs publient leurs cahiers des charges',
    meta:'Clients & opportunités',date:'Juillet 2026',
    excerpt:'Les fédérations ESH, OPH et Coop HLM ont mené un sourcing de prestataires de vote en amont des cahiers des charges. Les bailleurs annoncent désormais leurs modalités locales (IDF Habitat, Normandie mutualisée, Partélios...). La période de réponse aux AO est à son pic.',
@@ -403,7 +430,7 @@ const SIGNALS = [
 
   {id:'vc3',metier:'vote-correspondance',metierLabel:'Vote par correspondance',axe:'acteurs',axeLabel:'Acteurs & concurrence',
    badge:'Listes & participation',badgeColor:'#dcfce7',badgeTextColor:'#166534',
-   urgence:'À SURVEILLER',urgenceColor:'#6b7280',
+   urgence:'À SURVEILLER',urgenceColor:'#7F7F7F',
    title:'Listes, associations et réinstallation des CA post-municipales',
    meta:'Acteurs & concurrence',date:'Juillet 2026',
    excerpt:'Seules les associations nationales représentatives de locataires peuvent présenter des listes. Le contexte 2026 (réinstallation des CA d\'OPH après les municipales, mobilisation associative) et la faible participation historique renforcent l\'intérêt du vote mixte.',
@@ -413,7 +440,7 @@ const SIGNALS = [
   // ── VOTE ÉLECTRONIQUE ────────────────────────────────────
   {id:'ve1',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'CNIL 2026-045',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Vote électronique : délibération CNIL n°2026-045 + guide technique ANSSI',
    meta:'Marché & réglementation',date:'Juillet 2026',
    excerpt:'La CNIL a publié au JO le 24 avril 2026 la délibération n°2026-045 (adoptée le 19 mars), qui abroge les recommandations de 2010 et 2019. Elle s\'accompagne d\'un guide technique ANSSI (réf. ANSSI-PA-118), à utiliser conjointement.',
@@ -422,7 +449,7 @@ const SIGNALS = [
 
   {id:'ve2',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'secteurs',axeLabel:'Secteurs',
    badge:'Période transitoire',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Période transitoire CNIL : quel référentiel pour les élections HLM 2026 ?',
    meta:'Secteurs · Conformité',date:'Juillet 2026',
    excerpt:'La CNIL prévoit une transition : les scrutins déjà en préparation et prévus en 2026 peuvent conserver la version 2019 ; tout nouveau scrutin suit la version 2026. Un point à qualifier dès la réponse à l\'AO pour les élections HLM.',
@@ -450,7 +477,7 @@ const SIGNALS = [
 
   {id:'f2',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'acteurs',axeLabel:'Acteurs & concurrence',
    badge:'PA immatriculées',badgeColor:'#fef3c7',badgeTextColor:'#92400e',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'~142 Plateformes Agréées immatriculées, ~156 référencées (mi-juillet 2026)',
    meta:'Acteurs & concurrence',date:'Juillet 2026',
    excerpt:'L\'annuaire DGFiP recense ~142 Plateformes Agréées immatriculées (tests d\'interopérabilité réussis) et ~14 dossiers en attente, soit ~156 opérateurs référencés au relevé de mi-juillet 2026 — contre 134 fin mai. De nouveaux opérateurs s\'ajoutent chaque mois.',
@@ -468,7 +495,7 @@ const SIGNALS = [
 
   {id:'f4',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'techno',axeLabel:'Technologies',
    badge:'PPF & formats',badgeColor:'#fef3c7',badgeTextColor:'#92400e',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'PPF concentrateur seul : les PA deviennent le passage obligé (Factur-X / UBL / CII)',
    meta:'Technologies & innovation',date:'Juillet 2026',
    excerpt:'Le PPF ne sert plus de plateforme d\'échange direct : il devient annuaire central et concentrateur de données. Tous les flux passent par une PA, dans un format structuré (Factur-X, UBL, CII). Un PDF envoyé par mail n\'est plus une facture au sens légal.',
@@ -479,7 +506,7 @@ const SIGNALS = [
   // ── CRC · RELATION CLIENT ────────────────────────────────
   {id:'crc1',metier:'crc',metierLabel:'CRC · Relation client',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Marché CRC',badgeColor:'#cffafe',badgeTextColor:'#155e75',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Relation client externalisée : 53 % des entreprises externalisent, le chat progresse',
    meta:'Marché & réglementation',date:'Juillet 2026',
    excerpt:'53 % des entreprises françaises confient déjà tout ou partie de leur support client à un partenaire externe. Le chat gagne du terrain sur le téléphone, la valeur se déplace vers les « moments de vérité » que l\'IA ne suffit pas à traiter.',
@@ -488,7 +515,7 @@ const SIGNALS = [
 
   {id:'crc2',metier:'crc',metierLabel:'CRC · Relation client',axe:'techno',axeLabel:'Technologies',
    badge:'IA & centres de contact',badgeColor:'#cffafe',badgeTextColor:'#155e75',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'CRC augmenté : l\'IA agentique redéfinit les centres de contact',
    meta:'Technologies & innovation',date:'Juillet 2026',
    excerpt:'L\'IA agentique transforme les centres de contact : orchestration multi-agents, interopérabilité avec les applications métier, et modèle hybride IA + conseiller humain appelé à devenir dominant (benchmark AFRC, juillet 2026).',
@@ -498,7 +525,7 @@ const SIGNALS = [
   // ── BAILLEURS SOCIAUX · SLS / OPS ────────────────────────
   {id:'bail1',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Campagne SLS/OPS 2026',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Enquêtes SLS/OPS : campagne réglementaire 2026 auprès de tous les locataires',
    meta:'Marché & réglementation',date:'Juillet 2026',
    excerpt:'La loi du 4 mars 1996 impose aux bailleurs sociaux l\'enquête SLS (annuelle) et l\'enquête OPS (biennale). La campagne 2026, lancée dès l\'automne 2025, court jusqu\'à l\'automne 2026 selon les organismes, avec pénalités en cas de non-réponse.',
@@ -516,7 +543,7 @@ const SIGNALS = [
 
   {id:'bail3',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'techno',axeLabel:'Technologies',
    badge:'Donnée & GIP-SNE',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
-   urgence:'À SURVEILLER',urgenceColor:'#6b7280',
+   urgence:'À SURVEILLER',urgenceColor:'#7F7F7F',
    title:'OPS : qualité de la donnée et téléversement au portail GIP-SNE',
    meta:'Technologies & innovation',date:'Juillet 2026',
    excerpt:'Les données OPS alimentent l\'outil de cartographie du GIP-SNE, transmis à l\'État à l\'échelle du logement. Recueil, redressement, contrôle et téléversement : la qualité de la donnée est l\'enjeu opérationnel central.',
@@ -526,7 +553,7 @@ const SIGNALS = [
   // ── BPO · THÉMATIQUES TRANSVERSES (Automation & Délégation de gestion) ──
   {id:'b6',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'techno',axeLabel:'Technologies',
    badge:'Automation · IDP',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Hyperautomatisation & IDP : la chaîne RPA + IA pour le flux documentaire',
    meta:'Technologies & innovation',date:'Juillet 2026',
    excerpt:'L\'hyperautomatisation orchestre IA, ML, RPA, IDP et process mining pour automatiser de bout en bout. L\'IDP convertit les documents non structurés en données fiables ; des acteurs souverains français (Letxbe, Teklia) émergent.',
@@ -535,7 +562,7 @@ const SIGNALS = [
 
   {id:'b7',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'Délégation de gestion',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Délégation de gestion santé/prévoyance : marché en recomposition, opportunité d\'actes',
    meta:'Clients & opportunités · Secteurs',date:'Juillet 2026',
    excerpt:'La gestion déléguée couvre désormais ~1/3 des prestations santé (~22-23 M de bénéficiaires). Le marché se recompose (Cegedim/Allianz, Gentto = Apicil + Docaposte, Harmonie/NoveoCare), avec des conventions à clauses de performance.',
@@ -546,7 +573,7 @@ const SIGNALS = [
   // ── SÉCURITÉ & RGPD (axe transverse) ─────────────────────
   {id:'sec1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'CNIL · sous-traitants',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'CNIL : les sous-traitants dans le viseur — sécuriser la chaîne de traitement',
    meta:'Sécurité & RGPD',date:'Juillet 2026',
    excerpt:'La CNIL publie le 27 mai 2026 une fiche sur les cyberattaques visant les sous-traitants et durcit ses contrôles après un bilan 2025 record. Le responsable de traitement reste responsable même quand la faille vient du prestataire.',
@@ -555,7 +582,7 @@ const SIGNALS = [
 
   {id:'sec2',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'NIS2 · DORA',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Loi Résilience (NIS2, REC, DORA) : l\'effet cascade atteint les prestataires',
    meta:'Sécurité & RGPD',date:'Juillet 2026',
    excerpt:'La loi Résilience, qui transpose NIS2, REC et DORA, arrive à l\'Assemblée en juillet 2026 : ~15 000 entités, 18 secteurs, sanctions jusqu\'à 10 M€ ou 2 % du CA. Les clients régulés répercutent leurs exigences de sécurité sur leurs sous-traitants.',
@@ -564,7 +591,7 @@ const SIGNALS = [
 
   {id:'sec3',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'RGPD · SLS/OPS',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
-   urgence:'À SURVEILLER',urgenceColor:'#6b7280',
+   urgence:'À SURVEILLER',urgenceColor:'#7F7F7F',
    title:'Enquêtes SLS/OPS : données fiscales sensibles, exigences RGPD renforcées',
    meta:'Sécurité & RGPD',date:'Juillet 2026',
    excerpt:'Les campagnes SLS/OPS collectent avis d\'imposition et situation du foyer sur tout le parc : minimisation, conservation limitée et anonymisation avant transmission au portail GIP-SNE. Un enjeu de protection des données pour les bailleurs et leurs prestataires.',
@@ -573,7 +600,7 @@ const SIGNALS = [
 
   {id:'sec4',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'RGPD · vote',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Vote électronique : données d\'opinion, séparation stricte identité / vote',
    meta:'Sécurité & RGPD',date:'Juillet 2026',
    excerpt:'Les données de vote peuvent révéler des opinions (syndicales, politiques) — catégorie sensible au sens de l\'art. 9 du RGPD. La CNIL impose la séparation stricte identité/vote, la confidentialité du bulletin dès sa création et une expertise indépendante selon le risque.',
@@ -584,7 +611,7 @@ const SIGNALS = [
   // ── CARTES & BILLETTIQUE ─────────────────────────────────
   {id:'cart1',metier:'cartes',metierLabel:'Cartes & billettique',axe:'techno',axeLabel:'Technologies',
    badge:'Billettique · Open Payment',badgeColor:'#fef9c3',badgeTextColor:'#854d0e',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Billettique : l\'Open Payment et le titre dématérialisé s\'imposent',
    meta:'Technologies & innovation',date:'Juillet 2026',
    excerpt:'Île-de-France Mobilités équipe toutes ses lignes de bus en Open Payment d\'ici l\'été 2026 (~150 M€), et la plateforme nationale d\'intermodalité (« Titre unique », CB2D) se déploie. Le titre dématérialisé devient le support privilégié, la carte sans contact une option.',
@@ -593,7 +620,7 @@ const SIGNALS = [
 
   {id:'cart2',metier:'cartes',metierLabel:'Cartes & billettique',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'Fidélité · Wallet mobile',badgeColor:'#fef9c3',badgeTextColor:'#854d0e',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Cartes de fidélité : la bascule vers le wallet mobile s\'accélère',
    meta:'Clients & opportunités',date:'Juillet 2026',
    excerpt:'33,8 % des Français préfèrent désormais la carte de fidélité dématérialisée (70 % chez les moins de 34 ans) et 61,7 % la stockent dans un wallet mobile. Carrefour, Guerlain, L\'Occitane digitalisent — un signal fort pour les émetteurs de cartes plastiques.',
@@ -602,7 +629,7 @@ const SIGNALS = [
 
   {id:'cart3',metier:'cartes',metierLabel:'Cartes & billettique',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Support physique vs digital',badgeColor:'#fef9c3',badgeTextColor:'#854d0e',
-   urgence:'À SURVEILLER',urgenceColor:'#6b7280',
+   urgence:'À SURVEILLER',urgenceColor:'#7F7F7F',
    title:'Cartes à puce et supports : repositionner la valeur face au tout-digital',
    meta:'Marché & réglementation',date:'Juillet 2026',
    excerpt:'Fidélité, transport, accès : partout la carte physique cède du terrain au support dématérialisé. L\'enjeu se déplace vers la personnalisation, la sécurité, l\'hybridation et l\'éco-conception des cartes.',
@@ -612,7 +639,7 @@ const SIGNALS = [
   // ── MARCHÉS PUBLICS & APPELS D'OFFRES ────────────────────
   {id:'ao1',metier:'ao',metierLabel:'Marchés publics & AO',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Méthode & sources',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Veille marchés publics : cadrer les bonnes sources et les alertes',
    meta:'Marché & réglementation',date:'Juillet 2026',
    excerpt:'BOAMP, TED/JOUE, PLACE, profils acheteurs et APProch couvrent l\'essentiel des consultations. Des alertes gratuites par mots-clés et codes CPV existent — à condition de cibler le périmètre Paragon et de trier Go/No-Go.',
@@ -621,7 +648,7 @@ const SIGNALS = [
 
   {id:'ao2',metier:'ao',metierLabel:'Marchés publics & AO',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'AO Vote (HLM · CSE)',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'AO Vote : élections HLM, CSE et scrutins du secteur public à cibler',
    meta:'Clients & opportunités',date:'Juillet 2026',
    excerpt:'Deux gisements d\'AO à surveiller en priorité : les consultations des bailleurs pour les élections locataires (T4 2026) et le renouvellement des élections CSE 2026-2027, où le vote électronique progresse fortement.',
@@ -630,7 +657,7 @@ const SIGNALS = [
 
   {id:'ao3',metier:'ao',metierLabel:'Marchés publics & AO',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'AO Sécurité & RGPD',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'AO Sécurité & RGPD : les clauses cyber deviennent souvent éliminatoires',
    meta:'Sécurité & RGPD',date:'Juillet 2026',
    excerpt:'Les CCTP intègrent de plus en plus d\'exigences SecNumCloud, hébergement en France, conformité RGPD et NIS2. Anticiper ces clauses conditionne l\'accès à de nombreux marchés, notamment dans la santé et le secteur public.',
@@ -639,7 +666,7 @@ const SIGNALS = [
 
   {id:'ao4',metier:'ao',metierLabel:'Marchés publics & AO',axe:'qualite',axeLabel:'Qualité & certifications',
    badge:'AO Qualité & RSE',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'AO Qualité & RSE : certifications et critères environnementaux décisifs',
    meta:'Qualité & certifications',date:'Juillet 2026',
    excerpt:'Les acheteurs publics pondèrent de plus en plus la RSE et exigent des certifications (ISO 9001/27001, HDS). Les considérations environnementales s\'imposent dans les marchés — un levier de différenciation à documenter.',
@@ -649,7 +676,7 @@ const SIGNALS = [
   // ── CONCURRENCE PARAGON ──────────────────────────────────
   {id:'conc1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'acteurs',axeLabel:'Acteurs & concurrence',
    badge:'Concurrence Paragon',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Concurrence : un paysage BPO qui se concentre autour de grands intégrés',
    meta:'Acteurs & concurrence',date:'Juillet 2026',
    excerpt:'Xerfi classe Paragon parmi une vingtaine d\'acteurs clés du BPO en France, aux côtés de Docaposte, Tessi, Xelians, Cegedim ou Foundever. Les mouvements récents (M&A, IA, facturation) redessinent la concurrence.',
@@ -659,7 +686,7 @@ const SIGNALS = [
   // ── ÉCONOMIE & SOCIAL ────────────────────────────────────
   {id:'eco1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'economie',axeLabel:'Économie & social',
    badge:'SMIC · coût du travail',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'SMIC : deux hausses en 2026, pression directe sur les prestations à forte main-d\'œuvre',
    meta:'Économie & social',date:'Juillet 2026',
    excerpt:'Après +1,18 % au 1er janvier, le SMIC a été revalorisé de +2,41 % au 1er juin 2026 (12,31 €/h, 1 867 € brut mensuel). Pour des activités à forte main-d\'œuvre (CRC, saisie, tri, éditique), l\'impact sur les coûts et les prix est direct.',
@@ -669,7 +696,7 @@ const SIGNALS = [
   // ── ÉLECTIONS CSE (vote électronique) ────────────────────
   {id:'cse1',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Élections CSE 2026-2027',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
-   urgence:'HAUTE',urgenceColor:'#d97706',
+   urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Élections CSE 2026-2027 : le vote électronique se généralise',
    meta:'Marché & réglementation',date:'Juillet 2026',
    excerpt:'Le renouvellement des CSE (obligatoire dès 11 salariés, tous les 4 ans) alimente un flux continu de scrutins. Le vote électronique s\'y impose, encadré par accord ou DUE et par la nouvelle recommandation CNIL 2026-045.',
@@ -679,7 +706,7 @@ const SIGNALS = [
   // ── QUALITÉ & CERTIFICATIONS ─────────────────────────────
   {id:'qual1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'qualite',axeLabel:'Qualité & certifications',
    badge:'Certifications',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
-   urgence:'STRATÉGIQUE',urgenceColor:'#2563a8',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Qualité & certifications : socle de crédibilité pour les AO et les grands comptes',
    meta:'Qualité & certifications',date:'Juillet 2026',
    excerpt:'ISO 9001, ISO/IEC 27001, HDS, labels relation client : ces certifications structurent la confiance et deviennent des prérequis dans de nombreuses consultations, notamment publiques et dans la santé.',
@@ -693,19 +720,34 @@ const SIGNALS = [
 
 const URGENCE_ORDER = {CRITIQUE:0,HAUTE:1,'STRATÉGIQUE':2,'OPPORTUNITÉ':3,'À SURVEILLER':4};
 let activeMetier = 'all';
+let activeSecteur = 'all';
 let activeAxe = 'all';
 let searchQ = '';
 let sortMode = 'urgence';
 let nlThemeLabel = 'Veille multi-métiers';
 const exportSel = new Set(SIGNALS.map(s => s.id));
 
+// Secteurs prioritaires par signal (banque, assurance, sante, prevoyance, bailleurs)
+const SECT = {
+  b1:['banque','assurance','sante'], b2:['banque','assurance','sante','prevoyance'], b3:[], b4:['sante'],
+  b5:['sante','prevoyance'], b6:['banque','assurance','sante'], b7:['assurance','sante','prevoyance'],
+  conc1:[], eco1:[], qual1:['banque','assurance','sante'], sec1:['banque','assurance','sante'],
+  sec2:['banque','assurance','sante'], crc1:['banque','assurance'], crc2:['banque','assurance'],
+  vc1:['bailleurs'], vc2:['bailleurs'], vc3:['bailleurs'], ve1:['bailleurs'], ve2:['bailleurs'],
+  ve3:['bailleurs'], sec4:['bailleurs'], cse1:[], f1:['banque','assurance'], f2:['banque','assurance'],
+  f3:['banque','assurance'], f4:['banque','assurance'], bail1:['bailleurs'], bail2:['bailleurs'],
+  bail3:['bailleurs'], sec3:['bailleurs'], cart1:[], cart2:[], cart3:[], ao1:[], ao2:['bailleurs'],
+  ao3:['banque','assurance','sante'], ao4:[]
+};
+
 function getFiltered() {
   return SIGNALS.filter(s => {
     const mOk = activeMetier === 'all' || s.metier === activeMetier;
+    const secOk = activeSecteur === 'all' || (SECT[s.id]||[]).includes(activeSecteur);
     const aOk = activeAxe === 'all' || s.axe === activeAxe;
     const q = searchQ.toLowerCase();
     const sOk = !q || s.title.toLowerCase().includes(q) || s.excerpt.toLowerCase().includes(q) || (s.detail||'').toLowerCase().includes(q);
-    return mOk && aOk && sOk;
+    return mOk && aOk && sOk && secOk;
   }).sort((a,b) => {
     if (sortMode === 'urgence') return (URGENCE_ORDER[a.urgence]??9)-(URGENCE_ORDER[b.urgence]??9);
     if (sortMode === 'metier') return a.metier.localeCompare(b.metier);
@@ -715,7 +757,7 @@ function getFiltered() {
 }
 
 function metierColors() {
-  return {bpo:'#2563a8',crc:'#0e7490','vote-correspondance':'#166534','vote-electronique':'#9d174d',bailleurs:'#6d28d9',facturation:'#92400e',cartes:'#ca8a04',ao:'#334155'};
+  return {bpo:'#134D71',crc:'#0e7490','vote-correspondance':'#166534','vote-electronique':'#238ACB',bailleurs:'#6d28d9',facturation:'#C56603',cartes:'#E38900',ao:'#7F7F7F'};
 }
 
 function renderCards() {
@@ -759,6 +801,13 @@ function filterMetier(btn) {
   renderCards();
 }
 
+function filterSecteur(btn) {
+  document.querySelectorAll('.sctab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeSecteur = btn.dataset.secteur;
+  renderCards();
+}
+
 function filterAxe(btn) {
   document.querySelectorAll('.fb').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -798,7 +847,7 @@ function buildNL(ids) {
     <span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:${s.badgeColor};color:${s.badgeTextColor};margin-left:4px">${s.axeLabel}</span>
     <span style="display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:${s.urgenceColor};color:#fff;margin-left:4px">${s.urgence}</span>
   </div>
-  <div style="font-size:13px;font-weight:bold;color:#1a3a5c;margin-bottom:4px;line-height:1.3">${s.title}</div>
+  <div style="font-size:13px;font-weight:bold;color:#134D71;margin-bottom:4px;line-height:1.3">${s.title}</div>
   <div style="font-size:12px;color:#374151;line-height:1.5;margin-bottom:5px">${s.excerpt}</div>
   <div style="font-size:10px;color:#9ca3af;margin-top:5px">Sources : ${(s.links||[]).map(lk => `<a href="${lk.u}" style="color:#3b82f6;text-decoration:none">${lk.l}</a>`).join(' &nbsp;·&nbsp; ')}</div>
 </td></tr></table>
@@ -808,8 +857,8 @@ function buildNL(ids) {
 <body style="margin:0;padding:20px 0;background:#f3f4f6;font-family:Arial,Helvetica,sans-serif">
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:0 16px">
 <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%">
-<tr><td style="background:#1a3a5c;padding:22px 26px;border-radius:10px 10px 0 0">
-  <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd;margin-bottom:5px">Paragon BPS · Veille</div>
+<tr><td style="background:#134D71;padding:22px 26px;border-radius:10px 10px 0 0">
+  <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#56BEEC;margin-bottom:5px">Paragon BPS · Veille</div>
   <div style="font-size:21px;font-weight:700;color:#fff;margin-bottom:3px">${nlThemeLabel}</div>
   <div style="font-size:12px;color:rgba(255,255,255,.5)">${date} · ${sigs.length} signal${sigs.length>1?'s':''} · Usage interne</div>
 </td></tr>
@@ -894,7 +943,7 @@ renderCards();
 // si une version plus récente est publiée (anti-cache).
 // À CHAQUE PUBLICATION D'UNE NOUVELLE VERSION : incrémenter BUILD.
 // ============================================================
-const BUILD = "2026-07-29-2";
+const BUILD = "2026-07-29-3";
 (function setMaj() {
   var el = document.getElementById('majDate'); if (!el) return;
   var mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
