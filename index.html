@@ -367,6 +367,26 @@ footer{max-width:1160px;margin:0 auto;padding:1.75rem 1.5rem;border-top:1px soli
 // ============================================================
 const SIGNALS = [
 
+  // ══════════ ÉDITION AOÛT 2026 · mise à jour du 11 ══════════
+  {id:'factalert',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'Alerte DGFiP · J-1 mois',badgeColor:'#fef3c7',badgeTextColor:'#92400e',
+   urgence:'HAUTE',urgenceColor:'#E38900',
+   title:'Facturation : à un mois de l\'échéance, seules ~20 % des entreprises ont désigné leur plateforme',
+   meta:'Clients & opportunités',date:'Août 2026',pub:'11 août 2026',
+   excerpt:'Selon la DGFiP, à un mois du 1er septembre, seulement ~20 % des entreprises ont désigné leur plateforme de réception ; 30 % des PME/TPE n\'avaient toujours rien choisi fin juillet. La DGFiP multiplie les alertes et l\'État promet une phase d\'accompagnement jusqu\'à fin 2026 — un appel d\'air pour l\'offre BPO.',
+   detail:`<ul><li>À un mois de l'échéance, seules ~20 % des ~5 millions d'entreprises concernées avaient désigné leur plateforme de réception ; la DGFiP multiplie les messages d'alerte (« désignation d'une plateforme de réception de factures électroniques »).</li><li>Fin juillet 2026, 30 % des PME/TPE n'avaient toujours pas choisi de plateforme agréée ; sur les 70 % restantes, un tiers seulement était effectivement enregistré (DGFiP, S. Rabineau).</li><li>Le gouvernement maintient le 1er septembre mais annonce une « phase d'écoute et d'accompagnement » avec tolérance jusqu'à fin 2026 pour les acteurs de bonne foi.</li><li>Pour Paragon BPS : fenêtre d'accompagnement idéale — aider les clients retardataires à choisir et paramétrer leur PA, sécuriser la réception, et proposer une offre « conformité + externalisation documentaire ».</li></ul>`,
+   links:[{l:'Journal de l\'économie — 20 % ont désigné leur plateforme (J-1 mois)',u:'https://www.journaldeleconomie.fr/facturation-electronique-a-un-mois-de-lecheance-seulement-20-des-entreprises-ont-designe-leur-plateforme/'},{l:'Le Journal des Entreprises — tolérance jusqu\'à fin 2026',u:'https://www.lejournaldesentreprises.com/article/facturation-electronique-38-des-entreprises-ne-sont-pas-pretes-mais-letat-fera-preuve-de-tolerance-2146577'},{l:'Spendesk — baromètre préparation des entreprises',u:'https://www.spendesk.com/fr/blog/facturation-electronique-les-entreprises-sont-elles-vraiment-pretes/'}]},
+
+  {id:'bailcamp',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'Campagne SLS/OPS · rentrée',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
+   urgence:'HAUTE',urgenceColor:'#E38900',
+   title:'SLS/OPS : la campagne d\'enquêtes 2026 démarre en septembre — pics d\'envois et de collecte',
+   meta:'Clients & opportunités',date:'Août 2026',pub:'11 août 2026',
+   excerpt:'Les bailleurs lancent la campagne SLS/OPS dès début septembre : envoi en ligne (e-mail/SMS) puis relance papier, avec des dates limites en octobre-novembre. Volumes de masse, collecte multicanale et hotline locataires — un terrain naturel pour l\'externalisation.',
+   detail:`<ul><li>Calendrier type : envoi du lien de réponse en ligne (e-mail/SMS) à partir de début septembre, relance papier en septembre-octobre, dates limites de réponse en octobre-novembre 2026.</li><li>Enquête annuelle SLS (art. L.441-9 CCH) et biennale OPS (art. L.442-5 CCH) auprès de tous les locataires ; ressources N-2 (avis 2025 sur revenus 2024) ; pénalités en cas de non-réponse (frais de dossier de 25 €, SLS maximum, 7,62 €/mois pour l'OPS).</li><li>De nombreux bailleurs mandatent déjà un prestataire pour l'envoi, la collecte et le traitement (réponse en ligne + papier, ligne téléphonique dédiée).</li><li>Pour Paragon (traitement de courrier, GED, CRC) : offre clé en main SLS/OPS — édition, envoi multicanal, LAD/RAD, contrôle des pièces, hotline et reporting — pour absorber les pics de la rentrée.</li></ul>`,
+   links:[{l:'ANGDM — calendriers d\'envoi SLS/OPS des bailleurs',u:'https://www.angdm.gouv.fr/enquetes-des-bailleurs-sociaux-les-obligations-de-reponse-des-locataires-0'},{l:'Clésence — enquête SLS/OPS 2026 (formulaire prérempli)',u:'https://www.clesence.fr/actualite/enquete-sls-ops-2026'},{l:'Habitation Moderne — enquête SLS/OPS 2026',u:'https://www.habitationmoderne.org/enquete-sls-ops-2026-soyez-attentifs-a-votre-courrier-%E2%80%AF/'}]},
+
+
   // ══════════ ÉDITION AOÛT 2026 ══════════
   {id:'lean1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'qualite',axeLabel:'Qualité & certifications',
    badge:'Lean · Excellence op.',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
@@ -997,7 +1017,7 @@ renderCards();
 // si une version plus récente est publiée (anti-cache).
 // À CHAQUE PUBLICATION D'UNE NOUVELLE VERSION : incrémenter BUILD.
 // ============================================================
-const BUILD = "2026-08-03-1";
+const BUILD = "2026-08-11-1";
 (function setMaj() {
   var el = document.getElementById('majDate'); if (!el) return;
   var mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
