@@ -70,13 +70,12 @@ button{cursor:pointer}
 
 /* ── Filtres ─────────────────────────────── */
 .filters{background:var(--blanc);border-bottom:1px solid var(--ligne);position:sticky;top:60px;z-index:50}
-.frow{display:flex;align-items:center;gap:8px;padding:10px 26px;max-width:1140px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
-.frow::-webkit-scrollbar{display:none}
-.frow+.frow{border-top:1px solid var(--ligne);overflow:visible;flex-wrap:wrap}
+.frow{display:flex;align-items:center;flex-wrap:wrap;gap:7px;padding:9px 26px;max-width:1140px;margin:0 auto}
+.frow+.frow{border-top:1px solid var(--ligne)}
 .chip-new{border-color:var(--ambre-bord);background:var(--ambre);color:var(--ocre);font-weight:600}
 .chip-new.on{background:var(--orange);border-color:var(--orange);color:#20160A}
 .chip-new i{opacity:.75}
-.chip{border:1px solid var(--ligne);background:#fff;border-radius:20px;padding:5px 13px;font-size:13px;color:var(--gris);white-space:nowrap;display:inline-flex;align-items:center;gap:7px}
+.chip{border:1px solid var(--ligne);background:#fff;border-radius:20px;padding:4px 11px;font-size:12.8px;color:var(--gris);white-space:nowrap;display:inline-flex;align-items:center;gap:7px}
 .chip:hover{border-color:var(--gris-cl);color:var(--ink)}
 .chip.on{background:var(--nuit);border-color:var(--nuit);color:#fff;font-weight:500}
 .chip i{font-style:normal;opacity:.6;font-variant-numeric:tabular-nums}
@@ -96,6 +95,12 @@ button{cursor:pointer}
 .sig-in{display:grid;grid-template-columns:1.5fr .85fr;gap:32px;padding:24px 26px 22px}
 .sig-meta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:11.8px;color:var(--gris);margin-bottom:12px}
 .tag{font-size:11px;font-weight:700;border-radius:5px;padding:3px 9px;white-space:nowrap}
+.fresh{font-size:11px;font-weight:600;border-radius:5px;padding:2.5px 9px;white-space:nowrap}
+.fr-0{background:#E6F5EE;color:#1B7A56}
+.fr-1{background:var(--bleu-pale);color:var(--bleu)}
+.fr-2{background:var(--ambre);color:var(--ocre)}
+.fr-3{background:#FBE7E3;color:var(--rouge)}
+.fr-f{background:#EEF1F4;color:var(--gris)}
 .tag-met{font-size:11px;font-weight:600;border-radius:5px;padding:2.5px 9px;border:1px solid;background:transparent}
 .sig h3{font-size:23px;line-height:1.2;font-weight:600;margin-bottom:11px}
 .sig .lead{font-size:14.8px;color:#44525E;line-height:1.58;max-width:58ch}
@@ -220,13 +225,18 @@ footer img{height:16px;opacity:.85}
 <nav class="filters" aria-label="Filtres">
   <div class="frow" id="metierTabs"></div>
   <div class="frow">
-    <span class="flabel">Secteurs</span>
-    <span id="secteurTabs" style="display:flex;gap:8px;flex-wrap:wrap"></span>
-    <div class="sp"></div>
     <select class="fsel" id="axeSel" onchange="filterAxe(this.value)" aria-label="Axe thématique"></select>
+    <select class="fsel" id="freshSel" onchange="filterFresh(this.value)" aria-label="Fraîcheur de la source">
+      <option value="all">Toutes fraîcheurs</option>
+      <option value="30j">Source de moins de 30 jours</option>
+      <option value="3m">Source de moins de 3 mois</option>
+      <option value="6m">Source de moins de 6 mois</option>
+      <option value="vieux">Source de plus de 6 mois</option>
+      <option value="fond">Signaux de fond</option>
+    </select>
     <select class="fsel" id="sortSel" onchange="sortCards(this.value)" aria-label="Tri">
       <option value="urgence">Trier par urgence</option>
-      <option value="recent">Plus récents</option>
+      <option value="recent">Source la plus récente</option>
       <option value="metier">Par métier</option>
       <option value="axe">Par axe</option>
       <option value="alpha">Par titre</option>
@@ -246,7 +256,7 @@ footer img{height:16px;opacity:.85}
 <footer>
   <div class="wrap">
     <img src="data:image/png;base64,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" alt="Paragon">
-    <div>Veille sectorielle BPS · usage interne · fenêtre glissante de 3 mois · dernière mise à jour : <span id="majDate">—</span></div>
+    <div>Veille sectorielle BPS · usage interne · fenêtre glissante de 3 mois sur les cycles de veille · fraîcheur de la source indiquée sur chaque signal · dernière mise à jour : <span id="majDate">—</span></div>
   </div>
 </footer>
 
@@ -302,8 +312,8 @@ footer img{height:16px;opacity:.85}
 const TRIBUNE = {
   date: "Mise à jour du 14 septembre 2026",
   titleHtml: "Les échéances sont passées : le marché ne paie plus le traitement, il paie <b>la preuve du traitement</b>",
-  text: "La facturation électronique est entrée en vigueur le 1er septembre, la commande publique a relevé ses seuils et rendu le critère environnemental obligatoire, et la CNIL a durci le cadre du vote électronique. Sur les quatorze signaux ajoutés, la constante est la même : ce qui départage les prestataires n'est plus la capacité à absorber le volume, mais la capacité à documenter la chaîne — et le SMIC a pris 3,6 % sur l'année pour rappeler que le volume, lui, coûte plus cher.",
-  sources: ['n1','n8','n11']
+  text: "La facturation électronique est entrée en vigueur le 1er septembre, avec une tolérance de démarrage que la DGFiP fait reposer sur la preuve. La CNIL a sanctionné coup sur coup deux organismes début septembre. La RLS entame son extinction le 1er octobre et 5,8 millions d'agents publics votent le 10 décembre. Sur les dix-neuf signaux ajoutés, la constante est la même : ce qui départage les prestataires n'est plus la capacité à absorber le volume, mais la capacité à documenter la chaîne.",
+  sources: ['n15','n16','n18']
 };
 
 // ============================================================
@@ -314,7 +324,63 @@ const SIGNALS = [
 
   // ══════════ MISE À JOUR DU 14 SEPTEMBRE 2026 — NOUVEAUX SIGNAUX ══════════
 
-  {id:'n1',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'n15',origine:'2026-09-09',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'securite',axeLabel:'Sécurité & RGPD',
+   badge:'Sanctions CNIL',badgeColor:'#fee2e2',badgeTextColor:'#b91c1c',
+   urgence:'CRITIQUE',urgenceColor:'#dc2626',nouveau:true,
+   title:'La CNIL sanctionne un établissement de santé de 500 000 € pour défaut de sécurité des données',
+   meta:'Sécurité & RGPD',date:'Septembre 2026',pub:'14 septembre 2026',
+   excerpt:'Le 3 septembre, la CNIL a prononcé une amende de 500 000 € contre l\'Hôpital privé de la Loire pour ne pas avoir pris de mesures adaptées à la sécurité des données. Une seconde sanction de 300 000 € est tombée le 9 septembre. La série de rentrée confirme la priorité donnée à la sécurité et à la chaîne de sous-traitance.',
+   detail:`<ul><li>3 septembre 2026 : 500 000 € d'amende contre l'Hôpital privé de la Loire, pour absence de mesures adaptées à la sécurité de données de santé.</li><li>9 septembre 2026 : 300 000 € pour non-respect des droits des personnes, notamment du droit à l'effacement.</li><li>18 août 2026 : la CNIL a ouvert des vérifications sur le piratage du système d'information des impôts.</li><li>Depuis janvier 2026, 23 nouvelles sanctions ont été prononcées ; la CNIL cible désormais toutes les tailles d'organisme et met l'accent sur l'authentification multifacteur pour les bases sensibles.</li></ul>`,
+   action:'Faire de la conformité un argument commercial plutôt qu\'une contrainte : produire une fiche de preuves opposable — MFA, journalisation, délais de notification, contrats de sous-traitance article 28 — à joindre systématiquement aux réponses sur les marchés santé et assurance.',
+   owner:'DPO & avant-vente',due:'Fiche prête en octobre',
+   links:[{l:'CNIL — sanctions prononcées',u:'https://www.cnil.fr/fr/thematique/cnil/sanctions'},{l:'CNIL — compromission chez un sous-traitant',u:'https://www.cnil.fr/fr/compromission-donnees-chez-un-sous-traitant-quels-risques'}]},
+
+  {id:'n16',origine:'2026-08-12',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Tolérance de démarrage',badgeColor:'#ffedd5',badgeTextColor:'#c2410c',
+   urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
+   title:'La DGFiP encadre une tolérance au démarrage : ni report, ni suspension, mais une bonne foi à prouver',
+   meta:'Marché & réglementation',date:'Septembre 2026',pub:'14 septembre 2026',
+   excerpt:'Le guide pratique de démarrage publié par la DGFiP annonce que les sanctions ne s\'appliqueront pas mécaniquement aux entreprises engagées dans une trajectoire sérieuse de mise en conformité. La charge de la preuve repose entièrement sur l\'entreprise, sans critère chiffré.',
+   detail:`<ul><li>Trois principes affichés : le calendrier légal est maintenu, la continuité économique est préservée, et cette continuité ne vaut pas dispense d'appliquer la réforme.</li><li>La tolérance suppose de produire des pièces concrètes et datées : contrat de plateforme, calendrier de raccordement, échanges avec l'éditeur ou l'expert-comptable, consignes internes, actions de régularisation.</li><li>Aucun critère n'est chiffré : la frontière entre difficulté excusable et manquement sanctionnable reste à l'appréciation du service.</li><li>Une facture reçue par courriel, en PDF ou sur papier après le 1er septembre reste valable et ouvre droit à déduction si elle correspond à une opération réelle ; le retard de paiement fondé sur une difficulté informatique est expressément condamné.</li><li>Deux millions d'entreprises ont déclaré disposer d'une plateforme de réception, une déclaration qui ne vaut pas capacité vérifiée.</li></ul>`,
+   action:'Vendre la traçabilité de la trajectoire : proposer aux clients un dossier de preuve de conformité — journal des raccordements, échanges, régularisations — constitué et conservé par nous. C\'est exactement ce que la DGFiP réclamera et ce que personne n\'a organisé.',
+   owner:'Direction commerciale & offre',due:'Offre à formaliser en octobre',
+   links:[{l:'DGFiP — guide pratique de démarrage',u:'https://www.impots.gouv.fr/sites/default/files/media/1_metier/2_professionnel/EV/2_gestion/290_facturation_electronique/guide_pratique_facturation_electronique.pdf'},{l:'IT Social — tolérance et numéro d\'assistance',u:'https://itsocial.fr/metiers/metiers-actualites/facturation-electronique-la-dgfip-annonce-une-tolerance-au-demarrage-et-ouvre-un-numero-dassistance/'},{l:'Cyplom — ce que le guide autorise réellement',u:'https://www.cyplom.com/fr/blog/guide-pratique-demarrage-dgfip-facturation-electronique-1er-septembre-2026'}]},
+
+  {id:'n17',origine:'2026-06-08',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'clients',axeLabel:'Clients & opportunités',
+   badge:'Fonction publique · décembre',badgeColor:'#dbeafe',badgeTextColor:'#1d4ed8',
+   urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
+   title:'Élections professionnelles de la fonction publique : 5,8 millions d\'agents votent du 3 au 10 décembre 2026',
+   meta:'Clients & opportunités',date:'Septembre 2026',pub:'14 septembre 2026',
+   excerpt:'Le renouvellement général des instances de dialogue social est fixé au 10 décembre 2026 par arrêté du 2 juillet 2025. Le vote électronique par internet est le principe dans la fonction publique d\'État ; territoriale et hospitalière choisissent leurs modalités. Le scrutin est à moins de trois mois.',
+   detail:`<ul><li>5,8 millions d'agents des trois versants sont appelés à voter ; dans la fonction publique d'État, le vote électronique se déroule du 3 décembre 8 h au 10 décembre 17 h, l'urne et la correspondance devenant dérogatoires (art. R.211-505 du code général de la fonction publique).</li><li>Dans les versants territorial et hospitalier, chaque administration choisit ses modalités : le vote électronique, s'il est retenu, dure de 72 heures à 8 jours et doit s'achever le 10 décembre.</li><li>Les ministères mutualisent leurs scrutins sur des solutions ministérielles ; les établissements publics peuvent retenir une solution distincte, ce qui ouvre un marché de scrutins locaux.</li><li>Pour la première fois, des règles de représentation équilibrée entre femmes et hommes s'appliquent aux listes.</li><li>Chaque agent doit recevoir identifiants, calendrier et accès à une assistance technique — un dispositif multicanal à fort volume.</li></ul>`,
+   action:'Le calendrier est court mais les scrutins locaux d\'établissements ne sont pas tous attribués : cibler immédiatement les établissements publics hors solution ministérielle sur l\'assistance aux électeurs, la fiabilisation des listes et le vote par correspondance dérogatoire.',
+   owner:'Paragon Elections',due:'Scrutin le 10 décembre',
+   links:[{l:'Portail de la fonction publique — élections 2026',u:'https://www.fonction-publique.gouv.fr/dialogue-social-et-representation/les-elections-professionnelles-2026'},{l:'Service-Public — modalités de vote',u:'https://www.service-public.gouv.fr/particuliers/vosdroits/F18872'},{l:'Enseignement supérieur — circulaire d\'organisation',u:'https://www.enseignementsup-recherche.gouv.fr/fr/bo/2026/Hebdo20/ESRH2610522C'}]},
+
+  {id:'n18',origine:'2026-02-14',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'RLS · quittancement',badgeColor:'#ede9fe',badgeTextColor:'#6d28d9',
+   urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
+   title:'Réduction de loyer de solidarité : extinction progressive à partir du 1er octobre pour les ménages sans APL',
+   meta:'Marché & réglementation',date:'Septembre 2026',pub:'14 septembre 2026',
+   excerpt:'La loi de finances pour 2026 organise la sortie de la RLS pour les foyers non bénéficiaires de l\'APL : baisse de 25 % dès le 1er octobre 2026, puis 50 %, puis 75 %, et extinction complète en juin 2027. Chaque palier déclenche une modification du quittancement et une information des locataires.',
+   detail:`<ul><li>Calendrier : −25 % par rapport au montant de septembre 2026 jusqu'à fin décembre 2026, −50 % jusqu'à fin mars 2027, −75 % jusqu'à fin juin 2027, puis extinction pour les ménages sans APL.</li><li>Le montant global de la RLS est fixé à 900 M€ pour 2026, contre 1,3 Md€ dans le texte initial, en contrepartie d'une cotisation CGLLS portée à 275 M€ au titre du FNAP.</li><li>Chaque palier suppose un recalcul du quittancement et une communication aux locataires concernés, sur quatre vagues successives en neuf mois.</li><li>L'Union sociale pour l'habitat chiffrait les prélèvements 2026 sur les organismes HLM à un niveau record, ce qui tend leurs arbitrages de coûts de gestion.</li></ul>`,
+   action:'Quatre vagues de courriers et d\'avis d\'échéance modifiés en neuf mois, chez tous les bailleurs : proposer dès maintenant un dispositif packagé — édition, personnalisation, routage, hotline locataires — plutôt que d\'attendre les demandes au coup par coup.',
+   owner:'Direction Bailleurs sociaux',due:'1re vague le 1er octobre',
+   links:[{l:'Sénat — projet de loi de finances pour 2026, volet RLS',u:'https://www.senat.fr/rap/l25-312/l25-31218.html'},{l:'Les Coop\' HLM — loi de finances 2026 promulguée',u:'https://www.hlm.coop/actualites/all/20151'}]},
+
+  {id:'n19',origine:'2026-07-08',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'marche',axeLabel:'Marché & réglementation',
+   badge:'Relance & décentralisation',badgeColor:'#dcfce7',badgeTextColor:'#166534',
+   urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',nouveau:true,
+   title:'Logement : le projet de loi relance et décentralisation arrive à l\'Assemblée à la rentrée',
+   meta:'Marché & réglementation',date:'Septembre 2026',pub:'14 septembre 2026',
+   excerpt:'Adopté en première lecture au Sénat le 8 juillet 2026 et déposé à l\'Assemblée le lendemain, le texte porte la décentralisation de la politique du logement. Son examen en séance n\'est pas encore programmé, mais il conditionne les compétences des acheteurs publics du secteur.',
+   detail:`<ul><li>Le projet de loi visant la relance et la décentralisation du logement a été adopté au Sénat le 8 juillet 2026 puis transmis à l'Assemblée nationale, où la commission des affaires économiques s'en est saisie au fond.</li><li>Il organise le transfert de compétences vers les collectivités, ce qui déplacerait le niveau de décision — et donc d'achat — pour une partie des dispositifs.</li><li>Deux autres échéances structurent la rentrée du secteur : l'encadrement des loyers, dont le terme tombe fin novembre, et le budget 2027 encore à écrire.</li><li>Pour un prestataire documentaire, la décentralisation signifie une multiplication des donneurs d'ordre locaux et des consultations de taille plus réduite.</li></ul>`,
+   action:'Anticiper l\'éclatement des donneurs d\'ordre : adapter le dispositif commercial aux consultations locales de plus petite taille, là où notre organisation est calée sur les grands comptes nationaux.',
+   owner:'Direction commerciale secteur public',due:'Suivi de l\'examen à l\'Assemblée',
+   links:[{l:'Panorama de la rentrée parlementaire logement 2026',u:'https://www.rennesimmo9.com/actualites/politique/rentree-parlementaire-logement-2026'}]},
+
+
+  {id:'n1',origine:'2026-09-01',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Entrée en vigueur',badgeColor:'#fee2e2',badgeTextColor:'#b91c1c',
    urgence:'CRITIQUE',urgenceColor:'#dc2626',nouveau:true,
    title:'Facturation électronique : la réforme est entrée en vigueur le 1er septembre 2026, 149 plateformes agréées immatriculées',
@@ -325,7 +391,7 @@ const SIGNALS = [
    owner:'Direction commerciale',due:'T4 2026',
    links:[{l:'impots.gouv.fr — liste des plateformes agréées',u:'https://www.impots.gouv.fr/facturation-electronique-et-plateformes-agreees'},{l:'economie.gouv.fr — tout savoir sur la facturation électronique',u:'https://www.economie.gouv.fr/tout-savoir-sur-la-facturation-electronique-pour-les-entreprises'},{l:'Presse-citron — les 149 plateformes agréées',u:'https://www.presse-citron.net/facturation-electronique-entre-vigueur-aujourdhui-voici-149-plateformes-agreees-france/'}]},
 
-  {id:'n2',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'n2',origine:'2026-09-01',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Sanctions & e-reporting',badgeColor:'#ffedd5',badgeTextColor:'#c2410c',
    urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
    title:'Défaut de plateforme agréée : 500 € puis 1 000 € tous les trois mois, en plus des amendes par facture',
@@ -336,7 +402,7 @@ const SIGNALS = [
    owner:'Direction commerciale & juridique',due:'Avant le 31 octobre',
    links:[{l:'Pennylane — réforme et régime de sanctions',u:'https://www.pennylane.com/fr/fiches-pratiques/facture-electronique/reforme-facturation-electronique'},{l:'Service-Public — plateformes agréées immatriculées',u:'https://entreprendre.service-public.gouv.fr/actualites/A18759'}]},
 
-  {id:'n3',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'securite',axeLabel:'Sécurité & RGPD',
+  {id:'n3',origine:'2026-03-19',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'Recommandation CNIL',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
    urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
    title:'Vote par correspondance électronique : la recommandation CNIL du 19 mars 2026 s\'applique à tout nouveau scrutin',
@@ -347,7 +413,7 @@ const SIGNALS = [
    owner:'Paragon Elections',due:'T4 2026',
    links:[{l:'CNIL — recommandation vote par correspondance électronique',u:'https://www.cnil.fr/fr/recommandation-vote-electronique'},{l:'La Poste — CNIL et élections professionnelles',u:'https://www.laposte.fr/entreprise-collectivites/actualites/cnil-elections-professionnelles-comment-respecter-confidentialite-donnees-electeurs'}]},
 
-  {id:'n4',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'n4',origine:'2026-06-23',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Fonction publique',badgeColor:'#dbeafe',badgeTextColor:'#1d4ed8',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',nouveau:true,
    title:'Fonction publique : expertise préalable obligatoire et rapports transmis à la CNIL depuis le rappel du 23 juin 2026',
@@ -358,7 +424,7 @@ const SIGNALS = [
    owner:'Paragon Elections',due:'T4 2026',
    links:[{l:'Données personnelles — vote électronique et RGPD',u:'https://www.donneespersonnelles.fr/vote-electronique-rgpd'},{l:'CNIL — recommandation vote électronique',u:'https://www.cnil.fr/fr/recommandation-vote-electronique'}]},
 
-  {id:'n5',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'n5',origine:'2024-09-11',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Jurisprudence',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
    urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
    title:'Vote CSE : la conformité formelle ne protège pas — un seul manquement au droit électoral suffit à annuler le scrutin',
@@ -369,7 +435,7 @@ const SIGNALS = [
    owner:'Paragon Elections',due:'Avant le cycle CSE 2027',
    links:[{l:'Données personnelles — jurisprudence vote électronique',u:'https://www.donneespersonnelles.fr/vote-electronique-rgpd'},{l:'CSE Formation — conditions et garanties 2026',u:'https://cseformation-digital.fr/vote-electronique-cse-conditions-garanties-mise-en-place-2026/'}]},
 
-  {id:'n6',metier:'crc',metierLabel:'CRC · Relation client',axe:'secteurs',axeLabel:'Secteurs',
+  {id:'n6',origine:'2026-07-10',metier:'crc',metierLabel:'CRC · Relation client',axe:'secteurs',axeLabel:'Secteurs',
    badge:'Baromètre SP2C 2026',badgeColor:'#cffafe',badgeTextColor:'#0e7490',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',nouveau:true,
    title:'Relation client externalisée : un marché français de 3,5 Md€, en recul de 1,4 % pour la première fois',
@@ -380,7 +446,7 @@ const SIGNALS = [
    owner:'Direction CRC',due:'Plan T4',
    links:[{l:'Relation Client Mag — Baromètre 2026 du SP2C',u:'https://www.relationclientmag.fr/marketing-client-1251/barometre-etude-2151/relation-client-externalisee-lia-accelere-la-transformation-dun-marche-a-35-milliards-deuros-36176'},{l:'Armatis — panorama du BPO en Europe 2026',u:'https://www.armatis.com/2026/02/25/quels-sont-les-acteurs-bpo-de-la-relation-client-en-europe-et-en-france-panorama-du-marche-2026/'}]},
 
-  {id:'n7',metier:'crc',metierLabel:'CRC · Relation client',axe:'techno',axeLabel:'Technologies',
+  {id:'n7',origine:'2026-07-01',metier:'crc',metierLabel:'CRC · Relation client',axe:'techno',axeLabel:'Technologies',
    badge:'IA agentique',badgeColor:'#ede9fe',badgeTextColor:'#6d28d9',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',nouveau:true,
    title:'IA agentique : les premiers déploiements industriels affichent 24 % d\'appels automatisés et 20 points de satisfaction',
@@ -391,7 +457,7 @@ const SIGNALS = [
    owner:'Direction CRC',due:'Pilote lancé au T4',
    links:[{l:'AFRC — benchmark IA agentique (juillet 2026)',u:'https://www.afrc.org/2026/07/01/07-2026-benchmark-offre-ia-agentique-des-acteurs-de-solutions-de-relation-client/'},{l:'AFRC — IA agentique, accélérateur de la relation client',u:'https://www.afrc.org/2026/04/21/04-2026-ia-agentique-accelerateur-de-la-relation-client/'}]},
 
-  {id:'n8',metier:'ao',metierLabel:'Marchés publics & AO',axe:'securite',axeLabel:'Sécurité & RGPD',
+  {id:'n8',origine:'2026-06-19',metier:'ao',metierLabel:'Marchés publics & AO',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'Souveraineté',badgeColor:'#fee2e2',badgeTextColor:'#b91c1c',
    urgence:'CRITIQUE',urgenceColor:'#dc2626',nouveau:true,
    title:'SecNumCloud : le décret SREN, la circulaire Lecornu et la CNIL convergent — la qualification devient un filtre d\'accès',
@@ -402,7 +468,7 @@ const SIGNALS = [
    owner:'COMEX',due:'Arbitrage en octobre',
    links:[{l:'Delsol Avocats — circulaire du 5 février 2026',u:'https://www.delsolavocats.com/La-circulaire-Lecornu-du-5-fevrier-2026-reaffirme-l-exigence-d-un-hebergement-SecNumCloud-pour-les-donnees-de-sante'},{l:'NetExplorer — qui est concerné par SecNumCloud en 2026',u:'https://www.netexplorer.fr/blog/secnumcloud-qui-est-vraiment-concerne-en-2026'},{l:'Données personnelles — SecNumCloud, prestataires qualifiés',u:'https://donneespersonnelles.fr/secnumcloud-certification'}]},
 
-  {id:'n9',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'securite',axeLabel:'Sécurité & RGPD',
+  {id:'n9',origine:'2026-07-08',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'NIS2 · Loi Résilience',badgeColor:'#ffedd5',badgeTextColor:'#c2410c',
    urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
    title:'Loi Résilience : la Commission européenne saisit la CJUE contre la France, mais les clients appliquent déjà NIS2',
@@ -413,7 +479,7 @@ const SIGNALS = [
    owner:'DSI & RSSI',due:'Avant les décrets de fin 2026',
    links:[{l:'Legiwatch — état de la transposition NIS2',u:'https://www.legiwatch.fr/lexique/nis2/'},{l:'Deefense — calendrier de transposition et ReCyF',u:'https://deefense.fr/cyber-et-it/transposition-nis2-france-calendrier'},{l:'ANSSI — FAQ MonEspaceNIS2',u:'https://aide.monespacenis2.cyber.gouv.fr/fr/article/avancement-de-la-transposition-de-la-directive-nis-2-1b3j1da/'}]},
 
-  {id:'n10',metier:'ao',metierLabel:'Marchés publics & AO',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'n10',origine:'2026-05-26',metier:'ao',metierLabel:'Marchés publics & AO',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Loi simplification',badgeColor:'#e5e7eb',badgeTextColor:'#374151',
    urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
    title:'Commande publique : loi du 26 mai 2026, seuil de dispense porté à 60 000 € HT et généralisation programmée de PLACE',
@@ -424,7 +490,7 @@ const SIGNALS = [
    owner:'Direction commerciale secteur public',due:'Dispositif en place au T4',
    links:[{l:'Novlaw — loi de simplification et marchés publics',u:'https://novlaw.fr/ressource/loi-simplification-vie-economique-2026-marches-publics'},{l:'Service-Public — nouveaux seuils 2026',u:'https://entreprendre.service-public.gouv.fr/actualites/A18673'},{l:'Weka — ce qui attend les acheteurs en 2026',u:'https://www.weka.fr/actualite/commande-publique/article/marches-publics-ce-qui-attend-les-acheteurs-en-2026-209039/'}]},
 
-  {id:'n11',metier:'ao',metierLabel:'Marchés publics & AO',axe:'qualite',axeLabel:'Qualité & certifications',
+  {id:'n11',origine:'2026-08-21',metier:'ao',metierLabel:'Marchés publics & AO',axe:'qualite',axeLabel:'Qualité & certifications',
    badge:'Critère environnemental',badgeColor:'#dcfce7',badgeTextColor:'#166534',
    urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
    title:'Loi Climat et résilience : le critère environnemental est obligatoire dans les marchés publics depuis le 21 août 2026',
@@ -435,7 +501,7 @@ const SIGNALS = [
    owner:'Direction QSE & avant-vente',due:'Dossier prêt fin octobre',
    links:[{l:'Weka — nouveautés 2026 en matière de marchés publics',u:'https://www.weka.fr/actualite/commande-publique/article/marches-publics-ce-qui-attend-les-acheteurs-en-2026-209039/'},{l:'Okaveo — réforme de la commande publique 2026',u:'https://www.okaveo.com/blog/reforme-commande-publique-2026/'}]},
 
-  {id:'n12',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'economie',axeLabel:'Économie & social',
+  {id:'n12',origine:'2026-06-01',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'economie',axeLabel:'Économie & social',
    badge:'Coût du travail',badgeColor:'#ccfbf1',badgeTextColor:'#0f766e',
    urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
    title:'SMIC : deux revalorisations en 2026, de 12,02 € à 12,31 € de l\'heure au 1er juin',
@@ -446,7 +512,7 @@ const SIGNALS = [
    owner:'Direction financière',due:'Avant les renouvellements de janvier',
    links:[{l:'info.gouv.fr — SMIC revalorisé au 1er juin 2026',u:'https://www.info.gouv.fr/actualite/le-smic-revalorise-le-1er-juin-2026'},{l:'Ministère du Travail — revalorisation au 1er janvier 2026',u:'https://travail-emploi.gouv.fr/revalorisation-annuelle-du-smic-au-1er-janvier-2026'}]},
 
-  {id:'n13',metier:'cartes',metierLabel:'Cartes & billettique',axe:'techno',axeLabel:'Technologies',
+  {id:'n13',origine:'2026-06-16',metier:'cartes',metierLabel:'Cartes & billettique',axe:'techno',axeLabel:'Technologies',
    badge:'Open Payment',badgeColor:'#ffedd5',badgeTextColor:'#c2410c',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',nouveau:true,
    title:'Billettique francilienne : 1 300 bus équipés en Open Payment, le ticket carton a disparu',
@@ -457,7 +523,7 @@ const SIGNALS = [
    owner:'Direction Cartes & billettique',due:'Revue d\'offre au T4',
    links:[{l:'Île-de-France Mobilités — dématérialisation des titres',u:'https://presse.iledefrance-mobilites.fr/la-dematerialisation-des-titres-de-transport-continue-sur-le-reseau-francilien/?lang=fr'},{l:'Cerema — déploiement de l\'Open Payment en France',u:'https://www.cerema.fr/fr/actualites/carte-bancaire-titre-transport-succes-usagers-operateurs'}]},
 
-  {id:'n14',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'clients',axeLabel:'Clients & opportunités',
+  {id:'n14',origine:'2025-10-01',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'SLS/OPS',badgeColor:'#ede9fe',badgeTextColor:'#6d28d9',
    urgence:'HAUTE',urgenceColor:'#E38900',nouveau:true,
    title:'Enquêtes SLS/OPS : une campagne annuelle massive déjà largement sous-traitée à des opérateurs documentaires',
@@ -468,7 +534,7 @@ const SIGNALS = [
    owner:'Direction Bailleurs sociaux',due:'Avant la campagne d\'automne',
    links:[{l:'Ministère de la Transition écologique — enquête SLS',u:'https://www.ecologie.gouv.fr/politiques-publiques/enquete-supplement-loyer-solidarite'},{l:'ICF Habitat — campagne SLS/OPS auprès des locataires',u:'https://www.icfhabitat.fr/groupe/enquete-sls-ops-2026-noubliez-pas-de-repondre'},{l:'Alogea — chaîne de traitement de l\'enquête',u:'https://www.alogea.fr/actualites/lenquete-occupation-du-parc-social-ops-et-le-supplement-de-loyer-solidarite-sls-2026-est-lancee/'}]},
 
-  {id:'cse1',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'cse1',origine:'2026-03-19',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Élections CSE 2026-2027',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Élections CSE 2026-2027 : un marché récurrent où le vote électronique se généralise',
@@ -478,7 +544,7 @@ const SIGNALS = [
    action:'Se positionner sur les consultations CSE (offre clé en main vote électronique et/ou par correspondance, conformité, expertise indépendante, multicanal).',
    links:[{l:'Ministère du Travail — vote électronique CSE',u:'https://www.elections-professionnelles.travail.gouv.fr/vote-electronique'},{l:'Blog RH — guide élections CSE 2026-2027',u:'https://www.blog-rh.com/2026/06/elections-professionnelles-cse-2026-guide-operationnel/'},{l:'VCAST — organisation des élections CSE',u:'https://www.vcast.vote/organisation-election-cse/'}]},
 
-  {id:'csecadre',metier:'vote-correspondance',metierLabel:'Vote par correspondance',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'csecadre',fond:true,metier:'vote-correspondance',metierLabel:'Vote par correspondance',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Cadre juridique CSE',badgeColor:'#dcfce7',badgeTextColor:'#166534',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Organiser le vote CSE : accord ou DUE, notice d\'information obligatoire, expertise indépendante',
@@ -488,7 +554,7 @@ const SIGNALS = [
    action:'Sécuriser le cadre (accord/DUE, notice, expertise) est un différenciateur — l\'accompagnement juridique et logistique évite l\'annulation.',
    links:[{l:'Éditions Tissot — CSE & vote électronique (CNIL)',u:'https://www.editions-tissot.fr/actualite/representants-du-personnel-ce/elections-cse-et-vote-electronique-la-cnil-actualise-sa-recommandation'},{l:'WeChooz — guide juridique vote électronique CSE',u:'https://www.wechooz.fr/tout-savoir-sur-le-vote-electronique-aux-elections-du-cse/'},{l:'CSE Formation — conditions du vote électronique 2026',u:'https://cseformation-digital.fr/vote-electronique-cse-conditions-garanties-mise-en-place-2026/'}]},
 
-  {id:'csejuris',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'csejuris',fond:true,metier:'vote-electronique',metierLabel:'Vote électronique',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Jurisprudence CSE',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
    urgence:'À SURVEILLER',urgenceColor:'#7F7F7F',
    title:'Jurisprudence CSE : égalité d\'accès au vote et contentieux du protocole préélectoral',
@@ -498,7 +564,7 @@ const SIGNALS = [
    action:'Documenter l\'accessibilité, la parité (art. L.2314-19) et la traçabilité pour sécuriser la sincérité du scrutin.',
    links:[{l:'Lexbase — le vote électronique aux élections CSE',u:'https://www.lexbase.fr/article-juridique/86647837-pratiqueprofessionnellelevotea9lectroniqueauxa9lectionsprofessionnellesaucse'},{l:'UNSA — guide élections CSE 2026 (jurisprudence)',u:'https://www.unsa.org/Guide-UNSA-des-elections-professionnelles-C-S-E-2024-2025.html'},{l:'Blog RH — guide CSE 2026-2027 (PAP, DREETS)',u:'https://www.blog-rh.com/2026/06/elections-professionnelles-cse-2026-guide-operationnel/'}]},
 
-  {id:'sec4',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'securite',axeLabel:'Sécurité & RGPD',
+  {id:'sec4',origine:'2026-03-19',metier:'vote-electronique',metierLabel:'Vote électronique',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'RGPD · vote CSE',badgeColor:'#fce7f3',badgeTextColor:'#9d174d',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Vote CSE : données d\'opinion, RGPD et séparation stricte identité / vote',
@@ -508,7 +574,7 @@ const SIGNALS = [
    action:'Documenter la conformité RGPD et sécurité (avec le guide ANSSI) dès la réponse à l\'AO, pour garantir la sincérité du scrutin et éviter tout risque d\'annulation.',
    links:[{l:'CNIL — recommandation vote électronique',u:'https://www.cnil.fr/fr/recommandation-vote-electronique'},{l:'Éditions Tissot — CSE & vote électronique',u:'https://www.editions-tissot.fr/actualite/representants-du-personnel-ce/elections-cse-et-vote-electronique-la-cnil-actualise-sa-recommandation'}]},
 
-  {id:'ao2',metier:'ao',metierLabel:'Marchés publics & AO',axe:'clients',axeLabel:'Clients & opportunités',
+  {id:'ao2',origine:'2026-03-19',metier:'ao',metierLabel:'Marchés publics & AO',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'AO Vote CSE',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'AO Vote : élections CSE, fonction publique et scrutins professionnels à cibler',
@@ -521,7 +587,7 @@ const SIGNALS = [
 
   // ══════════ ÉDITION AOÛT 2026 · mise à jour du 11 ══════════,
 
-  {id:'lean1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'qualite',axeLabel:'Qualité & certifications',
+  {id:'lean1',fond:true,metier:'bpo',metierLabel:'BPO & Externalisation',axe:'qualite',axeLabel:'Qualité & certifications',
    badge:'Lean · Excellence op.',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Lean management : l\'excellence opérationnelle, nouveau standard des prestataires BPO',
@@ -531,7 +597,7 @@ const SIGNALS = [
    action:'Formaliser une démarche Lean/Six Sigma (ceintures vertes/noires, chantiers Kaizen, DMAIC), l\'articuler avec ISO 9001 et la prouver dans les mémoires techniques (indicateurs de progrès chiffrés).',
    links:[{l:'Goodcall — BPO operational excellence 2026',u:'https://www.goodcall.com/bpo/operational-excellence'},{l:'Relation-client.org — métiers de la relation client 2026',u:'https://relation-client.org/metiers-relation-client-2026/'},{l:'Centrale Lyon — Lean & excellence opérationnelle 2026',u:'https://www.ec-lyon.fr/sites/default/files/content/pages/documents/2026-02/plaquette-lean-2026.pdf'}]},
 
-  {id:'b1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'b1',origine:'2026-07-01',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Marché mondial',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'BPO mondial ~328 Md$ : la CX portée par l\'IA et l\'outcome-based',
@@ -541,7 +607,7 @@ const SIGNALS = [
    action:'Se positionner sur les contrats orientés résultats plutôt qu\'au volume, et industrialiser l\'hyper-automatisation (RPA + IA) sur les flux documentaires à faible valeur.',
    links:[{l:'Armatis — panorama BPO Europe 2026',u:'https://www.armatis.com/2026/02/25/quels-sont-les-acteurs-bpo-de-la-relation-client-en-europe-et-en-france-panorama-du-marche-2026/'},{l:'Armatis — définition & marché BPO 2026',u:'https://www.armatis.com/2026/02/24/quest-ce-que-le-bpo-business-process-outsourcing-definition-fonctionnement-et-avantages/'},{l:'La Plume — externalisation service client 2026',u:'https://www.laplume.mg/blog/actualites/externalisation-service-client-guide-tarifs-2026/'}]},
 
-  {id:'b3',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'rse',axeLabel:'RSE · RH · Management',
+  {id:'b3',origine:'2026-06-07',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'rse',axeLabel:'RSE · RH · Management',
    badge:'Transparence salariale',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Transparence salariale : projet de loi (22 articles) au Conseil d\'État',
@@ -551,7 +617,7 @@ const SIGNALS = [
    action:'Cartographier les grilles (écart « inexpliqué » ~4 % à poste comparable), préparer les fourchettes, renforcer le volet RSE des mémoires techniques.',
    links:[{l:'PayFit — transparence des salaires 2026',u:'https://payfit.com/fr/fiches-pratiques/transparence-des-salaires/'},{l:'Fiche-paie — état du droit (juil. 2026)',u:'https://fiche-paie.fr/blog/transparence-salariale'},{l:'Juritravail — 7 points clés',u:'https://www.juritravail.com/Actualite/transparence-des-remunerations-7-points-pour-comprendre-les-nouvelles-exigences-europeennes/Id/376662'}]},
 
-  {id:'b5',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'clients',axeLabel:'Clients & opportunités',
+  {id:'b5',origine:'2026-05-01',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'PSC fonction publique',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'PSC fonction publique : montée en charge des opérateurs, flux d\'actes massifs',
@@ -577,7 +643,7 @@ const SIGNALS = [
 
   // ── FACTURATION ÉLECTRONIQUE & PLATEFORMES AGRÉÉES ───────,
 
-  {id:'f4',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'techno',axeLabel:'Technologies',
+  {id:'f4',origine:'2026-07-01',metier:'facturation',metierLabel:'Facturation électronique & PA',axe:'techno',axeLabel:'Technologies',
    badge:'PPF & formats',badgeColor:'#fef3c7',badgeTextColor:'#92400e',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'PPF concentrateur seul : les PA deviennent le passage obligé (Factur-X / UBL / CII)',
@@ -590,7 +656,7 @@ const SIGNALS = [
 
   // ── CRC · RELATION CLIENT ────────────────────────────────,
 
-  {id:'crc1',metier:'crc',metierLabel:'CRC · Relation client',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'crc1',origine:'2026-07-01',metier:'crc',metierLabel:'CRC · Relation client',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Marché CRC',badgeColor:'#cffafe',badgeTextColor:'#155e75',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Relation client externalisée : 53 % des entreprises externalisent, le chat progresse',
@@ -600,7 +666,7 @@ const SIGNALS = [
    action:'Structurer une offre chat et back-office adossée au multicanal, et argumenter la bascule CAPEX vers OPEX auprès des directions qui hésitent encore à externaliser.',
    links:[{l:'La Plume — externalisation service client 2026',u:'https://www.laplume.mg/blog/actualites/externalisation-service-client-guide-tarifs-2026/'},{l:'Optiserv — guide relation client 2026',u:'https://www.optiserv.fr/guide-pratique-de-lexternalisation-de-la-relation-client-2026/'}]},
 
-  {id:'crc2',metier:'crc',metierLabel:'CRC · Relation client',axe:'techno',axeLabel:'Technologies',
+  {id:'crc2',origine:'2026-07-01',metier:'crc',metierLabel:'CRC · Relation client',axe:'techno',axeLabel:'Technologies',
    badge:'IA & centres de contact',badgeColor:'#cffafe',badgeTextColor:'#155e75',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'CRC augmenté : l\'IA agentique redéfinit les centres de contact',
@@ -612,7 +678,7 @@ const SIGNALS = [
 
   // ── BAILLEURS SOCIAUX · SLS / OPS ────────────────────────,
 
-  {id:'bail1',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'bail1',origine:'2025-10-01',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Campagne SLS/OPS 2026',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Enquêtes SLS/OPS : campagne réglementaire 2026 auprès de tous les locataires',
@@ -622,7 +688,7 @@ const SIGNALS = [
    action:'Caler les capacités d\'impression, de routage et de CRC sur les fenêtres de campagne des bailleurs clients, et proposer la relance multicanale comme option de l\'offre.',
    links:[{l:'Alogea — lancement enquête OPS/SLS 2026',u:'https://www.alogea.fr/actualites/lenquete-occupation-du-parc-social-ops-et-le-supplement-de-loyer-solidarite-sls-2026-est-lancee/'},{l:'Deux-Sèvres Habitat — enquête SLS/OPS 2026',u:'https://www.79habitat.fr/enquete-sls-ops-2026/'},{l:'Ministère — enquête OPS (cadre)',u:'https://www.ecologie.gouv.fr/politiques-publiques/enquete-loccupation-du-parc-social-ops'}]},
 
-  {id:'bail2',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'clients',axeLabel:'Clients & opportunités',
+  {id:'bail2',fond:true,metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'Externalisation SLS/OPS',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
    urgence:'OPPORTUNITÉ',urgenceColor:'#16a34a',
    title:'SLS/OPS : des campagnes multicanales à fort volume, terrain naturel du BPO',
@@ -632,7 +698,7 @@ const SIGNALS = [
    action:'Offre clé en main SLS/OPS — édition, routage, collecte multicanale, LAD/RAD, contrôle de complétude et reporting.',
    links:[{l:'Alogea — enquête OPS/SLS (prestataire Xelians)',u:'https://www.alogea.fr/actualites/lenquete-occupation-du-parc-social-ops-et-le-supplement-de-loyer-solidarite-sls-2026-est-lancee/'},{l:'Partélios — enquête OPS SLS 2026',u:'https://www.partelios.fr/actualite/enquete_ops_sls_2026/161'}]},
 
-  {id:'bail3',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'techno',axeLabel:'Technologies',
+  {id:'bail3',fond:true,metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'techno',axeLabel:'Technologies',
    badge:'Donnée & GIP-SNE',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
    urgence:'À SURVEILLER',urgenceColor:'#7F7F7F',
    title:'OPS : qualité de la donnée et téléversement au portail GIP-SNE',
@@ -644,7 +710,7 @@ const SIGNALS = [
 
   // ── BPO · THÉMATIQUES TRANSVERSES (Automation & Délégation de gestion) ──,
 
-  {id:'b6',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'techno',axeLabel:'Technologies',
+  {id:'b6',fond:true,metier:'bpo',metierLabel:'BPO & Externalisation',axe:'techno',axeLabel:'Technologies',
    badge:'Automation · IDP',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Hyperautomatisation & IDP : la chaîne RPA + IA pour le flux documentaire',
@@ -654,7 +720,7 @@ const SIGNALS = [
    action:'Industrialiser LAD/RAD et contrôle de complétude sur les flux à fort volume (affiliations, SLS/OPS, courrier entrant), en gardant supervision humaine et souveraineté des données.',
    links:[{l:'Parseur — de la RPA à l\'hyperautomatisation',u:'https://parseur.com/fr/blog/rpa-hyperautomatisation'},{l:'Archimag — IDP : actualité et enjeux',u:'https://www.archimag.com/tags/idp'}]},
 
-  {id:'b7',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'clients',axeLabel:'Clients & opportunités',
+  {id:'b7',origine:'2026-07-01',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'Délégation de gestion',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Délégation de gestion santé/prévoyance : marché en recomposition, opportunité d\'actes',
@@ -667,7 +733,7 @@ const SIGNALS = [
 
   // ── SÉCURITÉ & RGPD (axe transverse) ─────────────────────,
 
-  {id:'sec1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'securite',axeLabel:'Sécurité & RGPD',
+  {id:'sec1',origine:'2026-05-27',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'CNIL · sous-traitants',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'CNIL : les sous-traitants dans le viseur — sécuriser la chaîne de traitement',
@@ -677,7 +743,7 @@ const SIGNALS = [
    action:'Documenter les mesures de sécurité (art. 32) et les délais de réaction en tant que sous-traitant de données sensibles : c\'est ce que les responsables de traitement contrôlent désormais en amont des contrats.',
    links:[{l:'Données Personnelles — fiche CNIL sous-traitants (mai 2026)',u:'https://www.donneespersonnelles.fr/actualite-rgpd-2026'},{l:'CNIL — sanction France Travail (5 M€)',u:'https://www.cnil.fr/fr/violation-de-donnees-sanction-5millions-france-travail'},{l:'Siècle Digital — la CNIL durcit ses contrôles',u:'https://siecledigital.fr/2026/05/20/la-cnil-va-durcir-ses-controles-face-a-lexplosion-des-violations-de-donnees/'}]},
 
-  {id:'sec3',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'securite',axeLabel:'Sécurité & RGPD',
+  {id:'sec3',origine:'2026-05-01',metier:'bailleurs',metierLabel:'Bailleurs sociaux',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'RGPD · SLS/OPS',badgeColor:'#ede9fe',badgeTextColor:'#5b21b6',
    urgence:'À SURVEILLER',urgenceColor:'#7F7F7F',
    title:'Enquêtes SLS/OPS : données fiscales sensibles, exigences RGPD renforcées',
@@ -692,7 +758,7 @@ const SIGNALS = [
 
   // ── CARTES & BILLETTIQUE ─────────────────────────────────,
 
-  {id:'cart2',metier:'cartes',metierLabel:'Cartes & billettique',axe:'clients',axeLabel:'Clients & opportunités',
+  {id:'cart2',fond:true,metier:'cartes',metierLabel:'Cartes & billettique',axe:'clients',axeLabel:'Clients & opportunités',
    badge:'Fidélité · Wallet mobile',badgeColor:'#fef9c3',badgeTextColor:'#854d0e',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'Cartes de fidélité : la bascule vers le wallet mobile s\'accélère',
@@ -702,7 +768,7 @@ const SIGNALS = [
    action:'Faire évoluer l\'offre fidélité vers l\'hybride (support physique premium + carte wallet, personnalisation, notifications push, connexion CRM/caisse).',
    links:[{l:'Favecard — carte de fidélité digitale 2026',u:'https://www.favecard.co/fr/blog/carte-de-fidelite-digitale/'},{l:'Brevo — dématérialiser son programme de fidélité',u:'https://www.brevo.com/fr/blog/programme-fidelite-dematerialise/'},{l:'Le Hub La Poste — fidélité mobile',u:'https://lehub.laposte.fr/fidelite-mobile-bouleverse-enfin-cartes'}]},
 
-  {id:'cart3',metier:'cartes',metierLabel:'Cartes & billettique',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'cart3',fond:true,metier:'cartes',metierLabel:'Cartes & billettique',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Support physique vs digital',badgeColor:'#fef9c3',badgeTextColor:'#854d0e',
    urgence:'À SURVEILLER',urgenceColor:'#7F7F7F',
    title:'Cartes à puce et supports : repositionner la valeur face au tout-digital',
@@ -714,7 +780,7 @@ const SIGNALS = [
 
   // ── MARCHÉS PUBLICS & APPELS D'OFFRES ────────────────────,
 
-  {id:'ao1',metier:'ao',metierLabel:'Marchés publics & AO',axe:'marche',axeLabel:'Marché & réglementation',
+  {id:'ao1',fond:true,metier:'ao',metierLabel:'Marchés publics & AO',axe:'marche',axeLabel:'Marché & réglementation',
    badge:'Méthode & sources',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Veille marchés publics : cadrer les bonnes sources et les alertes',
@@ -724,7 +790,7 @@ const SIGNALS = [
    action:'Paramétrer des alertes par codes CPV (services d\'élections, gestion documentaire, relation client, cartes/billettique) et un processus Go/No-Go hebdomadaire.',
    links:[{l:'Service Public — trouver les avis de marchés',u:'https://entreprendre.service-public.gouv.fr/vosdroits/F32089'},{l:'Comparatif plateformes d\'AO 2026',u:'https://remporte.fr/blog/plateformes-appels-offres-comparatif/'},{l:'Olra — sources gratuites d\'AO 2026',u:'https://olra.fr/blog/ou-trouver-appels-offres-gratuitement'}]},
 
-  {id:'ao3',metier:'ao',metierLabel:'Marchés publics & AO',axe:'securite',axeLabel:'Sécurité & RGPD',
+  {id:'ao3',fond:true,metier:'ao',metierLabel:'Marchés publics & AO',axe:'securite',axeLabel:'Sécurité & RGPD',
    badge:'AO Sécurité & RGPD',badgeColor:'#e2e8f0',badgeTextColor:'#334155',
    urgence:'HAUTE',urgenceColor:'#E38900',
    title:'AO Sécurité & RGPD : les clauses cyber deviennent souvent éliminatoires',
@@ -734,7 +800,7 @@ const SIGNALS = [
    action:'Constituer un « dossier sécurité » réutilisable (certifications, hébergeurs, mesures art. 32, PRA/PCA) pour répondre vite et bien aux volets cyber des AO.',
    links:[{l:'Décret SREN — SecNumCloud & marchés santé',u:'https://application-sante-numerique.fr/blog/decret-sren-donnees-sensibles-cloud-etablissements-sante-publics/'},{l:'CNIL — recommandation & sécurité',u:'https://www.cnil.fr/fr/recommandation-vote-electronique'},{l:'Legiscope — NIS2 (loi Résilience)',u:'https://www.legiscope.com/blog/transposition-nis2-france.html'}]},
 
-  {id:'conc1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'acteurs',axeLabel:'Acteurs & concurrence',
+  {id:'conc1',origine:'2026-07-01',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'acteurs',axeLabel:'Acteurs & concurrence',
    badge:'Concurrence Paragon',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Concurrence : un paysage BPO qui se concentre autour de grands intégrés',
@@ -746,7 +812,7 @@ const SIGNALS = [
 
   // ── ÉCONOMIE & SOCIAL ────────────────────────────────────,
 
-  {id:'qual1',metier:'bpo',metierLabel:'BPO & Externalisation',axe:'qualite',axeLabel:'Qualité & certifications',
+  {id:'qual1',fond:true,metier:'bpo',metierLabel:'BPO & Externalisation',axe:'qualite',axeLabel:'Qualité & certifications',
    badge:'Certifications',badgeColor:'#dbeafe',badgeTextColor:'#1e40af',
    urgence:'STRATÉGIQUE',urgenceColor:'#238ACB',
    title:'Qualité & certifications : socle de crédibilité pour les AO et les grands comptes',
@@ -765,6 +831,7 @@ const SECT = {
   n1:['banque','assurance','sante'], n2:['banque','assurance'], n3:[], n4:[], n5:[],
   n6:['banque','assurance'], n7:['banque','assurance'], n8:['sante','banque','assurance'],
   n9:['banque','assurance','sante'], n10:[], n11:[], n12:[], n13:[], n14:['bailleurs'],
+  n15:['sante','assurance','banque'], n16:['banque','assurance'], n17:[], n18:['bailleurs'], n19:['bailleurs'],
   b1:[], b3:[], b5:['sante','prevoyance'], b6:['banque','assurance','sante'],
   b7:['assurance','sante','prevoyance'], conc1:[], qual1:['banque','assurance','sante'],
   sec1:['banque','assurance','sante'], sec3:['bailleurs'], sec4:['bailleurs'],
@@ -775,14 +842,14 @@ const SECT = {
 };
 
 const METIERS = [
-  {k:'all',   label:'Tous les métiers', color:'#97A3AE'},
-  {k:'facturation', label:'Facturation électronique & PA', color:'#C56603'},
-  {k:'vote',  label:'Vote & élections', color:'#166534'},
-  {k:'crc',   label:'CRC · Relation client', color:'#0E7490'},
-  {k:'bailleurs', label:'Bailleurs sociaux', color:'#6D28D9'},
-  {k:'cartes', label:'Cartes & billettique', color:'#E38900'},
-  {k:'bpo',   label:'BPO & Externalisation', color:'#164E72'},
-  {k:'ao',    label:'Marchés publics & AO', color:'#7F7F7F'}
+  {k:'all',   label:'Tout', color:'#97A3AE'},
+  {k:'facturation', label:'Facturation', color:'#C56603'},
+  {k:'vote',  label:'Vote', color:'#166534'},
+  {k:'crc',   label:'Relation client', color:'#0E7490'},
+  {k:'bailleurs', label:'Bailleurs', color:'#6D28D9'},
+  {k:'cartes', label:'Billettique', color:'#E38900'},
+  {k:'bpo',   label:'BPO', color:'#164E72'},
+  {k:'ao',    label:'Marchés publics', color:'#7F7F7F'}
 ];
 const SECTEURS = [
   {k:'all', label:'Tous', color:''},
@@ -803,11 +870,33 @@ const METIER_COLORS = {bpo:'#164E72',crc:'#0E7490','vote-correspondance':'#16653
 const URGENCE_ORDER = {CRITIQUE:0,HAUTE:1,'STRATÉGIQUE':2,'OPPORTUNITÉ':3,'À SURVEILLER':4};
 const MONTH_IDX = {'janvier':1,'février':2,'fevrier':2,'mars':3,'avril':4,'mai':5,'juin':6,'juillet':7,'août':8,'aout':8,'septembre':9,'octobre':10,'novembre':11,'décembre':12,'decembre':12};
 
-let activeMetier='all', activeSecteur='all', activeAxe='all', activeNouveau=false, searchQ='', sortMode='urgence';
+let activeMetier='all', activeSecteur='all', activeAxe='all', activeNouveau=false, activeFresh='all', searchQ='', sortMode='urgence';
 let nlThemeLabel='Veille multi-métiers', nlTribune=true, curModalTab='preview';
 const exportSel = new Set(SIGNALS.filter(s=>s.nouveau).map(s=>s.id));
 if (!exportSel.size) SIGNALS.slice(0,10).forEach(s=>exportSel.add(s.id));
 
+const TODAY = new Date(2026,8,14);   // date de la mise à jour courante
+const MOIS_FR = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+function origineInfo(s){
+  if(s.fond || !s.origine) return {label:'Signal de fond', cls:'fr-f', days:null, bucket:'fond'};
+  const [y,m,d] = s.origine.split('-').map(Number);
+  const dt = new Date(y,m-1,d);
+  const days = Math.round((TODAY-dt)/86400000);
+  const label = (d===1?'1er':d) + ' ' + MOIS_FR[m-1] + ' ' + y;
+  let cls='fr-3', bucket='vieux';
+  if(days<=30){cls='fr-0';bucket='30j';}
+  else if(days<=92){cls='fr-1';bucket='3m';}
+  else if(days<=183){cls='fr-2';bucket='6m';}
+  return {label, cls, days, bucket};
+}
+function ageTxt(days){
+  if(days===null) return '';
+  if(days<=1) return "aujourd'hui";
+  if(days<31) return 'il y a '+days+' jours';
+  const m=Math.round(days/30.4);
+  if(m<24) return 'il y a '+m+' mois';
+  return 'il y a '+Math.floor(days/365)+' ans';
+}
 const esc = t => String(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 function monthRank(d){ if(!d) return 0; const m=String(d).toLowerCase().match(/([a-zéûôàè]+)\s+(\d{4})/); return m ? parseInt(m[2],10)*12 + (MONTH_IDX[m[1]]||0) : 0; }
 function inMetier(s,k){ return k==='all' || s.metier===k || (k==='vote' && (s.metier==='vote-correspondance'||s.metier==='vote-electronique')); }
@@ -819,11 +908,25 @@ function getFiltered(){
     if(activeSecteur!=='all' && !(SECT[s.id]||[]).includes(activeSecteur)) return false;
     if(activeAxe!=='all' && s.axe!==activeAxe) return false;
     if(activeNouveau && !s.nouveau) return false;
+    if(activeFresh!=='all'){
+      const b = origineInfo(s).bucket;
+      if(activeFresh==='30j' && b!=='30j') return false;
+      if(activeFresh==='3m'  && !['30j','3m'].includes(b)) return false;
+      if(activeFresh==='6m'  && !['30j','3m','6m'].includes(b)) return false;
+      if(activeFresh==='fond'&& b!=='fond') return false;
+      if(activeFresh==='vieux'&& b!=='vieux') return false;
+    }
     if(q && !((s.title+' '+s.excerpt+' '+(s.detail||'')+' '+(s.action||'')).toLowerCase().includes(q))) return false;
     return true;
   }).sort((a,b)=>{
     const mr = monthRank(b.date)-monthRank(a.date);
-    if(sortMode==='recent') return mr || ((URGENCE_ORDER[a.urgence]??9)-(URGENCE_ORDER[b.urgence]??9));
+    if(sortMode==='recent'){
+      const da=origineInfo(a).days, db=origineInfo(b).days;
+      if(da===null&&db===null) return 0;
+      if(da===null) return 1;
+      if(db===null) return -1;
+      return da-db;
+    }
     if(mr!==0) return mr;
     if(sortMode==='metier') return a.metier.localeCompare(b.metier);
     if(sortMode==='axe') return a.axe.localeCompare(b.axe);
@@ -837,11 +940,11 @@ const ICON_EXT  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 
 function cardHTML(s){
   const mc = METIER_COLORS[s.metier]||'#97A3AE';
+  const o = origineInfo(s);
   const tags = [];
   if(s.due) tags.push('<span class="due">'+esc(s.due)+'</span>');
   if(s.owner) tags.push('<span>'+esc(s.owner)+'</span>');
   const links = (s.links||[]).map(l=>'<a href="'+l.u+'" target="_blank" rel="noopener">'+ICON_EXT+esc(l.l)+'</a>').join('');
-  const inNL = exportSel.has(s.id);
   return `
   <article class="sig" id="card-${s.id}">
     <div class="sig-in">
@@ -850,8 +953,9 @@ function cardHTML(s){
           <span class="tag" style="background:color-mix(in srgb,${s.urgenceColor} 14%,#fff);color:${s.urgenceColor}">${esc(s.urgence)}</span>
           ${s.nouveau?'<span class="tag" style="background:#E6F5EE;color:#1B7A56">Nouveau</span>':''}
           <span class="tag-met" style="border-color:${mc};color:${mc}">${esc(s.metierLabel)}</span>
+          <span class="fresh ${o.cls}">${o.days===null?'Signal de fond':ageTxt(o.days)}</span>
           <span>${esc(s.axeLabel)}</span><span>·</span><span>${esc(s.badge)}</span>
-          <span>·</span><span>Publié : ${esc(s.pub||s.date)}</span>
+          <span>·</span><span>Source : ${o.label}</span><span>·</span><span>ajouté le ${esc(s.pub||s.date)}</span>
         </div>
         <h3>${esc(s.title)}</h3>
         <p class="lead">${esc(s.excerpt)}</p>
@@ -863,9 +967,6 @@ function cardHTML(s){
       <aside class="aside">
         <div class="h">Sources<i></i>${(s.links||[]).length}</div>
         ${links||'<p style="font-size:12.5px;color:var(--gris-cl)">Source interne.</p>'}
-        <div class="acts">
-          <button class="${inNL?'in':''}" onclick="toggleExportSig('${s.id}',${!inNL})">${inNL?'Dans la lettre':'Ajouter à la lettre'}</button>
-        </div>
       </aside>
     </div>
     <div class="pa">
@@ -898,12 +999,8 @@ function renderFilters(){
     return '<button class="chip'+(activeMetier===m.k&&!activeNouveau?' on':'')+'" onclick="filterMetier(\''+m.k+'\')">'+
       (m.k!=='all'?'<span class="d" style="background:'+m.color+'"></span>':'')+m.label+'<i>'+n+'</i></button>';
   }).join('');
-  const hNew = '<button class="chip chip-new'+(activeNouveau?' on':'')+'" onclick="filterNouveau()">Nouveaux de la mise à jour<i>'+nNew+'</i></button>';
+  const hNew = '<button class="chip chip-new'+(activeNouveau?' on':'')+'" onclick="filterNouveau()">Nouveaux<i>'+nNew+'</i></button>';
   document.getElementById('metierTabs').innerHTML = hNew + h;
-
-  document.getElementById('secteurTabs').innerHTML = SECTEURS.map(x=>
-    '<button class="chip'+(activeSecteur===x.k?' on':'')+'" onclick="filterSecteur(\''+x.k+'\')">'+
-    (x.color?'<span class="d" style="background:'+x.color+'"></span>':'')+x.label+'</button>').join('');
 
   const sel = document.getElementById('axeSel');
   sel.innerHTML = '<option value="all">Tous les axes ('+SIGNALS.length+')</option>' +
@@ -912,8 +1009,8 @@ function renderFilters(){
 }
 
 function filterMetier(k){ activeMetier=k; activeNouveau=false; renderFilters(); renderCards(); }
-function filterSecteur(k){ activeSecteur=k; renderFilters(); renderCards(); }
 function filterAxe(k){ activeAxe=k; renderCards(); }
+function filterFresh(k){ activeFresh=k; renderCards(); }
 function filterNouveau(){ activeNouveau=!activeNouveau; if(activeNouveau) activeMetier='all'; renderFilters(); renderCards(); }
 function doSearch(){ searchQ=document.getElementById('globalSearch').value; renderCards(); }
 function sortCards(m){ sortMode=m; renderCards(); }
@@ -975,7 +1072,7 @@ function buildNL(ids){
       <div style="font-size:12px;color:#472F07;line-height:1.45">${s.action}</div>
       ${tags?`<div style="font-size:10.5px;color:#9F6100;margin-top:5px">${tags}</div>`:''}
     </td></tr></table>
-  <div style="font-size:10px;color:#9ca3af;margin-top:7px">Publié : ${s.pub||s.date} — Sources : ${(s.links||[]).map(l=>`<a href="${l.u}" style="color:#3b82f6;text-decoration:none">${l.l}</a>`).join(' &nbsp;·&nbsp; ')}</div>
+  <div style="font-size:10px;color:#9ca3af;margin-top:7px">Source du ${origineInfo(s).label} — ajouté le ${s.pub||s.date} —  ${(s.links||[]).map(l=>`<a href="${l.u}" style="color:#3b82f6;text-decoration:none">${l.l}</a>`).join(' &nbsp;·&nbsp; ')}</div>
 </td></tr></table>
 </td></tr>`;}).join('');
 
